@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فضاء الأساتذة - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; }
+        
+        /* القائمة الجانبية الخاصة بالأستاذ */
+        aside { width: 260px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; }
+        .aside-logo { font-size: 18px; font-weight: 700; color: #34d399; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #047857; padding-bottom: 15px; }
+        .aside-menu { list-style: none; flex: 1; }
+        .aside-menu li { margin-bottom: 10px; }
+        .aside-menu a { color: #a7f3d0; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .aside-menu a:hover, .aside-menu a.active { background: #059669; color: white; }
+
+        /* المحتوى الرئيسي */
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-bar h1 { font-size: 20px; color: #1e293b; }
+        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .back-home:hover { background: #cbd5e1; }
+
+        /* بطاقات الإحصائيات المختصرة */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #10b981; }
+        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
+
+        /* قسم الجداول والعمليات */
+        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background: #f1f5f9; color: #475569; font-weight: 700; }
+        td { color: #334155; }
+        
+        .action-btn { background: #10b981; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+        .action-btn:hover { background: #059669; }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة الجانبية الخاصة بالأستاذ -->
+    aside>
+        <div class="aside-logo">فضاء الأستاذ</div>
+        <ul class="aside-menu">
+            <li><a href="#" class="active">لوحة المتابعة</a></li>
+            <li><a href="#">تسجيل الغيابات</a></li>
+            <li><a href="#">إدخال النقط</a></li>
+            <li><a href="#">دفتر التحضير (Cahier de Texte)</a></li>
+            <li><a href="#">مجموعات الواتساب الخاصة</a></li>
+        </ul>
+    </aside>
+
+    <!-- المحتوى الرئيسي للأستاذ -->
+    <div class="main-container">
+        <div class="top-bar">
+            <h1>بوابة التدبير البيداغوجي للأستاذ</h1>
+            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+        </div>
+
+        <!-- الإحصائيات السريعة -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <h3>الأقسام المسندة</h3>
+                <div class="val">3 أقسام</div>
+            </div>
+            <div class="stat-box" style="border-color: #3b82f6;">
+                <h3>إجمالي التلاميذ</h3>
+                <div class="val">92 تلميذاً</div>
+            </div>
+            <div class="stat-box" style="border-color: #f59e0b;">
+                <h3>فروض تنتظر التصحيح</h3>
+                <div class="val">قسم واحد</div>
+            </div>
+        </div>
+
+        <!-- جدول الأقسام والمقررات -->
+        <div class="data-section">
+            <h2>
+                <span>الأقسام الدراسية الحالية</span>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>المستوى الدراسي</th>
+                        <th>المادة المدرسة</th>
+                        <th>عدد التلاميذ</th>
+                        <th>الإجراءات البيداغوجية</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>السادس ابتدائي (أ)</td>
+                        <td>اللغة العربية / التربية الإسلامية</td>
+                        <td>31</td>
+                        <td>
+                            <button class="action-btn" onclick="alert('فتح سجل الغياب لهذا القسم');">تسجيل الغياب</button> 
+                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة إدخال النقاط');">إدخال النقط</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>الأولى إعدادي (ب)</td>
+                        <td>اللغة العربية</td>
+                        <td>30</td>
+                        <td>
+                            <button class="action-btn" onclick="alert('فتح سجل الغياب لهذا القسم');">تسجيل الغياب</button> 
+                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة إدخال النقاط');">إدخال النقط</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
