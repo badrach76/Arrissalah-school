@@ -9,32 +9,26 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: #f8fafc; color: #1e293b; direction: rtl; }
         
-        /* شريط التنقل العلوي */
         header { background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; gap: 10px; }
         .logo { font-size: 18px; font-weight: 700; color: #0284c7; }
         .nav-menu { display: flex; list-style: none; gap: 15px; flex-wrap: wrap; }
         .nav-menu a { text-decoration: none; color: #64748b; font-weight: 600; transition: 0.3s; font-size: 14px; }
         .nav-menu a:hover { color: #0284c7; }
 
-        /* القسم الرئيسي (Hero) */
         .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 60px 20px; }
         .hero h1 { font-size: 28px; margin-bottom: 10px; }
         .hero p { font-size: 15px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
-        /* الهيكل العام */
         .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
         .section-title { font-size: 20px; margin-bottom: 20px; color: #1e293b; border-right: 4px solid #0284c7; padding-right: 10px; }
 
-        /* نبذة عن المؤسسة */
         .about-section { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 40px; line-height: 1.8; font-size: 15px; color: #475569; }
 
-        /* الأسلاك التعليمية */
         .cycles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .cycle-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid #0ea5e9; }
         .cycle-card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
         .cycle-card p { font-size: 13px; color: #64748b; }
 
-        /* الفضاءات الرئيسية */
         .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .space-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid #0284c7; }
         .space-card h3 { font-size: 17px; margin-bottom: 8px; color: #1e293b; }
@@ -42,22 +36,15 @@
         .btn { display: inline-block; background: #0284c7; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
 
-        /* الإعلانات والبلاغات */
         .announcements-section { background: #fef3c7; border: 1px solid #fde68a; padding: 25px; border-radius: 10px; margin-bottom: 40px; }
         .announcements-section h2 { color: #92400e; font-size: 18px; margin-bottom: 10px; }
         .announcements-section ul { list-style-type: disc; padding-right: 20px; color: #78350f; font-size: 14px; line-height: 1.6; }
 
-        /* التذييل */
         footer { text-align: center; padding: 20px; background: #1e293b; color: #94a3b8; font-size: 13px; }
-
-        @media (max-width: 480px) {
-            header { flex-direction: column; align-items: flex-start; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- شريط التنقل -->
     <header>
         <div class="logo">مؤسسة الرسالة للتعليم الخصوصي</div>
         <ul class="nav-menu">
@@ -69,7 +56,6 @@
         </ul>
     </header>
 
-    <!-- الواجهة الترحيبية -->
     <section class="hero">
         <h1>بوابة التواصل الرقمية للمؤسسة</h1>
         <p>نربط الإدارة، الأساتذة، التلاميذ، وأولياء الأمور في بيئة تربوية آمنة ومنظمة.</p>
@@ -77,19 +63,17 @@
 
     <div class="container">
         
-        <!-- 1. عن المؤسسة -->
         <section id="about" class="about-section">
             <h2 class="section-title" style="border-right-color: #0284c7; margin-bottom: 15px;">عن مؤسسة الرسالة للتعليم الخصوصي</h2>
-            <p>تعتبر مؤسسة الرسالة صرحاً تربوياً طموحاً يسعى لتقديم تعليم خصوصي متميز يجمع بين أصالة القيم التربوية ومهارات العصر الحديث. نهدف إلى بناء جيل متسلح بالعلم والأخلاق، ومواكبة المسار الدراسي للتلاميذ بضمان بيئة مدرسية محفزة وآمنة، وتأطير تربوي عالي الجودة يشرف عليه أساتذة أکفاء.</p>
+            <p>تعتبر مؤسسة الرسالة صرحاً تربوياً طموحاً يسعى لتقديم تعليم خصوصي متميز يجمع بين أصالة القيم التربوية ومهارات العصر الحديث. نهدف إلى بناء جيل متسلح بالعلم والأخلاق، ومواكبة المسار الدراسي للتلاميذ بضمان بيئة مدرسية محفزة وآمنة، وتأطير تربوي عالي الجودة يشرف عليه أساتذة أكفاء.</p>
         </section>
 
-        <!-- 2. الأسلاك التعليمية -->
         <div id="cycles">
             <h2 class="section-title">الأسلاك التعليمية بالمؤسسة</h2>
             <div class="cycles-grid">
                 <div class="cycle-card">
                     <h3>التعليم الأولي</h3>
-                    <p>حضضانة وتنمية مهارات الأطفال الصغار في بيئة تربوية تفاعلية ومرحة.</p>
+                    <p>حضانة وتنمية مهارات الأطفال الصغار في بيئة تربوية تفاعلية ومرحة.</p>
                 </div>
                 <div class="cycle-card">
                     <h3>السلك الابتدائي</h3>
@@ -106,49 +90,47 @@
             </div>
         </div>
 
-        <!-- 3. الإعلانات والبلاغات العامة -->
         <div id="announcements" class="announcements-section">
             <h2>📢 الإعلانات والبلاغات العامة</h2>
             <ul>
-                <li>انطلاق عملية التسجيل وإعادة التجيل برسم الموسم الدراسي الحالي.</li>
+                <li>انطلاق عملية التسجيل وإعادة التسجيل برسم الموسم الدراسي الحالي.</li>
                 <li>إعلان هام بخصوص توقيت استقبال أولياء الأمور من طرف الإدارة التربوية.</li>
                 <li>برمجة الأنشطة الموازية والرحلات التربوية بمختلف الأسلاك.</li>
             </ul>
         </div>
 
-        <!-- 4. فضاءات الدخول المخصصة (مع الربط النهائي) -->
         <div id="spaces">
             <h2 class="section-title">فضاءات الدخول المخصصة</h2>
             <div class="spaces-grid">
                 <div class="space-card" style="border-top-color: #3b82f6;">
                     <h3>فضاء الإدارة</h3>
                     <p>الإشراف الشامل، تتبع التسجيلات، والتدبير الإداري.</p>
-                    <a href="admin.html" class="btn" style="background: #3b82f6;">دخول الإدارة</a>
+                    <a href="login.html" class="btn" style="background: #3b82f6;">تسجيل الدخول</a>
                 </div>
                 <div class="space-card" style="border-top-color: #10b981;">
                     <h3>فضاء الأساتذة</h3>
                     <p>تسجيل الغياب، إدخال النقط، ودفتر التحضير.</p>
-                    <a href="teacher.html" class="btn" style="background: #10b981;">دخول الأساتذة</a>
+                    <a href="login.html" class="btn" style="background: #10b981;">تسجيل الدخول</a>
                 </div>
                 <div class="space-card" style="border-top-color: #f59e0b;">
                     <h3>فضاء أولياء الأمور</h3>
                     <p>تتبع المسار الدراسي، النقط، والغياب لحظة بلحظة.</p>
-                    <a href="parent.html" class="btn" style="background: #f59e0b;">دخول الأولياء</a>
+                    <a href="login.html" class="btn" style="background: #f59e0b;">تسجيل الدخول</a>
                 </div>
                 <div class="space-card" style="border-top-color: #8b5cf6;">
                     <h3>فضاء التلميذ</h3>
                     <p>الاطلاع على الجداول الزمنية، الدروس، والنتائج.</p>
-                    <a href="student.html" class="btn" style="background: #8b5cf6;">دخول التلميذ</a>
+                    <a href="login.html" class="btn" style="background: #8b5cf6;">تسجيل الدخول</a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- التذييل -->
     <footer>
         <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
     </footer>
 
 </body>
 </html>
+
