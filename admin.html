@@ -7,10 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
         
-        /* القائمة الجانبية الإدارية */
-        aside { width: 260px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; }
+        /* القائمة الجانبية الخاصة بالإدارة */
+        aside { width: 260px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .aside-logo { font-size: 18px; font-weight: 700; color: #38bdf8; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 10px; }
@@ -18,8 +18,8 @@
         .aside-menu a:hover, .aside-menu a.active { background: #0284c7; color: white; }
 
         /* المحتوى الرئيسي */
-        .main-container { flex: 1; padding: 30px; overflow-y: auto; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
         .top-bar h1 { font-size: 20px; color: #1e293b; }
         .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
         .back-home:hover { background: #cbd5e1; }
@@ -31,16 +31,23 @@
         .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
 
         /* قسم جدول بيانات التلاميذ */
-        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; }
+        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
+        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         td { color: #334155; }
         
         .action-btn { background: #0284c7; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
         .action-btn:hover { background: #0369a1; }
+
+        /* التجاوب مع الهواتف المحمولة لتجنب التداخل */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            aside { width: 100%; height: auto; }
+            .main-container { padding: 15px; }
+        }
     </style>
 </head>
 <body>
@@ -54,7 +61,6 @@
             <li><a href="#">هيئة التدريس</a></li>
             <li><a href="#">الرسوم والاستخلاص</a></li>
             <li><a href="#">الغيابات والتأخيرات</a></li>
-            <li><a href="#">إعدادات المجموعات</a></li>
         </ul>
     </aside>
 
@@ -94,7 +100,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>الرقم الترتيبي</th>
+                        <th>الرقم</th>
                         <th>الاسم الكامل</th>
                         <th>رقم مسار</th>
                         <th>المستوى الدراسي</th>
@@ -106,21 +112,14 @@
                         <td>01</td>
                         <td>يوسف البدري</td>
                         <td>M138920112</td>
-                        <td>السلك الابتدائي (السادس)</td>
+                        <td>السادس ابتدائي</td>
                         <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
                     </tr>
                     <tr>
                         <td>02</td>
                         <td>فاطمة الزهراء الإدريسي</td>
                         <td>M142310984</td>
-                        <td>السلك الإعدادي (الثالثة)</td>
-                        <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>حمزة الفيلالي</td>
-                        <td>M110293847</td>
-                        <td>السلك الثانوي (الجذع المشترك)</td>
+                        <td>الثالثة إعدادي</td>
                         <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
                     </tr>
                 </tbody>
