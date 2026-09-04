@@ -18,11 +18,14 @@
         .nav-menu a:hover { color: #0284c7; }
 
         /* الواجهة الترحيبية */
-        .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 60px 20px; }
-        .hero h1 { font-size: 28px; margin-bottom: 10px; }
-        .hero p { font-size: 15px; opacity: 0.9; max-width: 550px; margin: 0 auto 20px; }
-        .hero-btn { background: #ffffff; color: #0284c7; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; display: inline-block; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 70px 20px; }
+        .hero h1 { font-size: 30px; margin-bottom: 12px; }
+        .hero p { font-size: 15px; opacity: 0.9; max-width: 600px; margin: 0 auto 25px; line-height: 1.6; }
+        .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .hero-btn { background: #ffffff; color: #0284c7; padding: 10px 22px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .hero-btn:hover { background: #f1f5f9; }
+        .hero-btn.alt { background: #10b981; color: white; }
+        .hero-btn.alt:hover { background: #059669; }
 
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         
@@ -35,7 +38,7 @@
         .action-link { display: inline-block; background: #0284c7; color: white; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
         .action-link:hover { background: #0369a1; }
 
-        /* قسم الفضاءات (يظهر الأزرار قبل طلب تسجيل الدخول) */
+        /* قسم الفضاءات */
         .spaces-section { margin-bottom: 40px; }
         .section-title { font-size: 20px; margin-bottom: 20px; color: #1e293b; border-right: 4px solid #0284c7; padding-right: 10px; }
         .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
@@ -45,23 +48,24 @@
         .space-btn { display: inline-block; background: #0f172a; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; }
         .space-btn:hover { background: #334155; }
 
-        /* نموذج التسجيل القبلي */
-        .register-box { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-top: 4px solid #10b981; margin-bottom: 40px; }
+        /* نموذج التسجيل القبلي (مخفي افتراضياً ويظهر عند الطلب) */
+        .register-box { display: none; background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #10b981; margin-bottom: 40px; animation: fadeIn 0.4s ease; }
         .register-box h2 { font-size: 18px; color: #1e293b; margin-bottom: 8px; }
         .register-box p { font-size: 14px; color: #64748b; margin-bottom: 20px; }
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-bottom: 15px; }
         .form-control { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
-        .submit-reg { background: #10b981; color: white; border: none; padding: 10px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; }
+        .form-control:focus { border-color: #10b981; }
+        .submit-reg { background: #10b981; color: white; border: none; padding: 10px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; transition: 0.3s; }
         .submit-reg:hover { background: #059669; }
         .success-alert { display: none; margin-top: 15px; padding: 12px; background: #d1fae5; color: #065f46; border-radius: 6px; font-size: 14px; text-align: center; font-weight: 600; }
 
-        /* تصميم النافذة المنبثقة الاحترافية (Modal) بدلاً من الـ alert */
+        /* النافذة المنبثقة للنصوص التعريفية */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 500px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); position: relative; animation: fadeIn 0.3s ease; }
-        .close-modal { position: absolute; left: 20px; top: 15px; font-size: 22px; font-weight: bold; cursor: pointer; color: #64748b; }
+        .modal-content { background: white; padding: 35px; border-radius: 12px; width: 100%; max-width: 550px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; animation: fadeIn 0.3s ease; }
+        .close-modal { position: absolute; left: 20px; top: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; }
         .close-modal:hover { color: #ef4444; }
         .modal-content h3 { color: #0284c7; margin-bottom: 15px; font-size: 20px; }
-        .modal-content p { color: #334155; line-height: 1.7; font-size: 14px; }
+        .modal-content p { color: #334155; line-height: 1.8; font-size: 14.5px; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -75,43 +79,46 @@
         <ul class="nav-menu">
             <li><a href="#">الرئيسية</a></li>
             <li><a href="#spaces">الفضاءات التربوية</a></li>
-            <li><a href="#register">التسجيل القبلي</a></li>
+            <li><a href="#" onclick="toggleRegisterForm()">التسجيل القبلي</a></li>
         </ul>
     </header>
 
     <section class="hero">
         <h1>صرح تربوي متكامل لجيل المستقبل</h1>
-        <p>اختر الفضاء الخاص بك وتواصل مع منظومتنا الرقمية بكل سهولة وسلاسة.</p>
-        <a href="#spaces" class="hero-btn">استعرض فضاءات الدخول</a>
+        <p>نؤمن بأن التعليم رسالة سامية؛ لذا نجمع بين أصالة القيم التربوية ومهارات العصر الحديث لنبني معاً مساراً ناجحاً لأبنائكم.</p>
+        <div class="hero-btns">
+            <a href="#spaces" class="hero-btn">استعرض فضاءات الدخول</a>
+            <a href="#register" class="hero-btn alt" onclick="toggleRegisterForm()">طلب تسجيل تلميذ جديد</a>
+        </div>
     </section>
 
     <div class="container">
         
-        <!-- 1. بطاقات التعريف (تفتح نافذة Modal احترافية بدلاً من alert) -->
+        <!-- 1. البطاقات التعريفية بنصوص إبداعية وأنيقة -->
         <div class="grid-cards">
             <div class="card-box" style="border-top-color: #0284c7;">
-                <h3>عن المؤسسة</h3>
-                <p>نقدم تعليماً خصوصياً متميزاً يجمع بين القيم التربوية وأحدث أساليب التدريس عبر أطر تربوية كفؤة.</p>
-                <button class="action-link" style="background: #0284c7;" onclick="openModal('نبذة عن المؤسسة', 'تعتبر مؤسسة الرسالة صرحاً تربوياً طموحاً يسعى لتقديم تعليم خصوصي متميز يجمع بين أصالة القيم التربوية ومهارات العصر الحديث، لبناء جيل متسلح بالعلم والأخلاق وضمان بيئة مدرسية محفزة وآمنة.')">اعرف المزيد</button>
+                <h3>رؤيتنا ورسالتنا</h3>
+                <p>نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية لبناء جيل واثق بخطواته.</p>
+                <button class="action-link" style="background: #0284c7;" onclick="openModal('عن مؤسسة الرسالة', 'تأسست مؤسسة الرسالة للتعليم الخصوصي لتكون منارة علمية وتربوية رائدة. نؤمن بأن النجاح الحقيقي لا يقتصر على التحصيل المعرفي فحسب، بل يمتد لغرس القيم والأخلاق وبناء شخصية متوازنة قادرة على مواكبة تحديات المستقبل تحت إشراف نخبة من الأطر التربوية والإدارية المتميزة.')">قراءة المزيد</button>
             </div>
 
             <div class="card-box" style="border-top-color: #0ea5e9;">
-                <h3>الأسلاك التعليمية</h3>
-                <p>نوفر تكويناً متكاملاً يضم: التعليم الأولي، السلك الابتدائي، السلك الإعدادي، والسلك الثانوي.</p>
-                <button class="action-link" style="background: #0ea5e9;" onclick="openModal('الأسلاك التعليمية بالمؤسسة', '• التعليم الأولي: حضانة وتنمية مهارات الأطفال.<br>• السلك الابتدائي: تأسيس قوي في اللغات والعلوم.<br>• السلك الإعدادي: مواكبة وتطوير الفكر المنهجي.<br>• السلك الثانوي: توجيه أكاديمي وإعداد للبكالوريا.')">استعرض الأقسام</button>
+                <h3>أسلاكنا التعليمية</h3>
+                <p>مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى مرحلة البكالوريا.</p>
+                <button class="action-link" style="background: #0ea5e9;" onclick="openModal('تفاصيل الأسلاك التعليمية', '• <b>التعليم الأولي:</b> فضاء دافئ ومحفز لاكتشاف المهارات الأولى وتنمية الذكاء العاطفي.<br><br>• <b>السلك الابتدائي:</b> تأسيس متين في القواعد الأساسية للغات والرياضيات والعلوم.<br><br>• <b>السلك الإعدادي:</b> مواكبة مرحلة المراهقة وتطوير الفكر النقدي والمنهجي.<br><br>• <b>السلك الثانوي:</b> توجيه أكاديمي رفيع وإعداد جاد ومكثف لاجتياز امتحانات البكالوريا بتفوق.')">استعراض الأقسام</button>
             </div>
 
             <div class="card-box" style="border-top-color: #f59e0b;">
                 <h3>الإعلانات والبلاغات</h3>
-                <p>تابع آخر المستجدات المدرسية، تواريخ التسجيل، وبرمجة الأنشطة التربوية والموازية أولاً بأول.</p>
-                <button class="action-link" style="background: #f59e0b;" onclick="openModal('الإعلانات والبلاغات العامة', '📢 انطلاق عملية التسجيل وإعادة التسجيل برسم الموسم الدراسي الحالي.<br>📢 توقيت استقبال أولياء الأمور من طرف الإدارة كل يوم سبت صباحاً.')">عرض الإعلانات</button>
+                <p>ابقوا على اطلاع دائم بآخر المستجدات المدرسية، المواعيد الهامة، وأنشطتنا التربوية والموازية.</p>
+                <button class="action-link" style="background: #f59e0b;" onclick="openModal('الإعلانات والبلاغات الرسمية', '📢 <b>إعلان هام:</b> أبواب المؤسسة مفتوحة لاستقبال أولياء الأمور وتقديم طلبات التسجيل من الإثنين إلى السبت صباحاً.<br><br>📢 <b>أنشطة موازية:</b> ترقبوا برنامج الرحلات التربوية والورشات الإبداعية برسم هذا الموسم.')">عرض البلاغات</button>
             </div>
         </div>
 
-        <!-- 2. الفضاءات التربوية (أزرار الفضاءات تظهر واضحة بجميع أنواعها قبل طلب الدخول) -->
+        <!-- 2. الفضاءات التربوية -->
         <section id="spaces" class="spaces-section">
             <h2 class="section-title">فضاءات الدخول المخصصة للمستفيدين</h2>
-            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">اختر الفضاء الخاص بك للتوجه مباشرة نحو صفحة المصادقة ودخول المنصة:</p>
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">اختر فضاءك الخاص للولوج إلى البوابة الرقمية التفاعلية:</p>
             
             <div class="spaces-grid">
                 <div class="space-card" style="border-top-color: #3b82f6;">
@@ -137,10 +144,10 @@
             </div>
         </section>
 
-        <!-- 3. نموذج التسجيل القبلي -->
+        <!-- 3. نموذج التسجيل القبلي (مخفي افتراضياً ويظهر عند الضغط على الزر) -->
         <section id="register" class="register-box">
-            <h2>تسجيل تلميذ جديد (الموسم الدراسي الجديد)</h2>
-            <p>املأ البيانات أدناه لتقديم طلب الالتحاق، وسيتم حفظه مباشرة في قاعدة البيانات لدراسته من طرف الإدارة.</p>
+            <h2>طلب تسجيل تلميذ جديد (الموسم الدراسي الجديد)</h2>
+            <p>يسعدنا انضمام عائلتكم إلى مؤسستنا. يرجى تعبئة البيانات أدناه لتقديم طلب الالتحاق الأولي:</p>
             
             <form id="registrationForm">
                 <div class="form-row">
@@ -149,7 +156,7 @@
                         <input type="text" id="regName" class="form-control" required placeholder="مثال: يوسف البدري">
                     </div>
                     <div>
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155;">المستوى الدراسي</label>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155;">المستوى الدراسي المطلوب</label>
                         <select id="regLevel" class="form-control">
                             <option value="التعليم الأولي">التعليم الأولي</option>
                             <option value="السادس ابتدائي">السادس ابتدائي</option>
@@ -166,12 +173,12 @@
                     <button type="submit" class="submit-reg">إرسال طلب التسجيل</button>
                 </div>
             </form>
-            <div id="regSuccessMsg" class="success-alert">تم إرسال طلب التسجيل بنجاح! ستتواصل معك الإدارة في أقرب وقت.</div>
+            <div id="regSuccessMsg" class="success-alert">تم إرسال طلب التسجيل بنجاح! ستتواصل معك إدارة المؤسسة في أقرب وقت.</div>
         </section>
 
     </div>
 
-    <!-- نافذة منبثقة (Modal) لعرض النصوص التعريفية بشكل احترافي -->
+    <!-- نافذة منبثقة (Modal) للنصوص التعريفية الأنيقة -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -184,9 +191,20 @@
         <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
     </footer>
 
-    <!-- السكربتات البرمجية للنافذة المنبثقة وقاعدة البيانات -->
+    <!-- السكربتات البرمجية -->
     <script>
-        // دوال التحكم بالنافذة المنبثقة الاحترافية
+        // دالة إظهار وإخفاء نموذج التسجيل بسلاسة
+        function toggleRegisterForm() {
+            const regBox = document.getElementById('register');
+            if (regBox.style.display === 'block') {
+                regBox.style.display = 'none';
+            } else {
+                regBox.style.display = 'block';
+                regBox.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // دوال التحكم بالنافذة المنبثقة
         function openModal(title, text) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalText').innerHTML = text;
@@ -197,7 +215,6 @@
             document.getElementById('infoModal').style.display = 'none';
         }
 
-        // إغلاق النافذة عند النقر خارجها
         window.onclick = function(event) {
             let modal = document.getElementById('infoModal');
             if (event.target == modal) {
