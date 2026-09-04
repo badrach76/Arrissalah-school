@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فضاء الإدارة - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; }
+        
+        /* القائمة الجانبية الإدارية */
+        aside { width: 260px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; }
+        .aside-logo { font-size: 18px; font-weight: 700; color: #38bdf8; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
+        .aside-menu { list-style: none; flex: 1; }
+        .aside-menu li { margin-bottom: 10px; }
+        .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .aside-menu a:hover, .aside-menu a.active { background: #0284c7; color: white; }
+
+        /* المحتوى الرئيسي */
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-bar h1 { font-size: 20px; color: #1e293b; }
+        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .back-home:hover { background: #cbd5e1; }
+
+        /* بطاقات الإحصائيات المختصرة */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #0284c7; }
+        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
+
+        /* قسم جدول بيانات التلاميذ */
+        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background: #f1f5f9; color: #475569; font-weight: 700; }
+        td { color: #334155; }
+        
+        .action-btn { background: #0284c7; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .action-btn:hover { background: #0369a1; }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة الجانبية الخاصة بالإدارة -->
+    <aside>
+        <div class="aside-logo">إدارة مؤسسة الرسالة</div>
+        <ul class="aside-menu">
+            <li><a href="#" class="active">لوحة الإحصائيات</a></li>
+            <li><a href="#">إدارة التلاميذ ومسار</a></li>
+            <li><a href="#">هيئة التدريس</a></li>
+            <li><a href="#">الرسوم والاستخلاص</a></li>
+            <li><a href="#">الغيابات والتأخيرات</a></li>
+            <li><a href="#">إعدادات المجموعات</a></li>
+        </ul>
+    </aside>
+
+    <!-- المحتوى الرئيسي للإدارة -->
+    <div class="main-container">
+        <div class="top-bar">
+            <h1>لوحة تسيير الإدارة العامة</h1>
+            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+        </div>
+
+        <!-- الإحصائيات السريعة -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <h3>إجمالي التلاميذ</h3>
+                <div class="val">450</div>
+            </div>
+            <div class="stat-box" style="border-color: #10b981;">
+                <h3>الأساتذة المعتمدون</h3>
+                <div class="val">28</div>
+            </div>
+            <div class="stat-box" style="border-color: #f59e0b;">
+                <h3>الأقسام الدراسية</h3>
+                <div class="val">18</div>
+            </div>
+            <div class="stat-box" style="border-color: #ef4444;">
+                <h3>الغيابات اليومية</h3>
+                <div class="val">3</div>
+            </div>
+        </div>
+
+        <!-- جدول تسيير التلاميذ الأخير -->
+        <div class="data-section">
+            <h2>
+                <span>آخر التلاميذ المسجلين بالمنظومة</span>
+                <button class="action-btn" onclick="alert('فتح نافذة إضافة تلميذ جديد');">+ إضافة تلميذ</button>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الرقم الترتيبي</th>
+                        <th>الاسم الكامل</th>
+                        <th>رقم مسار</th>
+                        <th>المستوى الدراسي</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>يوسف البدري</td>
+                        <td>M138920112</td>
+                        <td>السلك الابتدائي (السادس)</td>
+                        <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>فاطمة الزهراء الإدريسي</td>
+                        <td>M142310984</td>
+                        <td>السلك الإعدادي (الثالثة)</td>
+                        <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>حمزة الفيلالي</td>
+                        <td>M110293847</td>
+                        <td>السلك الثانوي (الجذع المشترك)</td>
+                        <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
