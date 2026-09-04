@@ -3,225 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مؤسسة الرسالة للتعليم - لوحة التحكم الإدارية</title>
-    <!-- استيراد خط عربي أنيق واحترافي -->
+    <title>مؤسسة الرسالة للتعليم الخصوصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
-        body {
-            background-color: #f4f6f9;
-            color: #333;
-            direction: rtl;
-        }
-        /* القائمة الجانبية والشاشة */
-        .wrapper {
-            display: flex;
-            min-height: 100vh;
-        }
-        sidebar {
-            width: 260px;
-            background-color: #1e293b;
-            color: #fff;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .logo-area {
-            font-size: 20px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #38bdf8;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 15px;
-        }
-        .nav-links {
-            list-style: none;
-            flex: 1;
-        }
-        .nav-links li {
-            margin-bottom: 10px;
-        }
-        .nav-links a {
-            color: #94a3b8;
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-            border-radius: 6px;
-            transition: 0.3s;
-            font-weight: 600;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            background-color: #0284c7;
-            color: #fff;
-        }
-        /* المحتوى الرئيسي */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #fff;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            font-size: 22px;
-            color: #1e293b;
-        }
-        .user-info {
-            font-weight: 600;
-            color: #64748b;
-        }
-        /* بطاقات الإحصائيات */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-right: 4px solid #0284c7;
-        }
-        .stat-card h3 {
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 10px;
-        }
-        .stat-card .number {
-            font-size: 26px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        /* قسم الجداول ونماذج الإدارة */
-        .card-section {
-            background: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .card-section h2 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #1e293b;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 10px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .btn-primary {
-            background-color: #0284c7;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .btn-primary:hover {
-            background-color: #0369a1;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; }
+        
+        /* شريط التنقل العلوي */
+        header { background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 20px; font-weight: 700; color: #0284c7; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; }
+        .nav-menu a { text-decoration: none; color: #64748b; font-weight: 600; transition: 0.3s; }
+        .nav-menu a:hover { color: #0284c7; }
+
+        /* القسم الرئيسي (Hero) */
+        .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 60px 20px; }
+        .hero h1 { font-size: 32px; margin-bottom: 15px; }
+        .hero p { font-size: 16px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        /* شبكة الفضاءات الرئيسية */
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .section-title { font-size: 22px; margin-bottom: 20px; color: #1e293b; border-right: 4px solid #0284c7; padding-right: 10px; }
+        
+        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .space-card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; border-top: 4px solid #0284c7; }
+        .space-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .space-card h3 { font-size: 18px; margin-bottom: 10px; color: #1e293b; }
+        .space-card p { font-size: 14px; color: #64748b; margin-bottom: 20px; }
+        .btn { display: inline-block; background: #0284c7; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .btn:hover { background: #0369a1; }
+
+        /* قسم مجموعات الواتساب */
+        .whatsapp-section { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 30px; border-radius: 10px; margin-top: 30px; }
+        .whatsapp-section h2 { color: #166534; font-size: 20px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .wa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .wa-card { background: white; padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #dcfce7; }
+        .wa-card span { font-weight: 600; font-size: 14px; color: #14532d; }
+        .wa-btn { background: #25d366; color: white; padding: 6px 12px; border-radius: 5px; text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s; }
+        .wa-btn:hover { background: #20ba5a; }
+
+        /* التذييل */
+        footer { text-align: center; padding: 20px; background: #1e293b; color: #94a3b8; font-size: 14px; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <!-- القائمة الجانبية -->
-    <sidebar>
-        <div class="logo-area">مؤسسة الرسالة للتعليم</div>
-        <ul class="nav-links">
-            <li><a href="#" class="active">لوحة التحكم</a></li>
-            <li><a href="#">إدارة التلاميذ</a></li>
-            <li><a href="#">الأساتذة والاطر</a></li>
-            <li><a href="#">الاستخلاص والرسوم</a></li>
-            <li><a href="#">الإعلانات والتنبيهات</a></li>
+    <!-- شريط التنقل -->
+    <header>
+        <div class="logo">مؤسسة الرسالة للتعليم الخصوصي</div>
+        <ul class="nav-menu">
+            <li><a href="#">الرئيسية</a></li>
+            <li><a href="#spaces">الفضاءات</a></li>
+            <li><a href="#whatsapp">مجموعات الواتساب</a></li>
+            <li><a href="#">اتصل بنا</a></li>
         </ul>
-    </sidebar>
+    </header>
 
-    <!-- المحتوى الرئيسي -->
-    <div class="main-content">
-        <div class="header">
-            <h1>نظرة عامة على المؤسسة</h1>
-            <div class="user-info">مرحباً، الإدارة العامة</div>
+    <!-- الواجهة الترحيبية -->
+    <section class="hero">
+        <h1>بوابة التواصل الرقمية للمؤسسة</h1>
+        <p>نربط الإدارة، الأساتذة، التلاميذ، وأولياء الأمور في بيئة رقمية آمنة ومنظمة.</p>
+    </section>
+
+    <div class="container" id="spaces">
+        <h2 class="section-title">فضاءات الدخول المخصصة</h2>
+        
+        <!-- الفضاءات الأربعة -->
+        <div class="spaces-grid">
+            <div class="space-card" style="border-top-color: #3b82f6;">
+                <h3>فضاء الإدارة</h3>
+                <p>الإشراف الشامل، تتبع التسجيلات، والتدبير المالي والإداري.</p>
+                <a href="#" class="btn" style="background: #3b82f6;" onclick="alert('سيتم توجيهك إلى صفحة دخول الإدارة');">دخول الإدارة</a>
+            </div>
+            <div class="space-card" style="border-top-color: #10b981;">
+                <h3>فضاء الأساتذة</h3>
+                <p>تسجيل الغياب، إدخال النقط، ودفتر التحضير الرقمي.</p>
+                <a href="#" class="btn" style="background: #10b981;" onclick="alert('سيتم توجيهك إلى صفحة دخول الأساتذة');">دخول الأساتذة</a>
+            </div>
+            <div class="space-card" style="border-top-color: #f59e0b;">
+                <h3>فضاء أولياء الأمور</h3>
+                <p>تتبع المسار الدراسي، النقط، والغياب لحظة بلحظة.</p>
+                <a href="#" class="btn" style="background: #f59e0b;" onclick="alert('سيتم توجيهك إلى صفحة دخول أولياء الأمور');">دخول الأولياء</a>
+            </div>
+            <div class="space-card" style="border-top-color: #8b5cf6;">
+                <h3>فضاء التلميذ</h3>
+                <p>الاطلاع على الجداول الزمنية، الدروس، والواجبات المنزلية.</p>
+                <a href="#" class="btn" style="background: #8b5cf6;" onclick="alert('سيتم توجيهك إلى صفحة دخول التلاميذ');">دخول التلميذ</a>
+            </div>
         </div>
 
-        <!-- إحصائيات سريعة -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>إجمالي التلاميذ المسجلين</h3>
-                <div class="number">450</div>
-            </div>
-            <div class="stat-card" style="border-color: #10b981;">
-                <h3>الأساتذة العاملون</h3>
-                <div class="number">28</div>
-            </div>
-            <div class="stat-card" style="border-color: #f59e0b;">
-                <h3>مستويات التعليم</h3>
-                <div class="number">4 (أولي - ثانوي)</div>
-            </div>
-            <div class="stat-card" style="border-color: #ef4444;">
-                <h3>حالات الغياب اليوم</h3>
-                <div class="number">3</div>
-            </div>
-        </div>
-
-        <!-- نموذج تسجيل سريع (مثل نظام المعصرة والمشرفين) -->
-        <div class="card-section">
-            <h2>تسجيل تلميذ جديد بالمنظومة</h2>
-            <form onsubmit="event.preventDefault(); alert('تم حفظ بيانات التلميذ بنجاح!');">
-                <div class="form-group">
-                    <label>الاسم الكامل للتلميذ</label>
-                    <input type="text" placeholder="أدخل الاسم الكامل..." required>
+        <!-- قسم مجموعات الواتساب الرسمية -->
+        <div class="whatsapp-section" id="whatsapp">
+            <h2>📱 مجموعات الواتساب الرسمية للتواصل السريع</h2>
+            <p style="color: #15803d; font-size: 14px; margin-bottom: 20px;">انضم إلى المجموعة الخاصة بمستواك للبقاء على اطلاع دائم بالإعلانات والتوجيهات المدرسية:</p>
+            
+            <div class="wa-grid">
+                <div class="wa-card">
+                    <span>أولياء أمور: التعليم الأولي</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
                 </div>
-                <div class="form-group">
-                    <label>رقم مسار (Code Massar)</label>
-                    <input type="text" placeholder="مثال: M123456789" required>
+                <div class="wa-card">
+                    <span>أولياء أمور: الابتدائي</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
                 </div>
-                <div class="form-group">
-                    <label>المستوى الدراسي</label>
-                    <select required>
-                        <option value="">اختر المستوى...</option>
-                        <option value="preschool">التعليم الأولي</option>
-                        <option value="primary">السلك الابتدائي</option>
-                        <option value="middle">السلك الإعدادي</option>
-                        <option value="high">السلك الثانوي</option>
-                    </select>
+                <div class="wa-card">
+                    <span>أولياء أمور: الإعدادي</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
                 </div>
-                <button type="submit" class="btn-primary">حفظ وتسجيل</button>
-            </form>
+                <div class="wa-card">
+                    <span>أولياء أمور: الثانوي</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
+                </div>
+                <div class="wa-card">
+                    <span>مجموعة الأساتذة والأطر</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
+                </div>
+                <div class="wa-card">
+                    <span>الإعلانات العامة للمؤسسة</span>
+                    <a href="https://chat.whatsapp.com/example" target="_blank" class="wa-btn">انضمام</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <!-- التذييل -->
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
+    </footer>
 
 </body>
-  </html>
-  
+</html>
