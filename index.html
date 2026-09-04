@@ -10,31 +10,37 @@
         body { background-color: #f8fafc; color: #1e293b; direction: rtl; }
         
         /* شريط التنقل العلوي */
-        header { background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 20px; font-weight: 700; color: #0284c7; }
-        .nav-menu { display: flex; list-style: none; gap: 20px; }
-        .nav-menu a { text-decoration: none; color: #64748b; font-weight: 600; transition: 0.3s; }
+        header { background: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; gap: 10px; }
+        .logo { font-size: 18px; font-weight: 700; color: #0284c7; }
+        .nav-menu { display: flex; list-style: none; gap: 15px; flex-wrap: wrap; }
+        .nav-menu a { text-decoration: none; color: #64748b; font-weight: 600; transition: 0.3s; font-size: 14px; }
         .nav-menu a:hover { color: #0284c7; }
 
         /* القسم الرئيسي (Hero) */
-        .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 70px 20px; }
-        .hero h1 { font-size: 32px; margin-bottom: 15px; }
-        .hero p { font-size: 16px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        .hero { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-align: center; padding: 50px 20px; }
+        .hero h1 { font-size: 26px; margin-bottom: 10px; }
+        .hero p { font-size: 14px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
         /* شبكة الفضاءات الرئيسية */
-        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
-        .section-title { font-size: 22px; margin-bottom: 20px; color: #1e293b; border-right: 4px solid #0284c7; padding-right: 10px; }
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .section-title { font-size: 20px; margin-bottom: 20px; color: #1e293b; border-right: 4px solid #0284c7; padding-right: 10px; }
         
-        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .space-card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; border-top: 4px solid #0284c7; }
-        .space-card:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .space-card h3 { font-size: 18px; margin-bottom: 10px; color: #1e293b; }
-        .space-card p { font-size: 14px; color: #64748b; margin-bottom: 20px; }
-        .btn { display: inline-block; background: #0284c7; color: white; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .space-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; transition: 0.3s; border-top: 4px solid #0284c7; }
+        .space-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .space-card h3 { font-size: 17px; margin-bottom: 8px; color: #1e293b; }
+        .space-card p { font-size: 13px; color: #64748b; margin-bottom: 15px; line-height: 1.5; }
+        .btn { display: inline-block; background: #0284c7; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
 
         /* التذييل */
-        footer { text-align: center; padding: 20px; background: #1e293b; color: #94a3b8; font-size: 14px; margin-top: 60px; }
+        footer { text-align: center; padding: 20px; background: #1e293b; color: #94a3b8; font-size: 13px; margin-top: 40px; }
+
+        /* تحسينات إضافية للشاشات الصغيرة */
+        @media (max-width: 480px) {
+            header { flex-direction: column; align-items: flex-start; }
+            .hero h1 { font-size: 22px; }
+        }
     </style>
 </head>
 <body>
@@ -64,22 +70,22 @@
             <div class="space-card" style="border-top-color: #3b82f6;">
                 <h3>فضاء الإدارة</h3>
                 <p>الإشراف الشامل، تتبع التسجيلات، والتدبير المالي والإداري.</p>
-                <a href="admin.html" class="btn" style="background: #3b82f6;">دخول الإدارة</a>
+                <a href="#" class="btn" style="background: #3b82f6;" onclick="alert('سيتم ربطه بنجاح لاحقاً');">دخول الإدارة</a>
             </div>
             <div class="space-card" style="border-top-color: #10b981;">
                 <h3>فضاء الأساتذة</h3>
                 <p>تسجيل الغياب، إدخال النقط، ودفتر التحضير الرقمي.</p>
-                <a href="#" class="btn" style="background: #10b981;" onclick="alert('قريباً: فضاء الأساتذة');">دخول الأساتذة</a>
+                <a href="#" class="btn" style="background: #10b981;" onclick="alert('سيتم ربطه بنجاح لاحقاً');">دخول الأساتذة</a>
             </div>
             <div class="space-card" style="border-top-color: #f59e0b;">
                 <h3>فضاء أولياء الأمور</h3>
                 <p>تتبع المسار الدراسي، النقط، والغياب لحظة بلحظة.</p>
-                <a href="#" class="btn" style="background: #f59e0b;" onclick="alert('قريباً: فضاء أولياء الأمور');">دخول الأولياء</a>
+                <a href="#" class="btn" style="background: #f59e0b;" onclick="alert('سيتم ربطه بنجاح لاحقاً');">دخول الأولياء</a>
             </div>
             <div class="space-card" style="border-top-color: #8b5cf6;">
                 <h3>فضاء التلميذ</h3>
                 <p>الاطلاع على الجداول الزمنية، الدروس، والواجبات المنزلية.</p>
-                <a href="#" class="btn" style="background: #8b5cf6;" onclick="alert('قريباً: فضاء التلميذ');">دخول التلميذ</a>
+                <a href="#" class="btn" style="background: #8b5cf6;" onclick="alert('سيتم ربطه بنجاح لاحقاً');">دخول التلميذ</a>
             </div>
         </div>
     </div>
