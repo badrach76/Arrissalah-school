@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- مكتبة Supabase للربط بقاعدة البيانات -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        
+        .login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 400px; border-top: 4px solid #0284c7; }
+        .login-card h2 { font-size: 22px; color: #1e293b; margin-bottom: 8px; text-align: center; }
+        .login-card p { font-size: 13px; color: #64748b; margin-bottom: 25px; text-align: center; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        
+        .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .login-btn:hover { background: #0369a1; }
+        
+        .error-msg { background: #fee2e2; color: #b91c1c; padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 15px; display: none; text-align: center; }
+        .back-link { display: block; text-align: center; margin-top: 20px; font-size: 13px; color: #64748b; text-decoration: none; }
+        .back-link:hover { color: #0284c7; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2>تسجيل الدخول للمنصة</h2>
+        <p>أدخل بيانات الحساب الخاص بك للتوجه إلى فضاءك التربوي</p>
+        
+        <div id="errorBox" class="error-msg">البريد الإلكتروني أو كلمة المرور غير صحيحة</div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="email" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="password" required placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>اختر الفضاء المستهدف</label>
+                <select id="role">
+                    <option value="admin">فضاء الإدارة</option>
+                    <option value="teacher">فضاء الأساتذة</option>
+                    <option value="parent">فضاء أولياء الأمور</option>
+                    <option value="student">فضاء التلميذ</option>
+                </select>
+            </div>
+            <button type="submit" class="login-btn">دخول إلى الفضاء</button>
+        </form>
+
+        <a href="index.html" class="back-link">← العودة للواجهة الرئيسية</a>
+    </div>
+
+    <script>
+        // إعدادات الاتصال بـ Supabase (قم باستبدالها بمعبيانات مشروعك لاحقاً)
+        const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_URL.supabase.co';
+        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        
+        // التحقق من توفر المكتبة وإنشاء العميل
+        const supabaseClient = window.supabase ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const errorBox = document.getElementById('errorBox');
+
+            errorBox.style.display = 'none';
+
+            // إذا أردت التجربة محلياً للتأكد من انسيابية الصفحات قبل ربط قاعدة البيانات السحابية:
+            // يمكنك تجاوز المصادقة الوهمية مؤقتاً بالتحقق من الاختيار وتوجيه المدرس مباشرة:
+            redirectUser(role);
+
+            /* 
+               [عند تفعيل قاعدة البيانات الحقيقية في Supabase]:
+               const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+               if (error) {
+                   errorBox.style.display = 'block';
+               } else {
+                   redirectUser(role);
+               }
+            */
+        });
+
+        function redirectUser(role) {
+            switch(role) {
+                case 'admin': window.location.href = 'admin.html'; break;
+                case 'teacher': window.location.href = 'teacher.html'; break;
+                case 'parent': window.location.href = 'parent.html'; break;
+                case 'student': window.location.href = 'student.html'; break;
+            }
+        }
+    </script>
+</body>
+</html>
