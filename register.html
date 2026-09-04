@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل القبلي - مؤسسة الرسالة</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 18px; font-weight: 900; color: #0284c7; text-decoration: none; }
+
+        .container { max-width: 600px; margin: auto; padding: 40px 20px; width: 100%; }
+        .register-box { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #10b981; }
+        .register-box h2 { font-size: 20px; color: #0f172a; margin-bottom: 8px; }
+        .register-box p { font-size: 14px; color: #64748b; margin-bottom: 20px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
+        .form-control { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-control:focus { border-color: #10b981; }
+        
+        .submit-reg { width: 100%; background: #10b981; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 15px; transition: 0.3s; }
+        .submit-reg:hover { background: #059669; }
+        .success-alert { display: none; margin-top: 15px; padding: 12px; background: #d1fae5; color: #065f46; border-radius: 6px; font-size: 14px; text-align: center; font-weight: 600; }
+        
+        .back-home { display: block; text-align: center; margin-top: 20px; color: #64748b; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .back-home:hover { color: #0284c7; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">مؤسسة الرسالة للتعليم الخصوصي</a>
+        <a href="index.html" class="back-home" style="margin-top:0;">← الرئيسية</a>
+    </header>
+
+    <div class="container">
+        <section class="register-box">
+            <h2>طلب تسجيل تلميذ جديد</h2>
+            <p>يسعدنا انضمام عائلتكم إلى مؤسستنا. يرجى تعبئة البيانات أدناه لتقديم طلب الالتحاق:</p>
+            
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>الاسم الكامل للتلميذ</label>
+                    <input type="text" id="regName" class="form-control" required placeholder="مثال: يوسف البدري">
+                </div>
+                <div class="form-group">
+                    <label>المستوى الدراسي المطلوب</label>
+                    <select id="regLevel" class="form-control">
+                        <option value="التعليم الأولي">التعليم الأولي</option>
+                        <option value="السادس ابتدائي">السادس ابتدائي</option>
+                        <option value="الأولى إعدادي">الأولى إعدادي</option>
+                        <option value="الأولى باكالوريا">الأولى باكالوريا</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>رقم هاتف ولي الأمر</label>
+                    <input type="tel" id="regPhone" class="form-control" required placeholder="06XXXXXXXX">
+                </div>
+                <button type="submit" class="submit-reg">إرسال طلب التسجيل</button>
+            </form>
+            <div id="regSuccessMsg" class="success-alert">تم إرسال طلب التسجيل بنجاح! ستتواصل معك الإدارة قريباً.</div>
+        </section>
+        <a href="index.html" class="back-home">العودة إلى الصفحة الرئيسية</a>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        const _supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('regName').value;
+            const level = document.getElementById('regLevel').value;
+            const phone = document.getElementById('regPhone').value;
+
+            if (!_supabase || SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
+                alert('الرجاء إعداد بيانات Supabase في الكود.');
+                return;
+            }
+
+            const { error } = await _supabase
+                .from('students')
+                .insert([{ full_name: fullName, academic_level: level, parent_phone: phone, status: 'جديد' }]);
+
+            if (error) {
+                alert('خطأ: ' + error.message);
+            } else {
+                document.getElementById('regSuccessMsg').style.display = 'block';
+                document.getElementById('registrationForm').reset();
+            }
+        });
+    </script>
+</body>
+</html>
