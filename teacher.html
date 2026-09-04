@@ -7,10 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
         
         /* القائمة الجانبية الخاصة بالأستاذ */
-        aside { width: 260px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; }
+        aside { width: 260px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .aside-logo { font-size: 18px; font-weight: 700; color: #34d399; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #047857; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 10px; }
@@ -18,8 +18,8 @@
         .aside-menu a:hover, .aside-menu a.active { background: #059669; color: white; }
 
         /* المحتوى الرئيسي */
-        .main-container { flex: 1; padding: 30px; overflow-y: auto; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
         .top-bar h1 { font-size: 20px; color: #1e293b; }
         .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
         .back-home:hover { background: #cbd5e1; }
@@ -31,29 +31,35 @@
         .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
 
         /* قسم الجداول والعمليات */
-        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; }
+        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
+        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         td { color: #334155; }
         
         .action-btn { background: #10b981; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .action-btn:hover { background: #059669; }
+
+        /* التجاوب مع الهواتف المحمولة لتجنب التداخل تماماً */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            aside { width: 100%; height: auto; }
+            .main-container { padding: 15px; }
+        }
     </style>
 </head>
 <body>
 
     <!-- القائمة الجانبية الخاصة بالأستاذ -->
-    aside>
+    <aside>
         <div class="aside-logo">فضاء الأستاذ</div>
         <ul class="aside-menu">
             <li><a href="#" class="active">لوحة المتابعة</a></li>
             <li><a href="#">تسجيل الغيابات</a></li>
             <li><a href="#">إدخال النقط</a></li>
-            <li><a href="#">دفتر التحضير (Cahier de Texte)</a></li>
-            <li><a href="#">مجموعات الواتساب الخاصة</a></li>
+            <li><a href="#">دفتر التحضير</a></li>
         </ul>
     </aside>
 
@@ -97,11 +103,11 @@
                 <tbody>
                     <tr>
                         <td>السادس ابتدائي (أ)</td>
-                        <td>اللغة العربية / التربية الإسلامية</td>
+                        <td>اللغة العربية</td>
                         <td>31</td>
                         <td>
-                            <button class="action-btn" onclick="alert('فتح سجل الغياب لهذا القسم');">تسجيل الغياب</button> 
-                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة إدخال النقاط');">إدخال النقط</button>
+                            <button class="action-btn" onclick="alert('فتح سجل الغياب');">الغياب</button> 
+                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة النقط');">النقط</button>
                         </td>
                     </tr>
                     <tr>
@@ -109,8 +115,8 @@
                         <td>اللغة العربية</td>
                         <td>30</td>
                         <td>
-                            <button class="action-btn" onclick="alert('فتح سجل الغياب لهذا القسم');">تسجيل الغياب</button> 
-                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة إدخال النقاط');">إدخال النقط</button>
+                            <button class="action-btn" onclick="alert('فتح سجل الغياب');">الغياب</button> 
+                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة النقط');">النقط</button>
                         </td>
                     </tr>
                 </tbody>
