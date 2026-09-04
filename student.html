@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
+        
+        /* القائمة الجانبية الخاصة بالتلميذ */
+        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .aside-logo { font-size: 18px; font-weight: 700; color: #ddd6fe; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #5b21b6; padding-bottom: 15px; }
+        .aside-menu { list-style: none; flex: 1; }
+        .aside-menu li { margin-bottom: 10px; }
+        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .aside-menu a:hover, .aside-menu a.active { background: #7c3aed; color: white; }
+
+        /* المحتوى الرئيسي */
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
+        .top-bar h1 { font-size: 20px; color: #1e293b; }
+        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
+        .back-home:hover { background: #cbd5e1; }
+
+        /* بطاقات الإحصائيات المختصرة */
+        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #8b5cf6; }
+        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
+
+        /* قسم الجداول والدروس */
+        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
+        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th { background: #f1f5f9; color: #475569; font-weight: 700; }
+        td { color: #334155; }
+        
+        .action-btn { background: #8b5cf6; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
+        .action-btn:hover { background: #7c3aed; }
+
+        /* التجاوب مع الهواتف المحمولة */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            aside { width: 100%; height: auto; }
+            .main-container { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- القائمة الجانبية للتلميذ -->
+    <aside>
+        <div class="aside-logo">فضاء التلميذ</div>
+        <ul class="aside-menu">
+            <li><a href="#" class="active">الجدول الزمني</a></li>
+            <li><a href="#">الدروس والتمارين</a></li>
+            <li><a href="#">النقاط والنتائج</a></li>
+            <li><a href="#">مجموعات الواتساب</a></li>
+        </ul>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <div class="top-bar">
+            <h1>مرحباً بك في فضاء التلميذ</h1>
+            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+        </div>
+
+        <!-- الإحصائيات السريعة -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <h3>المستوى الدراسي</h3>
+                <div class="val">السادس ابتدائي</div>
+            </div>
+            <div class="stat-box" style="border-color: #10b981;">
+                <h3>المعدل الشخصي</h3>
+                <div class="val">17.20 / 20</div>
+            </div>
+            <div class="stat-box" style="border-color: #f59e0b;">
+                <h3>الواجبات المنتظرة</h3>
+                <div class="val">واجبان</div>
+            </div>
+        </div>
+
+        <!-- جدول الحصص أو الواجبات -->
+        <div class="data-section">
+            <h2>الجدول اليومي والحصص القادمة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>التوقيت</th>
+                        <th>المادة</th>
+                        <th>الأستاذ</th>
+                        <th>القاعة / القسم</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>08:30 - 10:30</td>
+                        <td>اللغة العربية</td>
+                        <td>الأستاذ محمد</td>
+                        <td>القسم 04</td>
+                    </tr>
+                    <tr>
+                        <td>10:45 - 12:30</td>
+                        <td>الرياضيات</td>
+                        <td>الأستاذة فاطمة</td>
+                        <td>القسم 04</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
