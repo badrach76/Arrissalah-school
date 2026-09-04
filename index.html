@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مؤسسة الرسالة للتعليم الخصوصي</title>
+    <!-- مكتبة Supabase للربط بقاعدة البيانات السحابية -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -29,6 +31,16 @@
         .cycle-card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
         .cycle-card p { font-size: 13px; color: #64748b; }
 
+        /* نموذج التسجيل الجديد */
+        .register-section { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid #10b981; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; transition: 0.3s; }
+        .form-group input:focus, .form-group select:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+        .submit-btn { background: #10b981; color: white; border: none; padding: 10px 25px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 14px; transition: 0.3s; }
+        .submit-btn:hover { background: #059669; }
+        .success-msg { display: none; margin-top: 15px; padding: 12px; background: #d1fae5; color: #065f46; border-radius: 6px; font-size: 14px; text-align: center; font-weight: 600; }
+
         .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .space-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid #0284c7; }
         .space-card h3 { font-size: 17px; margin-bottom: 8px; color: #1e293b; }
@@ -41,6 +53,10 @@
         .announcements-section ul { list-style-type: disc; padding-right: 20px; color: #78350f; font-size: 14px; line-height: 1.6; }
 
         footer { text-align: center; padding: 20px; background: #1e293b; color: #94a3b8; font-size: 13px; }
+
+        @media (max-width: 480px) {
+            header { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body>
@@ -50,8 +66,7 @@
         <ul class="nav-menu">
             <li><a href="#">الرئيسية</a></li>
             <li><a href="#about">عن المؤسسة</a></li>
-            <li><a href="#cycles">الأسلاك التعليمية</a></li>
-            <li><a href="#announcements">الإعلانات</a></li>
+            <li><a href="#register">التسجيل الجديد</a></li>
             <li><a href="#spaces">الفضاءات</a></li>
         </ul>
     </header>
@@ -63,11 +78,13 @@
 
     <div class="container">
         
+        <!-- 1. عن المؤسسة -->
         <section id="about" class="about-section">
             <h2 class="section-title" style="border-right-color: #0284c7; margin-bottom: 15px;">عن مؤسسة الرسالة للتعليم الخصوصي</h2>
             <p>تعتبر مؤسسة الرسالة صرحاً تربوياً طموحاً يسعى لتقديم تعليم خصوصي متميز يجمع بين أصالة القيم التربوية ومهارات العصر الحديث. نهدف إلى بناء جيل متسلح بالعلم والأخلاق، ومواكبة المسار الدراسي للتلاميذ بضمان بيئة مدرسية محفزة وآمنة، وتأطير تربوي عالي الجودة يشرف عليه أساتذة أكفاء.</p>
         </section>
 
+        <!-- 2. الأسلاك التعليمية -->
         <div id="cycles">
             <h2 class="section-title">الأسلاك التعليمية بالمؤسسة</h2>
             <div class="cycles-grid">
@@ -90,6 +107,39 @@
             </div>
         </div>
 
+        <!-- 3. قسم التسجيل الجديد (Pre-Registration) -->
+        <section id="register" class="register-section">
+            <h2 class="section-title" style="border-right-color: #10b981; margin-bottom: 15px;">تسجيل تلميذ جديد (الموسم الدراسي الجديد)</h2>
+            <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">قم بملء المعلومات أدناه لتقديم طلب تسجيل طفلك بالمؤسسة، وسيتم إرسال الطلب مباشرة إلى قاعدة البيانات.</p>
+            
+            <form id="registrationForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>الاسم الكامل للتلميذ</label>
+                        <input type="text" id="regName" required placeholder="مثال: يوسف البدري">
+                    </div>
+                    <div class="form-group">
+                        <label>المستوى الدراسي المطلوب</label>
+                        <select id="regLevel">
+                            <option value="التعليم الأولي">التعليم الأولي</option>
+                            <option value="السادس ابتدائي">السادس ابتدائي</option>
+                            <option value="الأولى إعدادي">الأولى إعدادي</option>
+                            <option value="الأولى باكالوريا">الأولى باكالوريا</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>هاتف ولي الأمر</label>
+                        <input type="tel" id="regPhone" required placeholder="06XXXXXXXX">
+                    </div>
+                </div>
+                <div style="margin-top: 15px; text-align: left;">
+                    <button type="submit" class="submit-btn">إرسال طلب التسجيل</button>
+                </div>
+            </form>
+            <div id="regSuccessMsg" class="success-msg">تم تسجيل الطلب بنجاح في قاعدة البيانات! ستتواصل معك الإدارة قريباً.</div>
+        </section>
+
+        <!-- 4. الإعلانات والبلاغات العامة -->
         <div id="announcements" class="announcements-section">
             <h2>📢 الإعلانات والبلاغات العامة</h2>
             <ul>
@@ -99,6 +149,7 @@
             </ul>
         </div>
 
+        <!-- 5. فضاءات الدخول المخصصة -->
         <div id="spaces">
             <h2 class="section-title">فضاءات الدخول المخصصة</h2>
             <div class="spaces-grid">
@@ -131,6 +182,36 @@
         <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
     </footer>
 
+    <!-- سكربت الاتصال بقاعدة بيانات Supabase -->
+    <script>
+        // استبدل القيم أدناه برابط ومفتاح مشروعك الفعلي من لوحة تحكم Supabase
+        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        
+        const _supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('regName').value;
+            const level = document.getElementById('regLevel').value;
+            const phone = document.getElementById('regPhone').value;
+
+            if (!_supabase || SUPABASE_URL.includes('YOUR_PROJECT_ID')) {
+                alert('الرجاء إدخال بيانات مشروع Supabase الصحيحة في الكود لربط قاعدة البيانات.');
+                return;
+            }
+
+            const { error } = await _supabase
+                .from('students')
+                .insert([{ full_name: fullName, academic_level: level, parent_phone: phone, status: 'جديد' }]);
+
+            if (error) {
+                alert('حدث خطأ أثناء إرسال الطلب: ' + error.message);
+            } else {
+                document.getElementById('regSuccessMsg').style.display = 'block';
+                document.getElementById('registrationForm').reset();
+            }
+        });
+    </script>
 </body>
 </html>
-
