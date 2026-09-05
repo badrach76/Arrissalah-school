@@ -39,7 +39,7 @@
         
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
-        .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
         
         .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 5px; }
         .login-btn:hover { background: #0369a1; }
@@ -77,9 +77,9 @@
             <p>اختر الفضاء المناسب للانتقال إلى لوحة الدخول الآمن:</p>
             
             <div class="spaces-grid">
-                <div class="space-card" style="border-top-color: #3b82f6;" onclick="openSecureLogin('admin', 'فضاء الإدارة العامة')">
+                <div class="space-card" style="border-top-color: #3b82f6;" onclick="openSecureLogin('admin', 'فضاء الإدارة والصلاحيات')">
                     <h3>فضاء الإدارة</h3>
-                    <p>التلاميذ، الأداءات والمصاريف</p>
+                    <p>المدير، الإداري المالي، والحارس العام</p>
                     <span class="space-btn" style="background: #3b82f6;">اختيار الفضاء</span>
                 </div>
                 <div class="space-card" style="border-top-color: #10b981;" onclick="openSecureLogin('teacher', 'فضاء الأساتذة التربوي')">
@@ -108,6 +108,17 @@
 
                 <form id="secureLoginForm">
                     <input type="hidden" id="selectedRole">
+                    
+                    <!-- خيارات الصلاحية الإدارية تظهر حصرياً عند اختيار فضاء الإدارة -->
+                    <div id="adminRoleSelection" class="form-group" style="display: none;">
+                        <label>حدد الصفة الإدارية:</label>
+                        <select id="adminSubRole" class="form-control">
+                            <option value="admin_general">المدير العام (صلاحيات مطلقة)</option>
+                            <option value="admin_finance_mgmt">المسؤول الإداري والمالي</option>
+                            <option value="admin_supervisor">الحارس العام (الغياب والنقط)</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label>البريد الإلكتروني / اسم المستخدم</label>
                         <input type="text" id="username" required value="user@alrisala.ma">
@@ -136,6 +147,13 @@
             document.getElementById('secureLoginView').style.display = 'block';
             document.getElementById('spaceTitleText').innerText = title;
             document.getElementById('selectedRole').value = role;
+
+            // إظهار اختيار الصفة الإدارية إذا كان الفضاء هو الإدارة
+            if (role === 'admin') {
+                document.getElementById('adminRoleSelection').style.display = 'block';
+            } else {
+                document.getElementById('adminRoleSelection').style.display = 'none';
+            }
         }
 
         function backToSpacesList() {
@@ -145,14 +163,26 @@
 
         document.getElementById('secureLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const role = document.getElementById('selectedRole').value;
-            localStorage.setItem('user_role', role);
+            let role = document.getElementById('selectedRole').value;
 
-            switch(role) {
-                case 'admin': window.location.href = 'admin.html'; break;
-                case 'teacher': window.location.href = 'teacher.html'; break;
-                case 'parent': window.location.href = 'parent.html'; break;
-                case 'student': window.location.href = 'student.html'; break;
+            if (role === 'admin') {
+                let subRole = document.getElementById('adminSubRole').value;
+                localStorage.setItem('user_role', subRole);
+
+                if (subRole === 'admin_general') {
+                    window.location.href = 'admin_general.html';
+                } else if (subRole === 'admin_finance_mgmt') {
+                    window.location.href = 'admin_finance.html';
+                } else if (subRole === 'admin_supervisor') {
+                    window.location.href = 'admin_supervisor.html';
+                }
+            } else {
+                localStorage.setItem('user_role', role);
+                switch(role) {
+                    case 'teacher': window.location.href = 'teacher.html'; break;
+                    case 'parent': window.location.href = 'parent.html'; break;
+                    case 'student': window.location.href = 'student.html'; break;
+                }
             }
         });
     </script>
