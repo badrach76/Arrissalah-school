@@ -71,7 +71,7 @@
     </header>
 
     <div class="container">
-        <!-- المرحلة 1: عرض أسماء الفضاءات أولاً -->
+        <!-- المرحلة الأولى: اختيار الفضاء -->
         <div id="spacesSelectionView">
             <h1>فضاءات الدخول المخصصة للمستفيدين</h1>
             <p>اختر الفضاء المناسب للانتقال إلى لوحة الدخول الآمن:</p>
@@ -79,7 +79,7 @@
             <div class="spaces-grid">
                 <div class="space-card" style="border-top-color: #3b82f6;" onclick="openSecureLogin('admin', 'فضاء الإدارة والصلاحيات')">
                     <h3>فضاء الإدارة</h3>
-                    <p>المدير، الإداري المالي، والحارس العام</p>
+                    <p>المدير، المسؤول الإداري والمالي، والحارس العام</p>
                     <span class="space-btn" style="background: #3b82f6;">اختيار الفضاء</span>
                 </div>
                 <div class="space-card" style="border-top-color: #10b981;" onclick="openSecureLogin('teacher', 'فضاء الأساتذة التربوي')">
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-        <!-- المرحلة 2: لوحة الدخول الآمن للفضاء المحدد -->
+        <!-- المرحلة الثانية: لوحة الدخول الآمن -->
         <div id="secureLoginView">
             <div class="login-card">
                 <h2 id="spaceTitleText">لوحة الدخول الآمن</h2>
@@ -109,7 +109,7 @@
                 <form id="secureLoginForm">
                     <input type="hidden" id="selectedRole">
                     
-                    <!-- خيارات الصلاحية الإدارية تظهر حصرياً عند اختيار فضاء الإدارة -->
+                    <!-- خيارات الصلاحية الإدارية الدقيقة -->
                     <div id="adminRoleSelection" class="form-group" style="display: none;">
                         <label>حدد الصفة الإدارية:</label>
                         <select id="adminSubRole" class="form-control">
@@ -148,7 +148,6 @@
             document.getElementById('spaceTitleText').innerText = title;
             document.getElementById('selectedRole').value = role;
 
-            // إظهار اختيار الصفة الإدارية إذا كان الفضاء هو الإدارة
             if (role === 'admin') {
                 document.getElementById('adminRoleSelection').style.display = 'block';
             } else {
@@ -168,14 +167,7 @@
             if (role === 'admin') {
                 let subRole = document.getElementById('adminSubRole').value;
                 localStorage.setItem('user_role', subRole);
-
-                if (subRole === 'admin_general') {
-                    window.location.href = 'admin_general.html';
-                } else if (subRole === 'admin_finance_mgmt') {
-                    window.location.href = 'admin_finance.html';
-                } else if (subRole === 'admin_supervisor') {
-                    window.location.href = 'admin_supervisor.html';
-                }
+                window.location.href = 'admin.html';
             } else {
                 localStorage.setItem('user_role', role);
                 switch(role) {
