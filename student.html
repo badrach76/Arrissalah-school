@@ -15,89 +15,63 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
         
-        aside { width: 280px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .aside-logo { font-size: 18px; font-weight: 900; color: #ddd6fe; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #5b21b6; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 13.5px; font-weight: 600; }
+        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
         .aside-menu a:hover, .aside-menu a.active { background: #7c3aed; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
         .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .top-bar h1 { font-size: 18px; color: #0f172a; }
         
-        .section-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #8b5cf6; }
-        .section-box h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; }
-        
+        .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 20px; border-right: 4px solid #8b5cf6; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        
         .btn { background: #8b5cf6; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
-        .btn:hover { background: #7c3aed; }
         .whatsapp-btn { background: #25d366; }
+
+        @media (max-width: 768px) { body { flex-direction: column; } aside { width: 100%; height: auto; } }
     </style>
 </head>
 <body>
-
     <aside>
         <div class="aside-logo">فضاء التلميذ</div>
         <ul class="aside-menu">
-            <li><a href="#" class="active">الدروس والجدول الزمني</a></li>
+            <li><a href="#" class="active">الدروس والجداول</a></li>
             <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
         </ul>
     </aside>
-
     <div class="main-container">
         <div class="top-bar">
             <h1>مرحباً بك في فضاء التلميذ</h1>
-            <a href="index.html" class="btn" style="background: #64748b;">الواجهة الرئيسية</a>
+            <a href="index.html" class="btn" style="background: #64748b;">الرئيسية</a>
+        </div>
+        
+        <div class="box" style="border-right-color: #25d366;">
+            <h2 style="font-size: 16px; margin-bottom: 10px;">مجموعة واتساب الفصل</h2>
+            <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الانضمام لمجموعة الفصل (السادس ابتدائي أ)</a>
         </div>
 
-        <!-- مجموعة واتساب الفصل الدراسي -->
-        <div class="section-box" style="border-color: #25d366;">
-            <h2>مجموعة واتساب الفصل الدراسي</h2>
-            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">انضم إلى مجموعة الواتساب الخاصة بفصلك للتواصل المستمر مع أستاذك وزملائك:</p>
-            <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الالتصاق بمجموعة واتساب (السادس ابتدائي أ)</a>
-        </div>
-
-        <!-- تحميل وطباعة الدروس PDF -->
-        <div class="section-box">
-            <h2>الدروس والتمارين المرفوعة (PDF)</h2>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 6px; margin-bottom: 8px;">
-                <div>
-                    <strong>ملخص التراكيب النحوية (اللغة العربية)</strong>
-                    <p style="font-size: 12px; color: #64748b;">أضيف بواسطة: الأستاذ محمد العمراني</p>
-                </div>
-                <div>
-                    <button class="btn" onclick="window.print()">طباعة / تحميل الدرس (PDF)</button>
-                </div>
+        <div class="box">
+            <h2 style="font-size: 16px; margin-bottom: 15px;">الدروس والتمارين المنشورة (PDF)</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 12px; border-radius: 6px;">
+                <span>ملخص التراكيب النحوية (أستاذ محمد)</span>
+                <button class="btn" onclick="window.print()">طباعة / تحميل PDF</button>
             </div>
         </div>
 
-        <!-- الجدول الزمني والحصص -->
-        <div class="section-box">
-            <h2>الجدول اليومي للحصص</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>التوقيت</th>
-                        <th>المادة</th>
-                        <th>الأستاذ</th>
-                        <th>القاعة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>08:30 - 10:30</td>
-                        <td>اللغة العربية</td>
-                        <td>الأستاذ محمد</td>
-                        <td>القسم 04</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="box">
+            <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead><tr><th>التوقيت</th><th>المادة</th><th>الأستاذ</th><th>القاعة</th></tr></thead>
+                    <tbody><tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد</td><td>القسم 04</td></tr></tbody>
+                </table>
+            </div>
         </div>
-
     </div>
 </body>
 </html>
