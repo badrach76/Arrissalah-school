@@ -70,13 +70,13 @@
     <div class="layout-body">
         <aside>
             <ul class="aside-menu" id="sideMenuContainer">
-                <!-- يتم تعبئة القائمة ديناميكياً حسب صلاحية المستخدم -->
+                <!-- القائمة الديناميكية -->
             </ul>
         </aside>
 
         <div class="main-container">
             
-            <!-- 1. لوحة القيادة الشاملة (للمدير العام) -->
+            <!-- 1. لوحة القيادة -->
             <div id="tab-dash" class="tab-content active">
                 <h2>لوحة المؤشرات الإحصائية والمالية الشاملة</h2>
                 <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-right: 4px solid #10b981; margin-bottom: 15px;">
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <!-- 2. إدارة التلاميذ والأداءات (مدير + إداري مالي) -->
+            <!-- 2. التلاميذ والأداءات -->
             <div id="tab-students" class="tab-content">
                 <h2>
                     <span>إدارة التلاميذ، الأداءات المالية وتحصيل الرسوم</span>
@@ -123,61 +123,68 @@
                 </table>
             </div>
 
-            <!-- 3. غيابات التلاميذ والأساتذة وإدخال النقاط (حارس عام + مدير) -->
+            <!-- 3. الغياب والنقط (مفعل بالكامل) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>سجل غيابات التلاميذ والأساتذة وإدخال النقاط</span></h2>
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">متابعة غياب الأساتذة:</h3>
-                    <table>
-                        <thead><tr><th>اسم الأستاذ</th><th>المادة</th><th>عدد الغيابات</th><th>الإجراء</th></tr></thead>
-                        <tbody>
-                            <tr><td>أ. محمد العمراني</td><td>اللغة العربية</td><td><span style="color: #10b981; font-weight: bold;">0 غياب</span></td><td><button class="btn" style="background: #ef4444;" onclick="alert('تم تسجيل غياب الأستاذ')">تسجيل غياب</button></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">متابعة غياب التلاميذ وإدخال النقط:</h3>
-                <button class="btn btn-success" onclick="alert('فتح لوحة إدخال نقط ومراقبة الغياب')">فتح سجل الغياب والنقط العام</button>
+                <h2>
+                    <span>سجل غيابات التلاميذ وإدخال النقط</span>
+                    <button class="btn btn-success" onclick="openAttendanceModal()">+ تسجيل غياب أو نقطة جديدة</button>
+                </h2>
+                <table>
+                    <thead><tr><th>التاريخ</th><th>اسم التلميذ</th><th>المستوى والقسم</th><th>نوع السجل (غیاب / نقطة)</th><th>البيان / النقطة</th></tr></thead>
+                    <tbody id="attendanceLogTable">
+                        <tr><td>2026-09-05</td><td>يوسف البدري</td><td>السادس ابتدائي (أ)</td><td><span style="color: #10b981; font-weight: bold;">نقطة مراقبة</span></td><td>18 / 20</td></tr>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- 4. رواتب الأساتذة والواتساب (مدير + إداري مالي) -->
+            <!-- 4. رواتب الأساتذة والواتساب (مع اختيار شهر الأداء) -->
             <div id="tab-teachers" class="tab-content">
-                <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب للفصول</span></h2>
+                <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب الشهري</th><th>صرف الراتب</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب الشهري</th><th>شهر الصرف</th><th>الإجراء المالي</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أ. محمد العمراني</td>
-                            <td>2022/09/01</td>
                             <td>24 ساعة</td>
                             <td>
                                 <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">السادس أ</a>
-                                <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">السادس ب</a>
                             </td>
                             <td>4500 درهم</td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500)">صرف الراتب الآلي</button></td>
+                            <td>
+                                <select id="salary_month_1" class="form-control" style="margin:0; padding:4px;">
+                                    <option value="شتمبر 2026">شتمبر 2026</option>
+                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                </select>
+                            </td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500, 'salary_month_1')">صرف الراتب الآلي</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 5. الموظفون الإداريون (مدير + إداري مالي) -->
+            <!-- 5. الموظفون الإداريون -->
             <div id="tab-staff" class="tab-content">
-                <h2><span>الموظفون الإداريون ورواتبهم الشهرية وتاريخ الالتحاق</span></h2>
+                <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
-                    <thead><tr><th>الاسم الكامل</th><th>الوظيفة الإدارية</th><th>تاريخ الالتحاق</th><th>الراتب الشهري</th><th>صرف الراتب</th></tr></thead>
+                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>الراتب</th><th>شهر الصرف</th><th>الإجراء المالي</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أحمد الداودي</td>
-                            <td>حارس عام / إداري</td>
-                            <td>2023/09/01</td>
+                            <td>حارس عام</td>
                             <td>5000 درهم</td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000)">صرف الراتب</button></td>
+                            <td>
+                                <select id="salary_month_staff" class="form-control" style="margin:0; padding:4px;">
+                                    <option value="شتمبر 2026">شتمبر 2026</option>
+                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                </select>
+                            </td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'salary_month_staff')">صرف الراتب</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 6. الخزينة العامة والمصاريف (مدير + إداري مالي) -->
+            <!-- 6. الخزينة العامة والمصاريف -->
             <div id="tab-finance" class="tab-content">
                 <h2><span>الخزينة المالية العامة وسجل الحركات</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
@@ -192,12 +199,34 @@
                 </table>
             </div>
 
-            <!-- 7. الرسائل والتواصل (مدير + إداري مالي) -->
+            <!-- 7. الرسائل والتواصل (خاصة بالولي أو عامة للمجموعة) -->
             <div id="tab-comms" class="tab-content">
                 <h2><span>إرسال الرسائل العامة والخاصة للأولياء عبر الواتساب</span></h2>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <textarea id="msgContent" class="form-control" rows="4" placeholder="اكتب نص الرسالة..."></textarea>
-                    <button class="btn" style="background: #25d366;" onclick="window.open('https://chat.whatsapp.com/123456789ABCDEF?text=' + encodeURIComponent(document.getElementById('msgContent').value), '_blank')">إرسال عبر واتساب الآن</button>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع الرسالة:</label>
+                        <select id="msgType" class="form-control" onchange="toggleMsgFields()">
+                            <option value="private">رسالة خاصة لولي أمر (على رقمه الخاص مباشرة)</option>
+                            <option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option>
+                        </select>
+                    </div>
+
+                    <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">رقم واتساب ولي الأمر:</label>
+                        <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
+                    </div>
+
+                    <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
+                        <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور الرسمية" readonly style="background: #e2e8f0;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">محتوى الرسالة:</label>
+                        <textarea id="msgContent" class="form-control" rows="4" placeholder="اكتب نص الرسالة هنا..."></textarea>
+                    </div>
+
+                    <button class="btn" style="background: #25d366; font-size: 14px; padding: 10px 20px;" onclick="sendWhatsAppMessage()">إرسال عبر واتساب الآن</button>
                 </div>
             </div>
 
@@ -218,11 +247,29 @@
         </div>
     </div>
 
+    <!-- نافذة تسجيل غياب أو نقطة جديدة -->
+    <div id="attendanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAttendanceModal()">&times;</span>
+            <h3 style="font-size: 16px; margin-bottom: 15px; color: #10b981;">تسجيل غياب أو إدخال نقطة للتلميذ</h3>
+            <form onsubmit="saveAttendanceRecord(event)">
+                <input type="date" id="attDate" class="form-control" required>
+                <input type="text" id="attStudentName" class="form-control" placeholder="اسم التلميذ الكامل" required>
+                <input type="text" id="attLevel" class="form-control" placeholder="المستوى والقسم" required>
+                <select id="attType" class="form-control">
+                    <option value="نقطة مراقبة">تسجيل نقطة مراقبة مستمرة</option>
+                    <option value="غياب غير مبرر">تسجيل غياب</option>
+                </select>
+                <input type="text" id="attValue" class="form-control" placeholder="البيان أو النقطة (مثال: 17/20 أو غياب مبرر)">
+                <button type="submit" class="btn btn-success" style="width: 100%; padding: 10px;">حفظ في السجل</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         let totalIncome = 125500;
         let totalExpenses = 45000;
 
-        // دالة تهيئة فضاء الإدارة وقراءة صلاحية المستخدم
         function initAdminPanel() {
             let role = localStorage.getItem('user_role') || 'admin_general';
             let menuContainer = document.getElementById('sideMenuContainer');
@@ -259,11 +306,11 @@
             } 
             else if (role === 'admin_supervisor') {
                 badge.innerText = 'صلاحية: الحارس العام';
-                welcome.innerText = 'مرحباً بك. فضاؤك مخصص حصرياً لمتابعة غيابات التلاميذ والأساتذة وإدخال النقاط.';
+                welcome.innerText = 'مرحباً بك. فضاؤك مخصص حصرياً لمتابعة غيابات التلاميذ وإدخال النقاط.';
                 document.getElementById('tab-dash').style.display = 'none';
                 document.getElementById('tab-attendance-grades').classList.add('active');
                 menuContainer.innerHTML = `
-                    <li><a onclick="switchTab('tab-attendance-grades', this)" class="active">الغياب والنقط (تلاميذ وأساتذة)</a></li>
+                    <li><a onclick="switchTab('tab-attendance-grades', this)" class="active">الغياب والنقط</a></li>
                 `;
             }
         }
@@ -277,6 +324,31 @@
             if (target) target.classList.add('active');
             if (element) element.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // نافذة الغياب والنقط
+        function openAttendanceModal() {
+            document.getElementById('attDate').valueAsDate = new Date();
+            document.getElementById('attendanceModal').style.display = 'flex';
+        }
+        function closeAttendanceModal() { document.getElementById('attendanceModal').style.display = 'none'; }
+
+        function saveAttendanceRecord(e) {
+            e.preventDefault();
+            let date = document.getElementById('attDate').value;
+            let name = document.getElementById('attStudentName').value;
+            let level = document.getElementById('attLevel').value;
+            let type = document.getElementById('attType').value;
+            let val = document.getElementById('attValue').value;
+
+            let tbody = document.getElementById('attendanceLogTable');
+            let tr = document.createElement('tr');
+            let color = type.includes('نقطة') ? '#10b981' : '#ef4444';
+            tr.innerHTML = `<td>${date}</td><td>${name}</td><td>${level}</td><td><span style="color: ${color}; font-weight: bold;">${type}</span></td><td>${val}</td>`;
+            tbody.appendChild(tr);
+
+            closeAttendanceModal();
+            alert('تم تسجيل البيانات بنجاح في سجل الغياب والنقط!');
         }
 
         function openAddStudentModal() { document.getElementById('addStudentModal').style.display = 'flex'; }
@@ -295,16 +367,39 @@
             alert(`تم تحصيل مبلغ ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله آلياً في الخزينة!`);
         }
 
-        function payMonthlySalary(beneficiary, amount) {
+        function payMonthlySalary(beneficiary, amount, monthSelectId) {
+            let month = document.getElementById(monthSelectId).value;
             totalExpenses += amount;
             document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب ${month}: ${beneficiary}</td>`;
             logBody.appendChild(tr);
 
-            alert(`تم صرف راتب "${beneficiary}" بنجاح وإضافته للمصاريف العامة!`);
+            alert(`تم صرف راتب "${beneficiary}" عن شهر (${month}) بمبلغ ${amount} درهم وإضافته للمصاريف العامة!`);
+        }
+
+        function toggleMsgFields() {
+            let type = document.getElementById('msgType').value;
+            document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
+            document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
+        }
+
+        function sendWhatsAppMessage() {
+            let type = document.getElementById('msgType').value;
+            let msg = document.getElementById('msgContent').value;
+            if(!msg) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
+            let enc = encodeURIComponent(msg);
+
+            if(type === 'private') {
+                let phone = document.getElementById('parentPhone').value;
+                if(!phone) { alert('الرجاء إدخال رقم واتساب ولي الأمر الخاص!'); return; }
+                window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+            } else {
+                // إرسال لمجموعة واتساب الأولياء العامة عبر رابط المجموعة
+                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
+            }
         }
     </script>
 </body>
