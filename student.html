@@ -4,12 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي</title>
-    <script>
-        if (localStorage.getItem('user_role') !== 'student') {
-            alert('يجب تسجيل الدخول بصلاحيات التلميذ أولاً!');
-            window.location.href = 'login.html';
-        }
-    </script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -22,13 +16,13 @@
 
         .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; }
+        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
 
         .layout-body { display: flex; flex: 1; }
         aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
         .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 20px; border-right: 4px solid #8b5cf6; }
@@ -63,9 +57,7 @@
 
     <div class="layout-body">
         <aside>
-            <ul class="aside-menu">
-                <li><a class="active">الدروس وكشف النقاط والغياب</a></li>
-            </ul>
+            <ul class="aside-menu"><li><a class="active">الدروس وكشف النقاط والغياب</a></li></ul>
         </aside>
         <div class="main-container">
             <div class="box" style="border-right-color: #25d366;">
@@ -73,7 +65,6 @@
                 <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الانضمام لمجموعة الفصل (السادس ابتدائي أ)</a>
             </div>
 
-            <!-- كشف النقاط المضاف حديثاً -->
             <div class="box" style="border-right-color: #0284c7;">
                 <h2 style="font-size: 16px; margin-bottom: 15px;">كشف النقاط الشخصي</h2>
                 <div style="margin-bottom: 10px;">
@@ -95,9 +86,7 @@
 
             <div class="box">
                 <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص وطباعته</h2>
-                <div style="margin-bottom: 10px;">
-                    <button class="btn" onclick="window.print()">طباعة جدول استعمال الزمان</button>
-                </div>
+                <button class="btn" onclick="window.print()" style="margin-bottom: 10px;">طباعة الجدول الزمني</button>
                 <table>
                     <thead><tr><th>التوقيت</th><th>المادة</th><th>الأستاذ</th><th>القاعة</th></tr></thead>
                     <tbody><tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد</td><td>القسم 04</td></tr></tbody>
