@@ -305,4 +305,55 @@
             logBody.appendChild(tr);
 
             let win = window.open('', '', 'height=600,width=500');
-            win.document.write(`<html><head><title>توصيل أداء</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}.box{border:2px dashed #0284c7;padding:25px;border-radius:10px;background:#f8fafc;}h2{color:#0284c7;text-align:center;}</style></head><body><div class="box"><h2>مؤسسة الرسالة للتعليم الخصوصي</h2><hr><p><b>اسم التلميذ(ة):</b> ${name}</p><p><b>المستوى:</b> ${level}</p><p><b>الشهر المؤدى:</b> ${month}</p><p><b>المبلغ:</b> <span style="colo
+            win.document.write(`<html><head><title>توصيل أداء</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}.box{border:2px dashed #0284c7;padding:25px;border-radius:10px;background:#f8fafc;}h2{color:#0284c7;text-align:center;}</style></head><body><div class="box"><h2>مؤسسة الرسالة للتعليم الخصوصي</h2><hr><p><b>اسم التلميذ(ة):</b> ${name}</p><p><b>المستوى:</b> ${level}</p><p><b>الشهر المؤدى:</b> ${month}</p><p><b>المبلغ:</b> <span style="color:#10b981; font-weight:bold;">${amount} درهم</span></p></div></body></html>`);
+            win.document.close();
+            win.print();
+        }
+
+        function payMonthlySalary(beneficiary, amount) {
+            totalExpenses += amount;
+            updateFinancialDisplay();
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>${beneficiary}</td>`;
+            logBody.appendChild(tr);
+            alert(`تم صرف راتب "${beneficiary}" بنجاح وتسجيله في المصاريف!`);
+        }
+
+        function addManualExpenseFromTransport() {
+            let desc = document.getElementById('transDesc').value;
+            let amount = parseFloat(document.getElementById('transAmount').value);
+            if(!desc || !amount) { alert('أدخل الوصف والمبلغ'); return; }
+            totalExpenses += amount;
+            updateFinancialDisplay();
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+            logBody.appendChild(tr);
+            document.getElementById('transDesc').value = '';
+            document.getElementById('transAmount').value = '';
+            alert('تم تسجيل وصرف المصروف بنجاح!');
+        }
+
+        function toggleMsgFields() {
+            let type = document.getElementById('msgType').value;
+            document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
+            document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
+        }
+
+        function sendWhatsAppMessage() {
+            let type = document.getElementById('msgType').value;
+            let msg = document.getElementById('msgContent').value;
+            if(!msg) { alert('اكتب نص الرسالة'); return; }
+            let enc = encodeURIComponent(msg);
+            if(type === 'private') {
+                let phone = document.getElementById('parentPhone').value;
+                if(!phone) { alert('أدخل رقم الولي'); return; }
+                window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+            } else {
+                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
