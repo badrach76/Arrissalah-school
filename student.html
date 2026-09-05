@@ -3,55 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي</title>
-    
-    <!-- حماية الصفحة -->
+    <title>فضاء التلميذ - مؤسسة الرسالة</title>
     <script>
         if (localStorage.getItem('user_role') !== 'student') {
-            alert('الرجاء تسجيل الدخول أولاً بصلاحيات التلميذ');
+            alert('يجب تسجيل الدخول بصلاحيات التلميذ أولاً!');
             window.location.href = 'login.html';
         }
     </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
         
-        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-logo { font-size: 18px; font-weight: 700; color: #ddd6fe; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #5b21b6; padding-bottom: 15px; }
+        aside { width: 280px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .aside-logo { font-size: 18px; font-weight: 900; color: #ddd6fe; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #5b21b6; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
-        .aside-menu li { margin-bottom: 10px; }
-        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .aside-menu li { margin-bottom: 8px; }
+        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 13.5px; font-weight: 600; }
         .aside-menu a:hover, .aside-menu a.active { background: #7c3aed; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
-        .top-bar h1 { font-size: 20px; color: #1e293b; }
-        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .back-home:hover { background: #cbd5e1; }
-
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #8b5cf6; }
-        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
-
-        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
-        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-bar h1 { font-size: 18px; color: #0f172a; }
+        
+        .section-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #8b5cf6; }
+        .section-box h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
-        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        td { color: #334155; }
         
-        .action-btn { background: #8b5cf6; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
-        .action-btn:hover { background: #7c3aed; }
-
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
-            aside { width: 100%; height: auto; }
-            .main-container { padding: 15px; }
-        }
+        .btn { background: #8b5cf6; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn:hover { background: #7c3aed; }
+        .whatsapp-btn { background: #25d366; }
     </style>
 </head>
 <body>
@@ -59,7 +43,7 @@
     <aside>
         <div class="aside-logo">فضاء التلميذ</div>
         <ul class="aside-menu">
-            <li><a href="#" class="active">الجدول الزمني</a></li>
+            <li><a href="#" class="active">الدروس والجدول الزمني</a></li>
             <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
         </ul>
     </aside>
@@ -67,29 +51,40 @@
     <div class="main-container">
         <div class="top-bar">
             <h1>مرحباً بك في فضاء التلميذ</h1>
-            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+            <a href="index.html" class="btn" style="background: #64748b;">الواجهة الرئيسية</a>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-box">
-                <h3>المستوى الدراسي</h3>
-                <div class="val">السادس ابتدائي</div>
-            </div>
-            <div class="stat-box" style="border-color: #10b981;">
-                <h3>المعدل الشخصي</h3>
-                <div class="val">17.20 / 20</div>
+        <!-- مجموعة واتساب الفصل الدراسي -->
+        <div class="section-box" style="border-color: #25d366;">
+            <h2>مجموعة واتساب الفصل الدراسي</h2>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">انضم إلى مجموعة الواتساب الخاصة بفصلك للتواصل المستمر مع أستاذك وزملائك:</p>
+            <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الالتصاق بمجموعة واتساب (السادس ابتدائي أ)</a>
+        </div>
+
+        <!-- تحميل وطباعة الدروس PDF -->
+        <div class="section-box">
+            <h2>الدروس والتمارين المرفوعة (PDF)</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 6px; margin-bottom: 8px;">
+                <div>
+                    <strong>ملخص التراكيب النحوية (اللغة العربية)</strong>
+                    <p style="font-size: 12px; color: #64748b;">أضيف بواسطة: الأستاذ محمد العمراني</p>
+                </div>
+                <div>
+                    <button class="btn" onclick="window.print()">طباعة / تحميل الدرس (PDF)</button>
+                </div>
             </div>
         </div>
 
-        <div class="data-section">
-            <h2>الجدول اليومي والحصص القادمة</h2>
+        <!-- الجدول الزمني والحصص -->
+        <div class="section-box">
+            <h2>الجدول اليومي للحصص</h2>
             <table>
                 <thead>
                     <tr>
                         <th>التوقيت</th>
                         <th>المادة</th>
                         <th>الأستاذ</th>
-                        <th>القاعة / القسم</th>
+                        <th>القاعة</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,7 +97,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
 
+    </div>
 </body>
 </html>
