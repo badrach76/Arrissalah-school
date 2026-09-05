@@ -3,115 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء الإدارة - مؤسسة الرسالة للتعليم الخصوصي</title>
-    
-    <!-- حماية الصفحة -->
+    <title>فضاء الإدارة - مؤسسة الرسالة</title>
     <script>
         if (localStorage.getItem('user_role') !== 'admin') {
-            alert('الرجاء تسجيل الدخول أولاً بصلاحيات الإدارة');
+            alert('يجب تسجيل الدخول كمسؤول أولاً!');
             window.location.href = 'login.html';
         }
     </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
         
-        aside { width: 260px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-logo { font-size: 18px; font-weight: 700; color: #38bdf8; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
-        .aside-menu { list-style: none; flex: 1; }
-        .aside-menu li { margin-bottom: 10px; }
-        .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        aside { width: 280px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .aside-logo { font-size: 18px; font-weight: 900; color: #38bdf8; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
+        .aside-menu { list-style: none; flex: 1; overflow-y: auto; }
+        .aside-menu li { margin-bottom: 8px; }
+        .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 13.5px; font-weight: 600; }
         .aside-menu a:hover, .aside-menu a.active { background: #0284c7; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
-        .top-bar h1 { font-size: 20px; color: #1e293b; }
-        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .back-home:hover { background: #cbd5e1; }
-
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #0284c7; }
-        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
-
-        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
-        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-bar h1 { font-size: 18px; color: #0f172a; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
-        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .section-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #0284c7; }
+        .section-box h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 600px; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        td { color: #334155; }
         
-        .action-btn { background: #0284c7; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .action-btn:hover { background: #0369a1; }
+        .btn { background: #0284c7; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn:hover { background: #0369a1; }
+        .btn-success { background: #10b981; }
+        .btn-success:hover { background: #059669; }
+        
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 15px; }
+        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; }
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
             aside { width: 100%; height: auto; }
-            .main-container { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
     <aside>
-        <div class="aside-logo">إدارة مؤسسة الرسالة</div>
+        <div class="aside-logo">الإدارة العامة للمؤسسة</div>
         <ul class="aside-menu">
-            <li><a href="#" class="active">لوحة الإحصائيات</a></li>
+            <li><a href="#" class="active">لوحة القيادة والمتابعة</a></li>
+            <li><a href="#students-sec">إدخال وإدارة التلاميذ</a></li>
+            <li><a href="#teachers-sec">تأطير الأساتذة</a></li>
+            <li><a href="#staff-sec">الموظفون الإداريون</a></li>
+            <li><a href="#transport-sec">السائقون والمرافقات</a></li>
+            <li><a href="#finance-sec">المالية (المداخيل والمصاريف)</a></li>
+            <li><a href="#comms-sec">التواصل والرسائل العامة/الخاصة</a></li>
             <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
         </ul>
     </aside>
 
     <div class="main-container">
         <div class="top-bar">
-            <h1>لوحة تسيير الإدارة العامة</h1>
-            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+            <h1>منصة التسيير الإداري الشامل</h1>
+            <a href="index.html" class="btn" style="background: #64748b;">الواجهة الرئيسية</a>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-box">
-                <h3>إجمالي التلاميذ</h3>
-                <div class="val">450</div>
-            </div>
-            <div class="stat-box" style="border-color: #10b981;">
-                <h3>الأساتذة المعتمدون</h3>
-                <div class="val">28</div>
-            </div>
-            <div class="stat-box" style="border-color: #f59e0b;">
-                <h3>الأقسام الدراسية</h3>
-                <div class="val">18</div>
-            </div>
-        </div>
-
-        <div class="data-section">
+        <!-- 1. إدخال وإدارة التلاميذ -->
+        <div id="students-sec" class="section-box">
             <h2>
-                <span>آخر التلاميذ المسجلين بالمنظومة</span>
-                <button class="action-btn" onclick="alert('فتح نافذة إضافة تلميذ جديد');">+ إضافة تلميذ</button>
+                <span>إدخال وإدارة التلاميذ</span>
+                <button class="btn btn-success" onclick="alert('تمت إضافة التلميذ بنجاح لقاعدة البيانات')">إضافة تلميذ جديد</button>
             </h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>الرقم</th>
-                        <th>الاسم الكامل</th>
-                        <th>رقم مسار</th>
-                        <th>المستوى الدراسي</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>يوسف البدري</td>
-                        <td>M138920112</td>
-                        <td>السادس ابتدائي</td>
-                        <td><button class="action-btn" style="background:#0ea5e9;">تعديل</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="form-grid">
+                <input type="text" class="form-control" placeholder="رقم المسار">
+                <input type="text" class="form-control" placeholder="الاسم العائلي">
+                <input type="text" class="form-control" placeholder="الاسم الشخصي">
+                <input type="date" class="form-control">
+                <select class="form-control"><option>المستوى الدراسي</option></select>
+                <input type="text" class="form-control" placeholder="القسم الدراسي (مثال: 6أ)">
+            </div>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم المسار</th>
+                            <th>الاسم الكامل</th>
+                            <th>المستوى</th>
+                            <th>القسم</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>إجراءات / إكسل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M138920</td>
+                            <td>يوسف البدري</td>
+                            <td>السادس ابتدائي</td>
+                            <td>القسم أ</td>
+                            <td>2026/09/01</td>
+                            <td><button class="btn" onclick="window.print()">تنزيل Excel / طباعة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
+        <!-- 2. تأطير الأساتذة -->
+        <div id="teachers-sec" class="section-box" style="border-color: #10b981;">
+            <h2>
+                <span>تأطير الأساتذة والتواصل</span>
+                <a href="https://whatsapp.com" target="_blank" class="btn btn-success">مجموعة واتساب الأساتذة</a>
+            </h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الأستاذ</th>
+                            <th>المادة</th>
+                            <th>المستويات المسندة</th>
+                            <th>ساعات العمل</th>
+                            <th>المستحقات المالية</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الأستاذ محمد العمراني</td>
+                            <td>اللغة العربية</td>
+                            <td>السادس ابتدائي، الأولى إعدادي</td>
+                            <td>24 ساعة/أسبوع</td>
+                            <td>4500 درهم</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. الموظفون الإداريون والسائقون والمرافقات -->
+        <div id="staff-sec" class="section-box" style="border-color: #f59e0b;">
+            <h2>الموظفون الإداريون والسائقون والمرافقات</h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الاسم الكامل</th>
+                            <th>الوظيفة</th>
+                            <th>ساعات العمل</th>
+                            <th>المستحقات</th>
+                            <th>تاريخ الالتحاق</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>أحمد الداودي</td>
+                            <td>حارس عام / إداري</td>
+                            <td>40 ساعة/أسبوع</td>
+                            <td>5000 درهم</td>
+                            <td>2023/09/01</td>
+                            <td>مستمر</td>
+                        </tr>
+                        <tr>
+                            <td>سعيد بوطاهر</td>
+                            <td>سائق حافلة النقل المدرسي</td>
+                            <td>35 ساعة/أسبوع</td>
+                            <td>4000 درهم</td>
+                            <td>2024/01/10</td>
+                            <td>مستمر</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. المالية -->
+        <div id="finance-sec" class="section-box" style="border-color: #8b5cf6;">
+            <h2>المالية والمحاسبة (المداخيل والمصاريف)</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong>المداخيل الإجمالية:</strong>
+                    <p style="color: #10b981; font-weight: 700; font-size: 18px; margin-top: 5px;">125,000 درهم (تسجيل + تأمين + مستحقات شهريّة)</p>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                    <strong>المصاريف (ثابتة ومتغيرة):</strong>
+                    <p style="color: #ef4444; font-weight: 700; font-size: 18px; margin-top: 5px;">45,000 درهم (أجور، ماء، كهرباء، صيانة)</p>
+                </div>
+            </div>
+            <div style="background: #1e293b; color: white; padding: 15px; border-radius: 8px; text-align: center;">
+                <strong>الصافي المالي للمؤسسة: </strong> <span style="color: #38bdf8; font-size: 20px;">80,000 درهم</span>
+            </div>
+        </div>
+
+        <!-- 5. التواصل (رسائل خاصة وعامة وأولياء الأمور) -->
+        <div id="comms-sec" class="section-box" style="border-color: #ec4899;">
+            <h2>التواصل والإعلانات</h2>
+            <div class="form-grid">
+                <select class="form-control"><option>نوع الرسالة: عامة للجميع / خاصة لولي أمر</option></select>
+                <input type="text" class="form-control" placeholder="عنوان الرسالة أو الموضوع">
+            </div>
+            <textarea class="form-control" rows="3" placeholder="اكتب نص الرسالة هنا (سيتم إرسالها عبر المنصة أو إشعار واتساب)..." style="margin-bottom: 10px;"></textarea>
+            <button class="btn" style="background: #ec4899;">إرسال الرسالة الآن</button>
+        </div>
+
+    </div>
 </body>
 </html>
