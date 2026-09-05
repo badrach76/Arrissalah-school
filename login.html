@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <title>فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -18,17 +18,35 @@
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; }
 
-        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 400px; border-top: 4px solid #0284c7; }
-        .login-card h2 { font-size: 22px; color: #1e293b; margin-bottom: 8px; text-align: center; }
-        .login-card p { font-size: 13px; color: #64748b; margin-bottom: 25px; text-align: center; }
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 30px 20px; }
+        
+        /* مرحلة عرض الفضاءات أولاً */
+        #spacesView { width: 100%; max-width: 900px; text-align: center; }
+        #spacesView h1 { font-size: 24px; color: #0f172a; margin-bottom: 10px; }
+        #spacesView p { color: #64748b; font-size: 14px; margin-bottom: 30px; }
+        
+        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .space-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; border-top: 4px solid #0284c7; transition: 0.3s; cursor: pointer; }
+        .space-card:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+        .space-card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
+        .space-card p { font-size: 12px; color: #64748b; margin-bottom: 15px; }
+        .space-btn { display: inline-block; background: #0f172a; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; }
+
+        /* مرحلة لوحة الدخول الآمن (تظهر بعد الاختيار) */
+        #loginView { display: none; width: 100%; max-width: 400px; }
+        .login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #0284c7; position: relative; }
+        .login-card h2 { font-size: 20px; color: #1e293b; margin-bottom: 5px; text-align: center; }
+        .login-card p { font-size: 13px; color: #64748b; margin-bottom: 20px; text-align: center; }
         
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
-        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+        .form-group input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
         
-        .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 11px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 5px; }
         .login-btn:hover { background: #0369a1; }
+        
+        .back-spaces { display: block; text-align: center; margin-top: 15px; color: #64748b; text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; }
+        .back-spaces:hover { color: #0284c7; }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
@@ -52,40 +70,82 @@
     </header>
 
     <div class="container">
-        <div class="login-card">
-            <h2>تسجيل الدخول للمنصة</h2>
-            <p>أدخل بيانات الحساب أو اختر الفضاء مباشرة للتجربة</p>
-
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="email" required value="admin@alrisala.ma" placeholder="name@example.com">
+        
+        <!-- المرحلة 1: عرض الفضاءات أولاً -->
+        <div id="spacesView">
+            <h1>فضاءات الدخول المخصصة للمستفيدين</h1>
+            <p>اختر الفضاء الذي ترغب في الولوج إليه للتوجه إلى لوحة الدخول الآمن:</p>
+            
+            <div class="spaces-grid">
+                <div class="space-card" style="border-top-color: #3b82f6;" onclick="selectSpace('admin', 'فضاء الإدارة')">
+                    <h3>فضاء الإدارة</h3>
+                    <p>الإشراف والتدبير المالي والإداري</p>
+                    <span class="space-btn" style="background: #3b82f6;">اختيار الفضاء</span>
                 </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="password" required value="123456" placeholder="••••••••">
+                <div class="space-card" style="border-top-color: #10b981;" onclick="selectSpace('teacher', 'فضاء الأساتذة')">
+                    <h3>فضاء الأساتذة</h3>
+                    <p>النقاط، الغياب ومجموعات الفصول</p>
+                    <span class="space-btn" style="background: #10b981;">اختيار الفضاء</span>
                 </div>
-                <div class="form-group">
-                    <label>اختر الفضاء المستهدف</label>
-                    <select id="role">
-                        <option value="admin">فضاء الإدارة</option>
-                        <option value="teacher">فضاء الأساتذة</option>
-                        <option value="parent">فضاء أولياء الأمور</option>
-                        <option value="student">فضاء التلميذ</option>
-                    </select>
+                <div class="space-card" style="border-top-color: #f59e0b;" onclick="selectSpace('parent', 'فضاء أولياء الأمور')">
+                    <h3>فضاء الأولياء</h3>
+                    <p>متابعة مسار الأبناء والغيابات</p>
+                    <span class="space-btn" style="background: #f59e0b;">اختيار الفضاء</span>
                 </div>
-                <button type="submit" class="login-btn">دخول إلى الفضاء</button>
-            </form>
+                <div class="space-card" style="border-top-color: #8b5cf6;" onclick="selectSpace('student', 'فضاء التلميذ')">
+                    <h3>فضاء التلميذ</h3>
+                    <p>الدروس، كشف النقاط والجداول</p>
+                    <span class="space-btn" style="background: #8b5cf6;">اختيار الفضاء</span>
+                </div>
+            </div>
         </div>
+
+        <!-- المرحلة 2: لوحة الدخول الآمن (تظهر حصرياً بعد الضغط على الفضاء) -->
+        <div id="loginView">
+            <div class="login-card">
+                <h2 id="selectedSpaceTitle">لوحة الدخول الآمن</h2>
+                <p>أدخل بيانات الحساب للمتابعة</p>
+
+                <form id="loginForm">
+                    <input type="hidden" id="targetRole">
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" id="email" required value="user@alrisala.ma" placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="password" id="password" required value="123456" placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="login-btn">تأكيد ودخول الفضاء</button>
+                </form>
+                <a class="back-spaces" onclick="goBackToSpaces()">← العودة واختيار فضاء آخر</a>
+            </div>
+        </div>
+
     </div>
 
     <script>
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
         document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
 
+        // عند اختيار الفضاء من البطاقات
+        function selectSpace(role, title) {
+            document.getElementById('spacesView').style.display = 'none';
+            document.getElementById('loginView').style.display = 'block';
+            document.getElementById('selectedSpaceTitle').innerText = title;
+            document.getElementById('targetRole').value = role;
+        }
+
+        // العودة لصفحة اختيار الفضاءات
+        function goBackToSpaces() {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('spacesView').style.display = 'block';
+        }
+
+        // عند تأكيد الدخول
         document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const role = document.getElementById('role').value;
+            const role = document.getElementById('targetRole').value;
             localStorage.setItem('user_role', role);
 
             switch(role) {
