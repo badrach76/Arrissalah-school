@@ -17,7 +17,7 @@
         .logo { font-size: 20px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; background: linear-gradient(135deg, #0284c7, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .sub-logo { font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* زر القائمة المنسدلة (تختفي وتظهر عند الطلب) */
+        /* زر القائمة المنسدلة */
         .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
         
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
@@ -57,7 +57,7 @@
 
         footer { text-align: center; padding: 25px; background: #0f172a; color: #94a3b8; font-size: 13px; margin-top: 50px; }
 
-        /* تجاوب الشاشات الصغيرة وإخفاء القائمة عند الطلب */
+        /* تباعد وتجاوب الشاشات الصغيرة */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); border-bottom: 1px solid #e2e8f0; }
@@ -73,7 +73,7 @@
             <div class="sub-logo" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
         </div>
         
-        <!-- زر القائمة الذي يظهر ويختفي عند الطلب -->
+        <!-- زر القائمة المنسدلة -->
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
         <ul class="nav-menu" id="navMenu">
@@ -100,18 +100,18 @@
             <div class="card-box" style="border-top-color: #0284c7;">
                 <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre Vision & Mission">رؤيتنا ورسالتنا</h3>
                 <p data-ar="نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية." data-fr="Nous créons un environnement d'apprentissage stimulant et sécurisé.">نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية.</p>
-                <button class="action-link" style="background: #0284c7;" onclick="openModal(currentLang === 'ar' ? 'عن مؤسسة الرسالة' : 'À propos d\'Al Risala', currentLang === 'ar' ? 'تأسست مؤسسة الرسالة للتعليم الخصوصي لتكون منارة علمية وتربوية رائدة تحت إشراف نخبة من الأطر التربوية.' : 'Fondé pour être un phare éducatif d\'excellence sous la supervision d\'une équipe pédagogique d\'élite.')" data-ar="قراءة المزيد" data-fr="Lire la suite">قراءة المزيد</button>
+                <button class="action-link" style="background: #0284c7;" onclick="openModal(currentLang === 'ar' ? 'عن مؤسسة الرسالة' : 'À propos d\'Al Risala', currentLang === 'ar' ? 'تأسست مؤسسة الرسالة للتعليم الخصوصي لتكون منارة علمية وتربوية رائدة تحت إشراف نخبة من الأطر التربوية المتميزة.' : 'Fondé pour être un phare éducatif d\'excellence sous la supervision d\'une équipe pédagogique d\'élite.')" data-ar="قراءة المزيد" data-fr="Lire la suite">قراءة المزيد</button>
             </div>
 
             <div class="card-box" style="border-top-color: #0ea5e9;">
                 <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles Éducatifs">أسلاكنا التعليمية</h3>
                 <p data-ar="مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا." data-fr="Un parcours éducatif continu de la petite section jusqu'au baccalauréat.">مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا.</p>
-                <button class="action-link" style="background: #0ea5e9;" onclick="openModal(currentLang === 'ar' ? 'تفاصيل الأسلاك التعليمية' : 'Détails des Cycles', currentLang === 'ar' ? '• التعليم الأولي<br>• السلك الابتدائي<br>• السلك الإعدادي<br>• السلك الثانوي' : '• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام" data-fr="Voir les cycles">استعراض الأقسام</button>
+                <button class="action-link" style="background: #0ea5e9;" onclick="openModal(currentLang === 'ar' ? 'تفاصيل الأسلاك التعليمية' : 'Détails des Cycles', currentLang === 'ar' ? '• <b>التعليم الأولي:</b> فضاء محفز لاكتشاف المهارات.<br>• <b>السلك الابتدائي:</b> تأسيس متين في اللغات والعلوم.<br>• <b>السلك الإعدادي:</b> تطوير الفكر النقدي والمنهجي.<br>• <b>السلك الثانوي:</b> إعداد مكثف للبكالوريا.' : '• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام" data-fr="Voir les cycles">استعراض الأقسام</button>
             </div>
 
             <div class="card-box" style="border-top-color: #f59e0b;">
                 <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & Avis">الإعلانات والبلاغات</h3>
-                <p data-ar="ابقوا على اطلاع دائم بآخر المستجدات المدرسية، المواعيد الهامة، والأنشطة." data-fr="Restez informés des dernières actualités et des dates importantes.">ابقوا على اطلاع دائم بآخر المستجدات المدرسية، المواعيد الهامة، والأنشطة.</p>
+                <p data-ar="ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة." data-fr="Restez informés des dernières actualités et des dates importantes.">ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة.</p>
                 <button class="action-link" style="background: #f59e0b;" onclick="openModal(currentLang === 'ar' ? 'الإعلانات الرسمية' : 'Avis Officiels', currentLang === 'ar' ? '📢 <b>أبواب المؤسسة مفتوحة</b> لاستقبال أولياء الأمور وتقديم طلبات التسجيل من الإثنين إلى السبت صباحاً.' : '📢 Nos portes sont ouvertes pour les inscriptions du lundi au samedi matin.')" data-ar="عرض البلاغات" data-fr="Voir les avis">عرض البلاغات</button>
             </div>
         </div>
@@ -134,9 +134,17 @@
     <script>
         let currentLang = 'ar';
 
+        // دالة إظهار وإخفاء القائمة المنسدلة
         function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
+
+        // إخفاء القائمة تلقائياً فور النقر على أي رابط بداخلها
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
 
         function toggleLanguage() {
             currentLang = currentLang === 'ar' ? 'fr' : 'ar';
