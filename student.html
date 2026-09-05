@@ -19,8 +19,8 @@
         .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
 
         .layout-body { display: flex; flex: 1; }
-        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-menu { list-style: none; flex: 1; }
+        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; flex-shrink: 0; }
+        .aside-menu { list-style: none; }
         .aside-menu li { margin-bottom: 8px; }
         .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
 
@@ -29,7 +29,8 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        .btn { background: #8b5cf6; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn { background: #8b5cf6; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn:hover { background: #7c3aed; }
         .whatsapp-btn { background: #25d366; }
 
         @media (max-width: 768px) {
@@ -60,36 +61,44 @@
             <ul class="aside-menu"><li><a class="active">الدروس وكشف النقاط والغياب</a></li></ul>
         </aside>
         <div class="main-container">
+            <!-- مجموعة واتساب الفصل -->
             <div class="box" style="border-right-color: #25d366;">
-                <h2 style="font-size: 16px; margin-bottom: 10px;">مجموعة واتساب الفصل</h2>
+                <h2 style="font-size: 16px; margin-bottom: 10px;">مجموعة واتساب الفصل الدراسي</h2>
                 <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الانضمام لمجموعة الفصل (السادس ابتدائي أ)</a>
             </div>
 
+            <!-- كشف النقاط -->
             <div class="box" style="border-right-color: #0284c7;">
                 <h2 style="font-size: 16px; margin-bottom: 15px;">كشف النقاط الشخصي</h2>
                 <div style="margin-bottom: 10px;">
-                    <button class="btn" style="background: #0284c7;" onclick="window.print()">طباعة كشف النقاط</button>
+                    <button class="btn" style="background: #0284c7;" onclick="printGradesReport()">طباعة كشف النقاط الرسمي</button>
                 </div>
-                <table>
-                    <thead><tr><th>المادة</th><th>المراقبة المستمرة</th><th>الامتحان</th><th>المعدل</th></tr></thead>
+                <table id="gradesTable">
+                    <thead><tr><th>المادة الدراسية</th><th>المراقبة المستمرة</th><th>الامتحان المحلي</th><th>المعدل المحصل</th></tr></thead>
                     <tbody>
                         <tr><td>اللغة العربية</td><td>17.00</td><td>16.50</td><td>16.75</td></tr>
                         <tr><td>الرياضيات</td><td>18.00</td><td>17.50</td><td>17.75</td></tr>
+                        <tr><td>النشاط العلمي</td><td>16.50</td><td>17.00</td><td>16.75</td></tr>
                     </tbody>
                 </table>
             </div>
 
+            <!-- سجل الغيابات -->
             <div class="box">
-                <h2 style="font-size: 16px; margin-bottom: 10px;">سجل الغيابات الخاص بي</h2>
-                <p style="font-size: 13px; color: #ef4444;">التنبيهات: لديك غياب واحد مبرر مسجل خلال هذا الأسبوع.</p>
+                <h2 style="font-size: 16px; margin-bottom: 10px;">سجل الغيابات والتنبيهات</h2>
+                <p style="font-size: 13px; color: #ef4444;">التنبيهات الإدارية: لديك غياب واحد مسجل ومبرر خلال هذا الأسبوع.</p>
             </div>
 
+            <!-- الجدول الزمني -->
             <div class="box">
-                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص وطباعته</h2>
-                <button class="btn" onclick="window.print()" style="margin-bottom: 10px;">طباعة الجدول الزمني</button>
-                <table>
-                    <thead><tr><th>التوقيت</th><th>المادة</th><th>الأستاذ</th><th>القاعة</th></tr></thead>
-                    <tbody><tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد</td><td>القسم 04</td></tr></tbody>
+                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص الدراسية</h2>
+                <button class="btn" onclick="printScheduleReport()" style="margin-bottom: 10px;">طباعة الجدول الزمني</button>
+                <table id="scheduleTable">
+                    <thead><tr><th>التوقيت الزمني</th><th>المادة</th><th>الأستاذ المكلف</th><th>القاعة</th></tr></thead>
+                    <tbody>
+                        <tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
+                        <tr><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -97,6 +106,34 @@
     <script>
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
         document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+
+        // طباعة كشف النقاط حصرياً
+        function printGradesReport() {
+            let tableHTML = document.getElementById('gradesTable').outerHTML;
+            let win = window.open('', '', 'height=600,width=700');
+            win.document.write(`<html><head><title>كشف النقاط الرسمي</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}h2{text-align:center;color:#0284c7;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #cbd5e1;padding:10px;text-align:right;}th{background:#f1f5f9;}</style></head><body>`);
+            win.document.write(`<h2>مؤسسة الرسالة للتعليم الخصوصي</h2>`);
+            win.document.write(`<p style="text-align:center; color:#64748b;">كشف نقط المراقبة المستمرة والامتحانات</p><hr style="margin:20px 0;">`);
+            win.document.write(tableHTML);
+            win.document.write(`<p style="margin-top:50px; text-align:left;">ختم وإمضاء إدارة المؤسسة</p>`);
+            win.document.write(`</body></html>`);
+            win.document.close();
+            win.print();
+        }
+
+        // طباعة الجدول الزمني حصرياً
+        function printScheduleReport() {
+            let tableHTML = document.getElementById('scheduleTable').outerHTML;
+            let win = window.open('', '', 'height=600,width=700');
+            win.document.write(`<html><head><title>الجدول الزمني للحصص</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}h2{text-align:center;color:#8b5cf6;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #cbd5e1;padding:10px;text-align:right;}th{background:#f1f5f9;}</style></head><body>`);
+            win.document.write(`<h2>مؤسسة الرسالة للتعليم الخصوصي</h2>`);
+            win.document.write(`<p style="text-align:center; color:#64748b;">الجدول الزمني الأسبوعي للحصص الدراسية</p><hr style="margin:20px 0;">`);
+            win.document.write(tableHTML);
+            win.document.write(`<p style="margin-top:50px; text-align:left;">إدارة المؤسسة</p>`);
+            win.document.write(`</body></html>`);
+            win.document.close();
+            win.print();
+        }
     </script>
 </body>
 </html>
