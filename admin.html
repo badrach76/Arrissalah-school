@@ -311,4 +311,88 @@
 
             let tbody = document.getElementById('studentsTableBody');
             let row = document.createElement('tr');
-            row.innerHTML = `<td>${reg}</td><td>${name}</td><td>${level}</td><td><span style="color: #ef4444; font-weight: bold;">غير مؤدى</span></td><td><span style="color: #64748b;">لا توجد غيابات</span></td><td><button class="btn btn-success" onclick="processStudentPayment('${name}', '${level}', 500, 'شهر شتمبر')">طباعة التوصيل والتحصيل
+            row.innerHTML = `<td>${reg}</td><td>${name}</td><td>${level}</td><td><span style="color: #ef4444; font-weight: bold;">غير مؤدى</span></td><td><span style="color: #64748b;">لا توجد غيابات</span></td><td><button class="btn btn-success" onclick="processStudentPayment('${name}', '${level}', 500, 'شهر شتمبر')">طباعة التوصيل والتحصيل الآلي</button></td>`;
+            tbody.appendChild(row);
+
+            closeAddStudentModal();
+            document.getElementById('addStudentForm').reset();
+            alert('تمت إضافة التلميذ بنجاح!');
+        }
+
+        function processStudentPayment(name, level, amount, month) {
+            totalIncome += amount;
+            updateFinancialDisplay();
+
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل (أداء تلميذ)</span></td><td>${amount} درهم</td><td>${name} (${month})</td>`;
+            logBody.appendChild(tr);
+
+            let win = window.open('', '', 'height=600,width=500');
+            win.document.write(`<html><head><title>توصيل أداء</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}.box{border:2px dashed #0284c7;padding:25px;border-radius:10px;background:#f8fafc;}h2{color:#0284c7;text-align:center;}</style></head><body><div class="box"><h2>مؤسسة الرسالة للتعليم الخصوصي</h2><hr><p><b>اسم التلميذ(ة):</b> ${name}</p><p><b>المستوى:</b> ${level}</p><p><b>الخدمة:</b> مصاريف التمدرس عن ${month}</p><p><b>المبلغ المؤدى:</b> <span style="color:#10b981; font-weight:bold;">${amount} درهم</span></p><p style="margin-top:30px; text-align:left;">ختم وإمضاء الإدارة</p></div></body></html>`);
+            win.document.close();
+            win.print();
+        }
+
+        function payMonthlySalary(beneficiary, amount) {
+            totalExpenses += amount;
+            updateFinancialDisplay();
+
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب شهري)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td>`;
+            logBody.appendChild(tr);
+
+            alert(`تم صرف راتب "${beneficiary}" بمبلغ ${amount} درهم، وإضافته للمصاريف العامة للخزينة!`);
+        }
+
+        function addManualExpenseFromTransport() {
+            let desc = document.getElementById('transDesc').value;
+            let amount = parseFloat(document.getElementById('transAmount').value);
+
+            if(!desc || !amount) {
+                alert('الرجاء إدخال الوصف والمبلغ بشكل صحيح');
+                return;
+            }
+
+            totalExpenses += amount;
+            updateFinancialDisplay();
+
+            let logBody = document.getElementById('financialLogBody');
+            let logTr = document.createElement('tr');
+            logTr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف نقل)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+            logBody.appendChild(logTr);
+
+            document.getElementById('transDesc').value = '';
+            document.getElementById('transAmount').value = '';
+            alert('تم تسجيل وصرف المصروف وإضافته للخزينة العامة بنجاح!');
+        }
+
+        function toggleMsgFields() {
+            let type = document.getElementById('msgType').value;
+            if(type === 'private') {
+                document.getElementById('privateFields').style.display = 'block';
+                document.getElementById('publicFields').style.display = 'none';
+            } else {
+                document.getElementById('privateFields').style.display = 'none';
+                document.getElementById('publicFields').style.display = 'block';
+            }
+        }
+
+        function sendWhatsAppMessage() {
+            let type = document.getElementById('msgType').value;
+            let message = document.getElementById('msgContent').value;
+            if(!message) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
+            let encodedMessage = encodeURIComponent(message);
+
+            if(type === 'private') {
+                let phone = document.getElementById('parentPhone').value;
+                if(!phone) { alert('الرجاء إدخال رقم واتساب ولي الأمر!'); return; }
+                window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
+            } else {
+                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${encodedMessage}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
