@@ -19,19 +19,19 @@
         .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
 
         .layout-body { display: flex; flex: 1; }
-        aside { width: 260px; background: #0f172a; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-menu { list-style: none; flex: 1; }
+        aside { width: 260px; background: #0f172a; color: white; padding: 20px; flex-shrink: 0; }
+        .aside-menu { list-style: none; }
         .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 12px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .aside-menu a:hover, .aside-menu a.active { background: #0284c7; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
         
-        /* ضبط إظهار وإخفاء الصفحات بدقة */
-        .tab-content { display: none; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #0284c7; }
+        /* إخفاء وإظهار الصفحات بشكل قاطع وجذري */
+        .tab-content { display: none !important; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #0284c7; }
         .tab-content.active { display: block !important; }
         
-        .tab-content h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .tab-content h2 { font-size: 17px; margin-bottom: 15px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 600px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
@@ -40,7 +40,7 @@
         .btn { background: #0284c7; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
         .btn-success { background: #10b981; }
-        .btn-success:hover { background: #059669; }
+        .whatsapp-btn { background: #25d366; }
         
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
@@ -50,9 +50,7 @@
         @media (max-width: 768px) {
             .layout-body { flex-direction: column; }
             aside { width: 100%; height: auto; margin-bottom: 15px; }
-            .menu-toggle { display: block; }
-            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
-            .nav-menu.active { display: flex; }
+            .main-container { padding: 15px; }
         }
     </style>
 </head>
@@ -72,7 +70,7 @@
     </header>
 
     <div class="layout-body">
-        <!-- القائمة الجانبية مع ربط دقيق بـ IDs الصفحات -->
+        <!-- القائمة الجانبية المنظمة -->
         <aside>
             <ul class="aside-menu">
                 <li><a onclick="switchTab('tab-dash', this)" class="active">لوحة القيادة المالية</a></li>
@@ -85,27 +83,29 @@
             </ul>
         </aside>
 
+        <!-- المحتوى الرئيسي (جميع الصفحات مدرجة هنا) -->
         <div class="main-container">
-            <!-- 1. لوحة القيادة -->
+            
+            <!-- 1. لوحة القيادة المالية -->
             <div id="tab-dash" class="tab-content active">
                 <h2>المؤشرات المالية والإحصائية الحية للمؤسسة</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 10px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
                     <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #10b981;">
-                        <h3>إجمالي المداخيل المسجلة</h3>
-                        <p id="dashTotalIncome" style="font-size: 24px; font-weight: bold; margin-top: 5px; color: #10b981;">125,500 درهم</p>
+                        <h3>إجمالي المداخيل</h3>
+                        <p id="dashTotalIncome" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #10b981;">125,500 درهم</p>
                     </div>
                     <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #ef4444;">
-                        <h3>إجمالي المصاريف المسجلة</h3>
-                        <p id="dashTotalExpenses" style="font-size: 24px; font-weight: bold; margin-top: 5px; color: #ef4444;">45,000 درهم</p>
+                        <h3>إجمالي المصاريف</h3>
+                        <p id="dashTotalExpenses" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #ef4444;">45,000 درهم</p>
                     </div>
                     <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #0284c7;">
                         <h3>الصافي المالي العام</h3>
-                        <p id="dashNetBalance" style="font-size: 24px; font-weight: bold; margin-top: 5px; color: #0284c7;">80,500 درهم</p>
+                        <p id="dashNetBalance" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #0284c7;">80,500 درهم</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. التلاميذ والأداءات -->
+            <!-- 2. التلاميذ والأداءات والغياب -->
             <div id="tab-students" class="tab-content">
                 <h2>
                     <span>إدارة التلاميذ، الأداءات المالية وسجل الغياب</span>
@@ -124,79 +124,95 @@
                             <td><span style="color: #ef4444; font-weight: bold;">غياب واحد</span></td>
                             <td>
                                 <button class="btn btn-success" onclick="processStudentPayment('يوسف البدري', 'السادس ابتدائي (أ)', 500, 'شهر شتمبر 2026')">طباعة التوصيل والتحصيل الآلي</button>
-                                <button class="btn" style="background: #0284c7;" onclick="exportTableToExcel('studentsTableBody', 'لائحة_التلاميذ.xls')">تنزيل Excel</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 3. الأساتذة -->
+            <!-- 3. رواتب الأساتذة والواتساب -->
             <div id="tab-teachers" class="tab-content">
-                <h2>
-                    <span>رواتب الأساتذة الشهرية والربط بالمصاريف</span>
-                    <button class="btn btn-success" onclick="payMonthlySalary('الأستاذ محمد العمراني (أستاذ مادة)', 4500)">صرف راتب الشهر</button>
-                </h2>
+                <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب الخاصة بالفصول</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ</th><th>المادة</th><th>المستويات</th><th>الراتب الشهري القار</th><th>الإجراء المالي</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ</th><th>المادة</th><th>المستويات</th><th>الراتب الشهري</th><th>مجموعة واتساب الفصل</th><th>إجراء الصرف الآلي</th></tr></thead>
                     <tbody>
-                        <tr><td>أ. محمد العمراني</td><td>اللغة العربية</td><td>السادس ابتدائي</td><td>4500 درهم شهرياً</td><td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500)">صرف الراتب الآلي</button></td></tr>
+                        <tr>
+                            <td>أ. محمد العمراني</td>
+                            <td>اللغة العربية</td>
+                            <td>السادس ابتدائي</td>
+                            <td>4500 درهم</td>
+                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500)">صرف الراتب الآلي</button></td>
+                        </tr>
+                        <tr>
+                            <td>أ. فاطمة الزهراء</td>
+                            <td>الفرنسية</td>
+                            <td>الخامس ابتدائي</td>
+                            <td>4500 درهم</td>
+                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4500)">صرف الراتب الآلي</button></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
             <!-- 4. الموظفون الإداريون -->
             <div id="tab-staff" class="tab-content">
-                <h2>
-                    <span>الموظفون الإداريون ورواتبهم الشهرية</span>
-                    <button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي (حارس عام)', 5000)">صرف راتب الإداريين</button>
-                </h2>
+                <h2><span>الموظفون الإداريون ورواتبهم الشهرية القارة</span></h2>
                 <table>
-                    <thead><tr><th>الاسم الكامل</th><th>الوظيفة</th><th>الراتب الشهري القار</th><th>تاريخ الالتحاق</th><th>صرف آلي</th></tr></thead>
+                    <thead><tr><th>الاسم الكامل</th><th>الوظيفة الإدارية</th><th>الراتب الشهري</th><th>تاريخ الالتحاق</th><th>إجراء الصرف الآلي</th></tr></thead>
                     <tbody>
-                        <tr><td>أحمد الداودي</td><td>حارس عام / إداري</td><td>5000 درهم شهرياً</td><td>2023/09/01</td><td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000)">صرف الراتب</button></td></tr>
+                        <tr>
+                            <td>أحمد الداودي</td>
+                            <td>حارس عام / إداري</td>
+                            <td>5000 درهم</td>
+                            <td>2023/09/01</td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي (حارس عام)', 5000)">صرف الراتب الآلي</button></td>
+                        </tr>
+                        <tr>
+                            <td>خديجة بلفقيه</td>
+                            <td>مقتصدة ومسؤولة الإدارة</td>
+                            <td>4500 درهم</td>
+                            <td>2024/01/10</td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('خديجة بلفقيه (مقتصدة)', 4500)">صرف الراتب الآلي</button></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 5. النقل المدرسي -->
+            <!-- 5. النقل المدرسي وطاقمه -->
             <div id="tab-transport" class="tab-content">
-                <h2><span>إدارة النقل المدرسي ومصاريفه الشهرية</span></h2>
+                <h2><span>إدارة النقل المدرسي، طاقمه (سائقون ومرافقات) والمصاريف</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">أجور طاقم النقل:</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px;">أجور طاقم النقل الشهرية:</h3>
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الراتب الشهري</th><th>صرف</th></tr></thead>
+                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر الشهري</th><th>صرف الراتب</th></tr></thead>
                         <tbody>
                             <tr><td>سعيد بوطاهر</td><td>سائق الحافلة 01</td><td>4000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000)">صرف</button></td></tr>
-                            <tr><td>فاطمة الزهراء</td><td>مرافقة الأطفال</td><td>3000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('فاطمة الزهراء (مرافقة)', 3000)">صرف</button></td></tr>
+                            <tr><td>عائشة ناصري</td><td>مرافقة الأطفال</td><td>3000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('عائشة ناصري (مرافقة)', 3000)">صرف</button></td></tr>
                         </tbody>
                     </table>
                 </div>
-                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">تسجيل مصاريف نقل إضافية (بنزين / صيانة):</h3>
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">تسجيل مصاريف نقل إضافية (بنزين / تأمين / صيانة):</h3>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <input type="text" id="transDesc" class="form-control" placeholder="نوع المصروف (مثال: بنزين)" style="flex: 2; margin: 0;">
+                    <input type="text" id="transDesc" class="form-control" placeholder="نوع المصروف (مثال: بنزين محطة الوقود)" style="flex: 2; margin: 0;">
                     <input type="number" id="transAmount" class="form-control" placeholder="المبلغ (درهم)" style="flex: 1; margin: 0;">
-                    <button class="btn btn-success" onclick="addManualExpenseFromTransport()">تسجيل وصرف</button>
+                    <button class="btn btn-success" onclick="addManualExpenseFromTransport()">تسجيل وصرف آلي</button>
                 </div>
-                <table>
-                    <thead><tr><th>التاريخ</th><th>نوع المصروف</th><th>المبلغ</th></tr></thead>
-                    <tbody id="transportExpensesBody">
-                        <tr><td>2026/09/02</td><td>تزود بالبنزين (محطة الوقود)</td><td>1,200 درهم</td></tr>
-                    </tbody>
-                </table>
             </div>
 
-            <!-- 6. الخزينة المالية -->
+            <!-- 6. الخزينة العامة والمصاريف -->
             <div id="tab-finance" class="tab-content">
-                <h2><span>الخزينة المالية العامة والمصاريف</span></h2>
+                <h2><span>الخزينة المالية العامة وسجل المداخيل والمصاريف</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
                     <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">إجمالي المداخيل المحصلة: <strong id="finTotalIncome" style="color: #10b981;">125,500 درهم</strong></div>
                     <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">إجمالي المصاريف المصروفة: <strong id="finTotalExpenses" style="color: #ef4444;">45,000 درهم</strong></div>
                 </div>
+                <h3>سجل الحركات المالية المباشرة:</h3>
                 <table>
                     <thead><tr><th>التاريخ</th><th>نوع العملية</th><th>المبلغ</th><th>البيان / المستفيد</th></tr></thead>
                     <tbody id="financialLogBody">
-                        <tr><td>2026/09/01</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف ثابت)</span></td><td>2,500 درهم</td><td>كهرباء وماء</td></tr>
+                        <tr><td>2026/09/01</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف ثابت)</span></td><td>2,500 درهم</td><td>كهرباء وماء المؤسسة</td></tr>
                         <tr><td>2026/09/01</td><td><span style="color: #10b981; font-weight: bold;">دخل (أداء تلميذ)</span></td><td>500 درهم</td><td>يوسف البدري (شتمبر)</td></tr>
                     </tbody>
                 </table>
@@ -209,8 +225,8 @@
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع الرسالة:</label>
                         <select id="msgType" class="form-control" onchange="toggleMsgFields()">
-                            <option value="private">رسالة خاصة لولي أمر معين</option>
-                            <option value="public">رسالة عامة (مجموعة الأولياء)</option>
+                            <option value="private">رسالة خاصة لولي أمر معين (واتساب شخصي)</option>
+                            <option value="public">رسالة عامة (مجموعة واتساب الأولياء)</option>
                         </select>
                     </div>
                     <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
@@ -218,7 +234,7 @@
                         <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
                     </div>
                     <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة:</label>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
                         <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور العامة" readonly style="background: #e2e8f0;">
                     </div>
                     <div class="form-group" style="margin-bottom: 15px;">
@@ -228,6 +244,7 @@
                     <button class="btn" style="background: #25d366; font-size: 14px; padding: 10px 20px;" onclick="sendWhatsAppMessage()">إرسال عبر واتساب الآن</button>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -235,10 +252,10 @@
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
-            <h3 style="font-size: 16px; margin-bottom: 15px; color: #0284c7;">إضافة تلميذ جديد</h3>
+            <h3 style="font-size: 16px; margin-bottom: 15px; color: #0284c7;">إضافة تلميذ جديد لقاعدة البيانات</h3>
             <form id="addStudentForm" onsubmit="saveNewStudent(event)">
                 <input type="text" id="newReg" class="form-control" placeholder="رقم المسار" required>
-                <input type="text" id="newName" class="form-control" placeholder="الاسم الكامل" required>
+                <input type="text" id="newName" class="form-control" placeholder="الاسم الكامل للتلميذ" required>
                 <input type="text" id="newLevel" class="form-control" placeholder="المستوى والقسم" required>
                 <button type="submit" class="btn btn-success" style="width: 100%; padding: 10px;">حفظ التلميذ</button>
             </form>
@@ -260,18 +277,24 @@
         }
 
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
 
-        // الدالة المسؤولة عن تبديل المحتوى وإظهار الصفحة المعنية عند النقر
+        // دالة تبديل الصفحات بدقة تامة عند النقر على القائمة الجانبية
         function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.aside-menu a').forEach(el => el.classList.remove('active'));
-            
-            let targetTab = document.getElementById(tabId);
-            if(targetTab) {
-                targetTab.classList.add('active');
+            let contents = document.querySelectorAll('.tab-content');
+            contents.forEach(function(el) {
+                el.classList.remove('active');
+            });
+
+            let links = document.querySelectorAll('.aside-menu a');
+            links.forEach(function(el) {
+                el.classList.remove('active');
+            });
+
+            let target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
             }
-            if(element) {
+            if (element) {
                 element.classList.add('active');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -288,18 +311,4 @@
 
             let tbody = document.getElementById('studentsTableBody');
             let row = document.createElement('tr');
-            row.innerHTML = `<td>${reg}</td><td>${name}</td><td>${level}</td><td><span style="color: #ef4444; font-weight: bold;">غير مؤدى</span></td><td><span style="color: #64748b;">لا توجد غيابات</span></td><td><button class="btn btn-success" onclick="processStudentPayment('${name}', '${level}', 500, 'شهر شتمبر')">طباعة التوصيل والتحصيل الآلي</button></td>`;
-            tbody.appendChild(row);
-
-            closeAddStudentModal();
-            document.getElementById('addStudentForm').reset();
-            alert('تمت إضافة التلميذ بنجاح!');
-        }
-
-        function processStudentPayment(name, level, amount, month) {
-            totalIncome += amount;
-            updateFinancialDisplay();
-
-            let logBody = document.getElementById('financialLogBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString
+            row.innerHTML = `<td>${reg}</td><td>${name}</td><td>${level}</td><td><span style="color: #ef4444; font-weight: bold;">غير مؤدى</span></td><td><span style="color: #64748b;">لا توجد غيابات</span></td><td><button class="btn btn-success" onclick="processStudentPayment('${name}', '${level}', 500, 'شهر شتمبر')">طباعة التوصيل والتحصيل
