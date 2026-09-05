@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء الأساتذة - مؤسسة الرسالة</title>
+    <title>فضاء الأساتذة - مؤسسة الرسالة للتعليم الخصوصي</title>
     <script>
         if (localStorage.getItem('user_role') !== 'teacher') {
             alert('يجب تسجيل الدخول بصلاحيات الأستاذ أولاً!');
@@ -13,19 +13,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
         
+        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
+        .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
+        .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .nav-menu a:hover { color: #0284c7; }
+
+        .layout-body { display: flex; flex: 1; }
         aside { width: 260px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-logo { font-size: 18px; font-weight: 900; color: #34d399; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #047857; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #a7f3d0; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+        .aside-menu a { color: #a7f3d0; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
         .aside-menu a:hover, .aside-menu a.active { background: #059669; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .top-bar h1 { font-size: 18px; color: #0f172a; }
-        
         .tab-content { display: none; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #10b981; }
         .tab-content.active { display: block; }
         .tab-content h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; }
@@ -37,73 +44,82 @@
         .btn { background: #10b981; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
         .btn:hover { background: #059669; }
         .whatsapp-btn { background: #25d366; }
-        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 10px; }
+        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 10px; outline: none; }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; }
+            .layout-body { flex-direction: column; }
             aside { width: 100%; height: auto; }
+            .menu-toggle { display: block; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+            .nav-menu.active { display: flex; }
         }
     </style>
 </head>
 <body>
 
-    <aside>
-        <div class="aside-logo">فضاء الأستاذ التربوي</div>
-        <ul class="aside-menu">
-            <li><a onclick="switchTab('t-classes')" class="active">الأقسام ومجموعات الواتساب</a></li>
-            <li><a onclick="switchTab('t-pdf')">رفع وطباعة الدروس (PDF)</a></li>
-            <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
+    <header>
+        <a href="index.html" class="brand-container">
+            <div class="logo">مؤسسة الرسالة</div>
+            <div class="sub-logo">للتعليم الخصوصي</div>
+        </a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="login.html">فضاءات الدخول</a></li>
+            <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';" style="color: #ef4444;">خروج</a></li>
         </ul>
-    </aside>
+    </header>
 
-    <div class="main-container">
-        <div class="top-bar">
-            <h1>منصة التدبير البيداغوجي للأستاذ</h1>
-            <a href="index.html" class="btn" style="background: #64748b;">الرئيسية</a>
-        </div>
+    <div class="layout-body">
+        <aside>
+            <ul class="aside-menu">
+                <li><a onclick="switchTab('t-classes', this)" class="active">الأقسام والغياب والواتساب</a></li>
+                <li><a onclick="switchTab('t-pdf', this)">رفع وطباعة الدروس (PDF)</a></li>
+            </ul>
+        </aside>
 
-        <!-- 1. الأقسام ومجموعات الواتساب -->
-        <div id="t-classes" class="tab-content active">
-            <h2>الأقسام المسندة ومجموعات التواصل للفصول</h2>
-            <table>
-                <thead><tr><th>المستوى والقسم</th><th>المادة</th><th>عدد التلاميذ</th><th>رابط مجموعة واتساب الفصل</th><th>تدبير النقط والغياب</th></tr></thead>
-                <tbody>
-                    <tr>
-                        <td>السادس ابتدائي (أ)</td>
-                        <td>اللغة العربية</td>
-                        <td>31</td>
-                        <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">مجموعة واتساب الفصل</a></td>
-                        <td><button class="btn" onclick="alert('فتح سجل النقط والغياب')">إدخال النقط والغياب</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- 2. رفع وطباعة الـ PDF -->
-        <div id="t-pdf" class="tab-content">
-            <h2>رفع وتنزيل الدروس والتمارين (PDF)</h2>
-            <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                <select class="form-control"><option>اختر القسم المستهدف</option></select>
-                <input type="text" class="form-control" placeholder="عنوان الدرس">
-                <input type="file" class="form-control" accept=".pdf">
-                <button class="btn" onclick="alert('تم رفع الدرس بنجاح')">نشر الدرس</button>
+        <div class="main-container">
+            <div id="t-classes" class="tab-content active">
+                <h2>إدارة الأقسام، تسجيل الغياب والنقط ومجموعات الواتساب</h2>
+                <table>
+                    <thead><tr><th>المستوى والقسم</th><th>المادة</th><th>واتساب الفصل</th><th>تسجيل الغياب والنقط</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>السادس ابتدائي (أ)</td>
+                            <td>اللغة العربية</td>
+                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
+                            <td><button class="btn" onclick="alert('تم تسجيل الغياب وإدخال النقط بنجاح')">تسجيل غياب تلميذ / نقطة</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <table>
-                <thead><tr><th>اسم الدرس</th><th>القسم</th><th>العمليات</th></tr></thead>
-                <tbody>
-                    <tr><td>ملخص التراكيب النحوية.pdf</td><td>السادس ابتدائي (أ)</td><td><button class="btn" onclick="window.print()">طباعة / تحميل</button></td></tr>
-                </tbody>
-            </table>
-        </div>
 
+            <div id="t-pdf" class="tab-content">
+                <h2>رفع وطباعة الدروس والتمارين (PDF)</h2>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <input type="text" class="form-control" placeholder="عنوان الدرس أو التارين">
+                    <input type="file" class="form-control" accept=".pdf">
+                    <button class="btn" onclick="alert('تم رفع الدرس بنجاح')">نشر الدرس</button>
+                </div>
+                <table>
+                    <thead><tr><th>اسم الملف</th><th>القسم</th><th>العمليات</th></tr></thead>
+                    <tbody>
+                        <tr><td>ملخص التراكيب النحوية.pdf</td><td>السادس ابتدائي (أ)</td><td><button class="btn" onclick="window.print()">طباعة / تحميل PDF</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
-        function switchTab(tabId) {
+        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+
+        function switchTab(tabId, element) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.aside-menu a').forEach(el => el.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+            element.classList.add('active');
         }
     </script>
 </body>
