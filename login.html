@@ -3,76 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاءات الدخول - مؤسسة الرسالة</title>
+    <title>تسجيل الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
         
-        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 18px; font-weight: 900; color: #0284c7; text-decoration: none; }
+        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
+        .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
+        .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
 
-        .container { max-width: 900px; margin: auto; padding: 40px 20px; width: 100%; text-align: center; }
-        h1 { font-size: 26px; color: #0f172a; margin-bottom: 10px; }
-        p { color: #64748b; font-size: 14px; margin-bottom: 30px; }
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; }
 
-        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .space-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; border-top: 4px solid #0284c7; transition: 0.3s; }
-        .space-card:hover { transform: translateY(-5px); }
-        .space-card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
-        .space-card p { font-size: 12px; color: #64748b; margin-bottom: 15px; }
-        .space-btn { display: inline-block; background: #0f172a; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 13px; transition: 0.3s; }
-        .space-btn:hover { background: #0284c7; }
+        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 400px; border-top: 4px solid #0284c7; }
+        .login-card h2 { font-size: 22px; color: #1e293b; margin-bottom: 8px; text-align: center; }
+        .login-card p { font-size: 13px; color: #64748b; margin-bottom: 25px; text-align: center; }
         
-        .back-home { display: inline-block; margin-top: 30px; color: #64748b; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .back-home:hover { color: #0284c7; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
+        
+        .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .login-btn:hover { background: #0369a1; }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
+            .nav-menu.active { display: flex; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo">مؤسسة الرسالة للتعليم الخصوصي</a>
-        <a href="index.html" class="back-home" style="margin-top:0;">← الرئيسية</a>
+        <a href="index.html" class="brand-container">
+            <div class="logo">مؤسسة الرسالة</div>
+            <div class="sub-logo">للتعليم الخصوصي</div>
+        </a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="register.html">التسجيل القبلي</a></li>
+        </ul>
     </header>
 
     <div class="container">
-        <h1>فضاءات الدخول المخصصة للمستفيدين</h1>
-        <p>اختر فضاءك الخاص للولوج إلى البوابة الرقمية التفاعلية وإدارة المهام:</p>
-        
-        <div class="spaces-grid">
-            <div class="space-card" style="border-top-color: #3b82f6;">
-                <h3>فضاء الإدارة</h3>
-                <p>الإشراف الشامل والتدبير الإداري</p>
-                <button onclick="loginAs('admin')" class="space-btn" style="background: #3b82f6;">دخول الإدارة</button>
-            </div>
-            <div class="space-card" style="border-top-color: #10b981;">
-                <h3>فضاء الأساتذة</h3>
-                <p>تسجيل الغياب وإدخال النقط</p>
-                <button onclick="loginAs('teacher')" class="space-btn" style="background: #10b981;">دخول الأساتذة</button>
-            </div>
-            <div class="space-card" style="border-top-color: #f59e0b;">
-                <h3>فضاء أولياء الأمور</h3>
-                <p>تتبع المسار الدراسي والنقاط</p>
-                <button onclick="loginAs('parent')" class="space-btn" style="background: #f59e0b;">دخول الأولياء</button>
-            </div>
-            <div class="space-card" style="border-top-color: #8b5cf6;">
-                <h3>فضاء التلميذ</h3>
-                <p>الجداول الزمنية والدروس</p>
-                <button onclick="loginAs('student')" class="space-btn" style="background: #8b5cf6;">دخول التلميذ</button>
-            </div>
+        <div class="login-card">
+            <h2>تسجيل الدخول للمنصة</h2>
+            <p>أدخل بيانات الحساب الخاص بك للتوجه إلى فضاءك التربوي</p>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="email" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>اختر الفضاء المستهدف</label>
+                    <select id="role">
+                        <option value="admin">فضاء الإدارة</option>
+                        <option value="teacher">فضاء الأساتذة</option>
+                        <option value="parent">فضاء أولياء الأمور</option>
+                        <option value="student">فضاء التلميذ</option>
+                    </select>
+                </div>
+                <button type="submit" class="login-btn">دخول إلى الفضاء</button>
+            </form>
         </div>
     </div>
 
     <script>
-        function loginAs(role) {
+        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const role = document.getElementById('role').value;
             localStorage.setItem('user_role', role);
+
             switch(role) {
                 case 'admin': window.location.href = 'admin.html'; break;
                 case 'teacher': window.location.href = 'teacher.html'; break;
                 case 'parent': window.location.href = 'parent.html'; break;
                 case 'student': window.location.href = 'student.html'; break;
             }
-        }
+        });
     </script>
 </body>
 </html>
