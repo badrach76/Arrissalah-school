@@ -28,7 +28,7 @@
         aside { width: 260px; background: #6d28d9; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
+        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
         .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 20px; border-right: 4px solid #8b5cf6; }
@@ -42,7 +42,7 @@
             .layout-body { flex-direction: column; }
             aside { width: 100%; height: auto; }
             .menu-toggle { display: block; }
-            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
             .nav-menu.active { display: flex; }
         }
     </style>
@@ -63,12 +63,29 @@
 
     <div class="layout-body">
         <aside>
-            <ul class="aside-menu"><li><a href="#" class="active">الدروس وجداول الحصص والغياب</a></li></ul>
+            <ul class="aside-menu">
+                <li><a class="active">الدروس وكشف النقاط والغياب</a></li>
+            </ul>
         </aside>
         <div class="main-container">
             <div class="box" style="border-right-color: #25d366;">
                 <h2 style="font-size: 16px; margin-bottom: 10px;">مجموعة واتساب الفصل</h2>
                 <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الانضمام لمجموعة الفصل (السادس ابتدائي أ)</a>
+            </div>
+
+            <!-- كشف النقاط المضاف حديثاً -->
+            <div class="box" style="border-right-color: #0284c7;">
+                <h2 style="font-size: 16px; margin-bottom: 15px;">كشف النقاط الشخصي</h2>
+                <div style="margin-bottom: 10px;">
+                    <button class="btn" style="background: #0284c7;" onclick="window.print()">طباعة كشف النقاط</button>
+                </div>
+                <table>
+                    <thead><tr><th>المادة</th><th>المراقبة المستمرة</th><th>الامتحان</th><th>المعدل</th></tr></thead>
+                    <tbody>
+                        <tr><td>اللغة العربية</td><td>17.00</td><td>16.50</td><td>16.75</td></tr>
+                        <tr><td>الرياضيات</td><td>18.00</td><td>17.50</td><td>17.75</td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <div class="box">
@@ -81,12 +98,10 @@
                 <div style="margin-bottom: 10px;">
                     <button class="btn" onclick="window.print()">طباعة جدول استعمال الزمان</button>
                 </div>
-                <div style="overflow-x: auto;">
-                    <table>
-                        <thead><tr><th>التوقيت</th><th>المادة</th><th>الأستاذ</th><th>القاعة</th></tr></thead>
-                        <tbody><tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد</td><td>القسم 04</td></tr></tbody>
-                    </table>
-                </div>
+                <table>
+                    <thead><tr><th>التوقيت</th><th>المادة</th><th>الأستاذ</th><th>القاعة</th></tr></thead>
+                    <tbody><tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد</td><td>القسم 04</td></tr></tbody>
+                </table>
             </div>
         </div>
     </div>
