@@ -3,109 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء الأساتذة - مؤسسة الرسالة للتعليم الخصوصي</title>
-    
-    <!-- حماية الصفحة -->
+    <title>فضاء الأساتذة - مؤسسة الرسالة</title>
     <script>
         if (localStorage.getItem('user_role') !== 'teacher') {
-            alert('الرجاء تسجيل الدخول أولاً بصلاحيات الأستاذ');
+            alert('يجب تسجيل الدخول بصلاحيات الأستاذ أولاً!');
             window.location.href = 'login.html';
         }
     </script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; direction: rtl; display: flex; min-height: 100vh; flex-direction: row; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
         
-        aside { width: 260px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-logo { font-size: 18px; font-weight: 700; color: #34d399; margin-bottom: 30px; text-align: center; border-bottom: 1px solid #047857; padding-bottom: 15px; }
+        aside { width: 280px; background: #065f46; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .aside-logo { font-size: 18px; font-weight: 900; color: #34d399; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #047857; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
-        .aside-menu li { margin-bottom: 10px; }
-        .aside-menu a { color: #a7f3d0; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .aside-menu li { margin-bottom: 8px; }
+        .aside-menu a { color: #a7f3d0; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; transition: 0.3s; font-size: 13.5px; font-weight: 600; }
         .aside-menu a:hover, .aside-menu a.active { background: #059669; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
-        .top-bar h1 { font-size: 20px; color: #1e293b; }
-        .back-home { background: #e2e8f0; color: #334155; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; }
-        .back-home:hover { background: #cbd5e1; }
-
-        .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-right: 4px solid #10b981; }
-        .stat-box h3 { font-size: 13px; color: #64748b; margin-bottom: 8px; }
-        .stat-box .val { font-size: 24px; font-weight: 700; color: #1e293b; }
-
-        .data-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); overflow-x: auto; }
-        .data-section h2 { font-size: 16px; margin-bottom: 15px; color: #1e293b; }
+        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-bar h1 { font-size: 18px; color: #0f172a; }
+        
+        .section-box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #10b981; }
+        .section-box h2 { font-size: 16px; margin-bottom: 15px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
-        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        td { color: #334155; }
         
-        .action-btn { background: #10b981; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; }
-        .action-btn:hover { background: #059669; }
+        .btn { background: #10b981; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn:hover { background: #059669; }
+        .whatsapp-btn { background: #25d366; }
+        .whatsapp-btn:hover { background: #128c7e; }
+
+        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 10px; }
 
         @media (max-width: 768px) {
             body { flex-direction: column; }
             aside { width: 100%; height: auto; }
-            .main-container { padding: 15px; }
         }
     </style>
 </head>
 <body>
 
     <aside>
-        <div class="aside-logo">فضاء الأستاذ</div>
+        <div class="aside-logo">فضاء الأستاذ التربوي</div>
         <ul class="aside-menu">
-            <li><a href="#" class="active">لوحة المتابعة</a></li>
+            <li><a href="#" class="active">لوحة المتابعة البيداغوجية</a></li>
+            <li><a href="#classes-sec">الأقسام ومجموعات الواتساب</a></li>
+            <li><a href="#pdf-sec">رفع وطباعة الدروس (PDF)</a></li>
             <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
         </ul>
     </aside>
 
     <div class="main-container">
         <div class="top-bar">
-            <h1>بوابة التدبير البيداغوجي للأستاذ</h1>
-            <a href="index.html" class="back-home">العودة للواجهة الرئيسية</a>
+            <h1>بوابة الأستاذ - التدبير البيداغوجي</h1>
+            <a href="index.html" class="btn" style="background: #64748b;">الواجهة الرئيسية</a>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-box">
-                <h3>الأقسام المسندة</h3>
-                <div class="val">3 أقسام</div>
-            </div>
-            <div class="stat-box" style="border-color: #3b82f6;">
-                <h3>إجمالي التلاميذ</h3>
-                <div class="val">92 تلميذاً</div>
+        <!-- 1. الأقسام ومجموعات الواتساب الخاصة بكل فصل -->
+        <div id="classes-sec" class="section-box">
+            <h2>
+                <span>الأقسام المسندة ومجموعات التواصل (واتساب)</span>
+            </h2>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">كل فصل دراسي يمتلك مجموعة واتساب خاصة يتواصل فيها الأستاذ والإدارة مع التلاميذ وأوليائهم:</p>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المستوى الدراسي</th>
+                            <th>القسم</th>
+                            <th>المادة</th>
+                            <th>عدد التلاميذ</th>
+                            <th>رابط مجموعة الواتساب الخاصة بالفصل</th>
+                            <th>العمليات (غياب / نقط)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>السادس ابتدائي</td>
+                            <td>القسم أ</td>
+                            <td>اللغة العربية</td>
+                            <td>31 تلميذاً</td>
+                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">مجموعة واتساب (6 ابتدائي أ)</a></td>
+                            <td>
+                                <button class="btn" onclick="alert('فتح سجل الغياب وسجل النقط لهذا القسم')">تدبير الغياب والنقط</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>الأولى إعدادي</td>
+                            <td>القسم ب</td>
+                            <td>اللغة العربية</td>
+                            <td>30 تلميذاً</td>
+                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">مجموعة واتساب (1 إعدادي ب)</a></td>
+                            <td>
+                                <button class="btn" onclick="alert('فتح سجل الغياب وسجل النقط لهذا القسم')">تدبير الغياب والنقط</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="data-section">
-            <h2>الأقسام الدراسية الحالية</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>المستوى الدراسي</th>
-                        <th>المادة المدرسة</th>
-                        <th>عدد التلاميذ</th>
-                        <th>الإجراءات البيداغوجية</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>السادس ابتدائي (أ)</td>
-                        <td>اللغة العربية</td>
-                        <td>31</td>
-                        <td>
-                            <button class="action-btn" onclick="alert('فتح سجل الغياب');">الغياب</button> 
-                            <button class="action-btn" style="background:#0284c7;" onclick="alert('فتح نافذة النقط');">النقط</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- 2. رفع وطباعة الدروس PDF -->
+        <div id="pdf-sec" class="section-box" style="border-color: #0284c7;">
+            <h2>رفع وتنزيل الدروس والتمارين (PDF)</h2>
+            <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">اختر القسم المستهدف</label>
+                <select class="form-control">
+                    <option>السادس ابتدائي (أ)</option>
+                    <option>الأولى إعدادي (ب)</option>
+                </select>
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">عنوان الدرس / التمرين</label>
+                <input type="text" class="form-control" placeholder="مثال: الدرس اللغوي: التوكيد">
+                <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">ملف الـ PDF</label>
+                <input type="file" class="form-control" accept=".pdf">
+                <button class="btn" style="background: #0284c7;" onclick="alert('تم رفع الدرس بنجاح وصار متاحاً لتلاميذ القسم والتحميل والطباعة!')">نرفع ونشر الدرس</button>
+            </div>
+
+            <h3 style="font-size: 14px; margin-bottom: 10px; color: #334155;">الدروس المنشورة سابقاً:</h3>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f1f5f9; border-radius: 6px; margin-bottom: 8px;">
+                <span style="font-size: 13px;">ملخص التراكيب النحوية (السادس ابتدائي).pdf</span>
+                <div>
+                    <button class="btn" style="background: #0ea5e9;" onclick="window.print()">طباعة / تحميل</button>
+                </div>
+            </div>
         </div>
+
     </div>
-
 </body>
 </html>
