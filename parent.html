@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء أولياء الأمور - مؤسسة الرسالة</title>
+    <title>فضاء أولياء الأمور - مؤسسة الرسالة للتعليم الخصوصي</title>
     <script>
         if (localStorage.getItem('user_role') !== 'parent') {
             alert('يجب تسجيل الدخول بصلاحيات ولي الأمر أولاً!');
@@ -13,19 +13,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; display: flex; min-height: 100vh; }
+        body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
         
+        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
+        .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
+        .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; }
+        
+        .layout-body { display: flex; flex: 1; }
         aside { width: 260px; background: #b45309; color: white; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; }
-        .aside-logo { font-size: 18px; font-weight: 900; color: #fde68a; margin-bottom: 25px; text-align: center; border-bottom: 1px solid #92400e; padding-bottom: 15px; }
         .aside-menu { list-style: none; flex: 1; }
         .aside-menu li { margin-bottom: 8px; }
         .aside-menu a { color: #fef3c7; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
-        .aside-menu a:hover, .aside-menu a.active { background: #d97706; color: white; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .top-bar { background: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .top-bar h1 { font-size: 18px; color: #0f172a; }
-        
         .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-right: 4px solid #f59e0b; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
@@ -33,39 +38,56 @@
         .btn { background: #f59e0b; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
         .whatsapp-btn { background: #25d366; }
 
-        @media (max-width: 768px) { body { flex-direction: column; } aside { width: 100%; height: auto; } }
+        @media (max-width: 768px) {
+            .layout-body { flex-direction: column; }
+            aside { width: 100%; height: auto; }
+            .menu-toggle { display: block; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; }
+            .nav-menu.active { display: flex; }
+        }
     </style>
 </head>
 <body>
-    <aside>
-        <div class="aside-logo">فضاء ولي الأمر</div>
-        <ul class="aside-menu">
-            <li><a href="#" class="active">متابعة الأبناء</a></li>
-            <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';">تسجيل الخروج</a></li>
+    <header>
+        <a href="index.html" class="brand-container">
+            <div class="logo">مؤسسة الرسالة</div>
+            <div class="sub-logo">للتعليم الخصوصي</div>
+        </a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="login.html">فضاءات الدخول</a></li>
+            <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';" style="color: #ef4444;">خروج</a></li>
         </ul>
-    </aside>
-    <div class="main-container">
-        <div class="top-bar">
-            <h1>متابعة المسار الدراسي للأبناء</h1>
-            <a href="index.html" class="btn" style="background: #64748b;">الرئيسية</a>
-        </div>
-        <div class="box">
-            <h2 style="font-size: 16px; margin-bottom: 15px;">قائمة الأبناء المتمدرسين</h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead><tr><th>الاسم الكامل</th><th>رقم المسار</th><th>المستوى والقسم</th><th>مجموعة واتساب الفصل</th><th>كشف النقاط</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td>يوسف البدري</td>
-                            <td>M138920112</td>
-                            <td>السادس ابتدائي (أ)</td>
-                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
-                            <td><button class="btn" onclick="alert('عرض كشف النقاط')">عرض الكشف</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+    </header>
+
+    <div class="layout-body">
+        <aside>
+            <ul class="aside-menu"><li><a href="#" class="active">متابعة الأبناء والغياب</a></li></ul>
+        </aside>
+        <div class="main-container">
+            <div class="box">
+                <h2 style="font-size: 16px; margin-bottom: 15px;">قائمة الأبناء والمسار والغياب</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead><tr><th>الاسم الكامل</th><th>المستوى والقسم</th><th>حالة الغياب</th><th>واتساب الفصل</th><th>كشف النقاط</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>يوسف البدري</td>
+                                <td>السادس ابتدائي (أ)</td>
+                                <td><span style="color: #ef4444;">غياب مسجل يوم أمس</span></td>
+                                <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
+                                <td><button class="btn" onclick="window.print()">طباعة كشف النقاط</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+    </script>
 </body>
 </html>
