@@ -14,11 +14,6 @@
         .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
         .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
 
-        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
-        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
-        .nav-menu a:hover { color: #0284c7; }
-
         .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; width: 100%; }
         
         #spacesSelectionView { width: 100%; max-width: 900px; text-align: center; }
@@ -48,12 +43,6 @@
         .back-spaces:hover { color: #0284c7; }
 
         footer { text-align: center; padding: 25px; background: #0f172a; color: #94a3b8; font-size: 13px; margin-top: auto; }
-
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
-            .nav-menu.active { display: flex; }
-        }
     </style>
 </head>
 <body>
@@ -63,15 +52,10 @@
             <div class="logo">مؤسسة الرسالة</div>
             <div class="sub-logo">للتعليم الخصوصي</div>
         </a>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="register.html">التسجيل القبلي</a></li>
-        </ul>
     </header>
 
     <div class="container">
-        <!-- المرحلة الأولى: اختيار الفضاء -->
+        <!-- خيارات الفضاءات -->
         <div id="spacesSelectionView">
             <h1>فضاءات الدخول المخصصة للمستفيدين</h1>
             <p>اختر الفضاء المناسب للانتقال إلى لوحة الدخول الآمن:</p>
@@ -79,7 +63,7 @@
             <div class="spaces-grid">
                 <div class="space-card" style="border-top-color: #3b82f6;" onclick="openSecureLogin('admin', 'فضاء الإدارة والصلاحيات')">
                     <h3>فضاء الإدارة</h3>
-                    <p>المدير، المسؤول الإداري والمالي، والحارس العام</p>
+                    <p>المدير، المسؤول المالي، والحارس العام</p>
                     <span class="space-btn" style="background: #3b82f6;">اختيار الفضاء</span>
                 </div>
                 <div class="space-card" style="border-top-color: #10b981;" onclick="openSecureLogin('teacher', 'فضاء الأساتذة التربوي')">
@@ -89,18 +73,18 @@
                 </div>
                 <div class="space-card" style="border-top-color: #f59e0b;" onclick="openSecureLogin('parent', 'فضاء أولياء الأمور')">
                     <h3>فضاء الأولياء</h3>
-                    <p>متابعة مسار الأبناء والغيابات</p>
+                    <p>متابعة مسار الأبناء وكشف النقاط</p>
                     <span class="space-btn" style="background: #f59e0b;">اختيار الفضاء</span>
                 </div>
                 <div class="space-card" style="border-top-color: #8b5cf6;" onclick="openSecureLogin('student', 'فضاء التلميذ')">
                     <h3>فضاء التلميذ</h3>
-                    <p>كشف النقاط، جداول الحصص والدروس</p>
+                    <p>كشف النقاط وجداول الحصص والدروس</p>
                     <span class="space-btn" style="background: #8b5cf6;">اختيار الفضاء</span>
                 </div>
             </div>
         </div>
 
-        <!-- المرحلة الثانية: لوحة الدخول الآمن -->
+        <!-- لوحة الدخول الآمن -->
         <div id="secureLoginView">
             <div class="login-card">
                 <h2 id="spaceTitleText">لوحة الدخول الآمن</h2>
@@ -109,18 +93,17 @@
                 <form id="secureLoginForm">
                     <input type="hidden" id="selectedRole">
                     
-                    <!-- خيارات الصلاحية الإدارية الدقيقة -->
                     <div id="adminRoleSelection" class="form-group" style="display: none;">
                         <label>حدد الصفة الإدارية:</label>
                         <select id="adminSubRole" class="form-control">
                             <option value="admin_general">المدير العام (صلاحيات مطلقة)</option>
                             <option value="admin_finance_mgmt">المسؤول الإداري والمالي</option>
-                            <option value="admin_supervisor">الحارس العام (الغياب والنقط)</option>
+                            <option value="admin_supervisor">الحارس العام (الغياب والنقط حصرياً)</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label>البريد الإلكتروني / اسم المستخدم</label>
+                        <label>اسم المستخدم أو البريد</label>
                         <input type="text" id="username" required value="user@alrisala.ma">
                     </div>
                     <div class="form-group">
@@ -139,9 +122,6 @@
     </footer>
 
     <script>
-        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
-
         function openSecureLogin(role, title) {
             document.getElementById('spacesSelectionView').style.display = 'none';
             document.getElementById('secureLoginView').style.display = 'block';
@@ -167,9 +147,13 @@
             if (role === 'admin') {
                 let subRole = document.getElementById('adminSubRole').value;
                 localStorage.setItem('user_role', subRole);
-                window.location.href = 'admin.html';
             } else {
                 localStorage.setItem('user_role', role);
+            }
+
+            if (role === 'admin') {
+                window.location.href = 'admin.html';
+            } else {
                 switch(role) {
                     case 'teacher': window.location.href = 'teacher.html'; break;
                     case 'parent': window.location.href = 'parent.html'; break;
