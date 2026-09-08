@@ -381,122 +381,273 @@
 
             let tbody = document.getElementById('studentsTableBody');
             let tr = document.createElement('tr');
-            let randId = Math.floor(Math.random() * 1000);
-            tr.innerHTML = `<td>${reg}</td><td>${fName}</td><td>${lName}</td><td>${cls}</td><td>${season}</td><td><select id="m_${randId}" class="form-control" style="margin:0; padding:4px;"><option value="شتمبر 2026">شتمبر 2026</option></select></td><td><button class="btn btn-success" onclick="processStudentPayment('${reg}', '${fName} ${lName}', '${cls}', 500, 'm_${randId}')">طباعة وتحصيل</button></td>`;
-            tbody.appendChild(tr);
 
-            // إضافة التلميذ مباشرة للائحة إدخال النقط والغياب الميسرة
-            let directTbody = document.getElementById('directGradesTable');
-            let directTr = document.createElement('tr');
-            directTr.innerHTML = `<td>${reg}</td><td>${fName} ${lName}</td><td>${cls}</td><td><select id="att_status_${randId}" class="form-control" style="margin:0; padding:4px;"><option value="حاضر">حاضر</option><option value="غائب">غائب</option></select></td><td><input type="number" id="grade_val_${randId}" class="form-control" placeholder="مثال: 17.5" style="margin:0; padding:4px;"></td><td><button class="btn btn-success" onclick="saveDirectGrade('${fName} ${lName}', 'grade_val_${randId}', 'att_status_${randId}')">حفظ وتحديث مباشر</button></td>`;
-            directTbody.appendChild(directTr);
+<script>
+    // 1. بيانات الاتصال بمشروع Supabase الخاص بك (ضع بياناتك هنا)
+    const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
 
+    // تهيئة عميل Supabase
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let totalIncome = 125500;
+    let totalExpenses = 45000;
+
+    // عند تحميل الصفحة يتم جلب البيانات من Supabase
+    function initAdminPanel() {
+        let role = localStorage.getItem('user_role') || 'admin_general';
+        let menuContainer = document.getElementById('sideMenuContainer');
+        let badge = document.getElementById('userRoleBadge');
+        let welcome = document.getElementById('welcomeMsg');
+
+        menuContainer.innerHTML = '';
+
+        if (role === 'admin_general' || role === 'admin') {
+            badge.innerText = 'صلاحية: المدير العام';
+            welcome.innerText = 'مرحباً بالمدير العام. تملك الصلاحية المطلقة للإشراف على كافة أقسام المؤسسة.';
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-dash', this)" class="active">لوحة القيادة الشاملة</a></li>
+                <li><a onclick="switchTab('tab-students', this)">التلاميذ والأداءات</a></li>
+                <li><a onclick="switchTab('tab-attendance-grades', this)">الغياب والنقط</a></li>
+                <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة والواتساب</a></li>
+                <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
+                <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+                <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
+            `;
+        } 
+        else if (role === 'admin_finance_mgmt') {
+            badge.innerText = 'صلاحية: المسؤول الإداري والمالي';
+            welcome.innerText = 'مرحباً بك. فضاؤك مخصص للإجراءات الإدارية، تدبير التلاميذ، المداخيل والمصاريف المالية.';
+            document.getElementById('tab-dash').style.display = 'none';
+            document.getElementById('tab-students').classList.add('active');
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-students', this)" class="active">التلاميذ والأداءات</a></li>
+                <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة</a></li>
+                <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
+                <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+                <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
+            `;
+        } 
+        else if (role === 'admin_supervisor') {
+            badge.innerText = 'صلاحية: الحارس العام';
+            document.getElementById('tab-dash').style.display = 'none';
+            document.getElementById('tab-attendance-grades').classList.add('active');
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-attendance-grades', this)" class="active">متابعة الغياب والنقط</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+            `;
+        }
+
+        // جلب التلاميذ من Supabase فور فتح الصفحة
+        loadStudentsFromSupabase();
+    }
+
+    function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
+
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.aside-menu a').forEach(el => el.classList.remove('active'));
+        let target = document.getElementById(tabId);
+        if (target) target.classList.add('active');
+        if (element) element.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openAddStudentModal() { document.getElementById('addStudentModal').style.display = 'flex'; }
+    function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
+
+    // 2. دالة حفظ تلميذ جديد مباشرة في جدول Supabase
+    async function saveNewStudent(e) {
+        e.preventDefault();
+        let reg = document.getElementById('newReg').value;
+        let fName = document.getElementById('newFirstName').value;
+        let lName = document.getElementById('newLastName').value;
+        let cls = document.getElementById('newClass').value;
+        let season = document.getElementById('newSeason').value;
+
+        // إرسال البيانات إلى Supabase
+        const { data, error } = await _supabase
+            .from('students')
+            .insert([{ 
+                reg_number: reg, 
+                first_name: fName, 
+                last_name: lName, 
+                class_name: cls, 
+                academic_season: season 
+            }]);
+
+        if (error) {
+            alert('حدث خطأ أثناء الحفظ في قاعدة البيانات: ' + error.message);
+        } else {
+            alert('تم حفظ التلميذ بنجاح في قاعدة البيانات!');
             closeAddStudentModal();
             document.getElementById('addStudentForm').reset();
-            alert('تمت إضافة التلميذ بنجاح وإدراجه في لوحة النقط والغياب!');
+            loadStudentsFromSupabase(); // إعادة تحميل الجدول تلقائياً
+        }
+    }
+
+    // 3. دالة جلب وعرض التلاميذ من Supabase في الجدول
+    async function loadStudentsFromSupabase() {
+        let { data: students, error } = await _supabase
+            .from('students')
+            .select('*');
+
+        if (error) {
+            console.error('خطأ في جلب البيانات:', error);
+            return;
         }
 
-        function saveDirectGrade(studentName, gradeInputId, statusSelectId) {
-            let grade = document.getElementById(gradeInputId).value;
-            let status = document.getElementById(statusSelectId).value;
-            if(!grade && status === 'حاضر') { alert('الرجاء إدخال النقطة'); return; }
-            alert(`تم اعتماد النقطة (${grade || 'غير محددة'}) والحالة (${status}) للتلميذ ${studentName} بنجاح!`);
-        }
+        let tbody = document.getElementById('studentsTableBody');
+        let directTbody = document.getElementById('directGradesTable');
+        
+        tbody.innerHTML = '';
+        directTbody.innerHTML = '';
 
-        function processStudentPayment(reg, name, level, amount, monthSelectId) {
-            let month = document.getElementById(monthSelectId).value;
-            totalIncome += amount;
-            document.getElementById('finTotalIncome').innerText = totalIncome.toLocaleString() + ' درهم';
-            
-            let logBody = document.getElementById('financialLogBody');
+        if (!students || students.length === 0) return;
+
+        students.forEach((st, index) => {
+            // تعبئة جدول إدارة التلاميذ والأداءات
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td>`;
-            logBody.appendChild(tr);
-
-            alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
-        }
-
-        function payMonthlySalary(beneficiary, amount, monthSelectId) {
-            let month = document.getElementById(monthSelectId).value || 'شتمبر 2026';
-            totalExpenses += amount;
-            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
-            
-            let logBody = document.getElementById('financialLogBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب ${month}: ${beneficiary}</td>`;
-            logBody.appendChild(tr);
-
-            alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
-        }
-
-        function addTransportExpense() {
-            let desc = document.getElementById('transExpDesc').value;
-            let amount = parseFloat(document.getElementById('transExpAmount').value);
-            if(!desc || !amount) { alert('أدخل نوع المصروف والمبلغ'); return; }
-
-            totalExpenses += amount;
-            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
-
-            let logBody = document.getElementById('financialLogBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (نقل مدرسي)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
-            logBody.appendChild(tr);
-
-            document.getElementById('transExpDesc').value = '';
-            document.getElementById('transExpAmount').value = '';
-            alert('تم تسجيل مصروف النقل وخصمه من الميزانية بنجاح!');
-        }
-
-        function addOtherExpense() {
-            let desc = document.getElementById('otherDesc').value;
-            let amount = parseFloat(document.getElementById('otherAmount').value);
-            if(!desc || !amount) { alert('أدخل البيان والمبلغ بشكل صحيح'); return; }
-
-            totalExpenses += amount;
-            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
-
-            let logBody = document.getElementById('financialLogBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف آخر)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
-            logBody.appendChild(tr);
-
-            document.getElementById('otherDesc').value = '';
-            document.getElementById('otherAmount').value = '';
-            alert('تم تسجيل المصروف الإضافي وخصمه من الميزانية بنجاح!');
-        }
-
-        function addActivity() {
-            let name = document.getElementById('actName').value;
-            let date = document.getElementById('actDate').value;
-            if(!name) { alert('أدخل عنوان النشاط'); return; }
-            let tbody = document.getElementById('activitiesTableBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><span style="color:#10b981; font-weight:bold;">مضاف حديثاً</span></td>`;
+            tr.innerHTML = `
+                <td>${st.reg_number}</td>
+                <td>${st.first_name}</td>
+                <td>${st.last_name}</td>
+                <td>${st.class_name}</td>
+                <td>${st.academic_season}</td>
+                <td>
+                    <select id="m_${st.id}" class="form-control" style="margin:0; padding:4px;">
+                        <option value="شتمبر 2026">شتمبر 2026</option>
+                        <option value="أكتوبر 2026">أكتوبر 2026</option>
+                    </select>
+                </td>
+                <td><button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name} ${st.last_name}', '${st.class_name}', 500, 'm_${st.id}')">طباعة وتحصيل</button></td>
+            `;
             tbody.appendChild(tr);
-            document.getElementById('actName').value = '';
-            alert('تم إضافة النشاط التربوي بنجاح!');
-        }
 
-        function toggleMsgFields() {
-            let type = document.getElementById('msgType').value;
-            document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
-            document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
-        }
+            // تعبئة جدول النقط والغياب الميسر للحارس العام والأستاذ
+            let directTr = document.createElement('tr');
+            directTr.innerHTML = `
+                <td>${st.reg_number}</td>
+                <td>${st.first_name} ${st.last_name}</td>
+                <td>${st.class_name}</td>
+                <td>
+                    <select id="att_status_${st.id}" class="form-control" style="margin:0; padding:4px;">
+                        <option value="حاضر">حاضر</option>
+                        <option value="غائب">غائب</option>
+                    </select>
+                </td>
+                <td><input type="number" id="grade_val_${st.id}" class="form-control" placeholder="مثال: 17.5" style="margin:0; padding:4px;"></td>
+                <td><button class="btn btn-success" onclick="saveDirectGrade('${st.first_name} ${st.last_name}', 'grade_val_${st.id}', 'att_status_${st.id}')">حفظ وتحديث مباشر</button></td>
+            `;
+            directTbody.appendChild(directTr);
+        });
+    }
 
-        function sendWhatsAppMessage() {
-            let type = document.getElementById('msgType').value;
-            let msg = document.getElementById('msgContent').value;
-            if(!msg) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
-            let enc = encodeURIComponent(msg);
+    function saveDirectGrade(studentName, gradeInputId, statusSelectId) {
+        let grade = document.getElementById(gradeInputId).value;
+        let status = document.getElementById(statusSelectId).value;
+        if(!grade && status === 'حاضر') { alert('الرجاء إدخال النقطة'); return; }
+        alert(`تم اعتماد النقطة (${grade || 'غير محددة'}) والحالة (${status}) للتلميذ ${studentName} وتحديثها بنجاح!`);
+    }
 
-            if(type === 'private') {
-                let phone = document.getElementById('parentPhone').value;
-                if(!phone) { alert('الرجاء إدخال رقم واتساب الولي الخاص!'); return; }
-                window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
-            } else {
-                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
-            }
+    function processStudentPayment(reg, name, level, amount, monthSelectId) {
+        let month = document.getElementById(monthSelectId).value;
+        totalIncome += amount;
+        document.getElementById('finTotalIncome').innerText = totalIncome.toLocaleString() + ' درهم';
+        
+        let logBody = document.getElementById('financialLogBody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td>`;
+        logBody.appendChild(tr);
+
+        alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
+    }
+
+    function payMonthlySalary(beneficiary, amount, monthSelectId) {
+        let month = document.getElementById(monthSelectId).value || 'شتمبر 2026';
+        totalExpenses += amount;
+        document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+        
+        let logBody = document.getElementById('financialLogBody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب ${month}: ${beneficiary}</td>`;
+        logBody.appendChild(tr);
+
+        alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
+    }
+
+    function addTransportExpense() {
+        let desc = document.getElementById('transExpDesc').value;
+        let amount = parseFloat(document.getElementById('transExpAmount').value);
+        if(!desc || !amount) { alert('أدخل نوع المصروف والمبلغ'); return; }
+
+        totalExpenses += amount;
+        document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+
+        let logBody = document.getElementById('financialLogBody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (نقل مدرسي)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+        logBody.appendChild(tr);
+
+        document.getElementById('transExpDesc').value = '';
+        document.getElementById('transExpAmount').value = '';
+        alert('تم تسجيل مصروف النقل وخصمه من الميزانية بنجاح!');
+    }
+
+    function addOtherExpense() {
+        let desc = document.getElementById('otherDesc').value;
+        let amount = parseFloat(document.getElementById('otherAmount').value);
+        if(!desc || !amount) { alert('أدخل البيان والمبلغ بشكل صحيح'); return; }
+
+        totalExpenses += amount;
+        document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+
+        let logBody = document.getElementById('financialLogBody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف آخر)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+        logBody.appendChild(tr);
+
+        document.getElementById('otherDesc').value = '';
+        document.getElementById('otherAmount').value = '';
+        alert('تم تسجيل المصروف الإضافي وخصمه من الميزانية بنجاح!');
+    }
+
+    function addActivity() {
+        let name = document.getElementById('actName').value;
+        let date = document.getElementById('actDate').value;
+        if(!name) { alert('أدخل عنوان النشاط'); return; }
+        let tbody = document.getElementById('activitiesTableBody');
+        let tr = document.createElement('tr');
+        tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><span style="color:#10b981; font-weight:bold;">مضاف حديثاً</span></td>`;
+        tbody.appendChild(tr);
+        document.getElementById('actName').value = '';
+        alert('تم إضافة النشاط التربوي بنجاح!');
+    }
+
+    function toggleMsgFields() {
+        let type = document.getElementById('msgType').value;
+        document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
+        document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
+    }
+
+    function sendWhatsAppMessage() {
+        let type = document.getElementById('msgType').value;
+        let msg = document.getElementById('msgContent').value;
+        if(!msg) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
+        let enc = encodeURIComponent(msg);
+
+        if(type === 'private') {
+            let phone = document.getElementById('parentPhone').value;
+            if(!phone) { alert('الرجاء إدخال رقم واتساب الولي الخاص!'); return; }
+            window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+        } else {
+            window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
         }
-    </script>
+    }
+</script>
 </body>
 </html>
