@@ -307,55 +307,74 @@
         let totalIncome = 125500;
         let totalExpenses = 45000;
 
-        function initAdminPanel() {
-            let role = localStorage.getItem('user_role') || 'admin_general';
-            let menuContainer = document.getElementById('sideMenuContainer');
-            let badge = document.getElementById('userRoleBadge');
-            let welcome = document.getElementById('welcomeMsg');
+            function initAdminPanel() {
+        // جلب الدور، وإذا لم يوجد يتم توجيهه افتراضياً للمدير العام أو حسب الاختيار
+        let role = localStorage.getItem('user_role') || 'admin_general';
+        let menuContainer = document.getElementById('sideMenuContainer');
+        let badge = document.getElementById('userRoleBadge');
+        let welcome = document.getElementById('welcomeMsg');
 
-            menuContainer.innerHTML = '';
+        // إخفاء كافة التبويبات أولاً لمنع التداخل
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
 
-            if (role === 'admin_general' || role === 'admin') {
-                badge.innerText = 'صلاحية: المدير العام';
-                welcome.innerText = 'مرحباً بالمدير العام. تملك الصلاحية المطلقة للإشراف على كافة أقسام المؤسسة.';
-                menuContainer.innerHTML = `
-                    <li><a onclick="switchTab('tab-dash', this)" class="active">لوحة القيادة الشاملة</a></li>
-                    <li><a onclick="switchTab('tab-students', this)">التلاميذ والأداءات</a></li>
-                    <li><a onclick="switchTab('tab-attendance-grades', this)">الغياب والنقط</a></li>
-                    <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة والواتساب</a></li>
-                    <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
-                    <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
-                    <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
-                    <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
-                    <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
-                `;
-            } 
-            else if (role === 'admin_finance_mgmt') {
-                badge.innerText = 'صلاحية: المسؤول الإداري والمالي';
-                welcome.innerText = 'مرحباً بك. فضاؤك مخصص للإجراءات الإدارية، تدبير التلاميذ، المداخيل والمصاريف المالية.';
-                document.getElementById('tab-dash').style.display = 'none';
-                document.getElementById('tab-students').classList.add('active');
-                menuContainer.innerHTML = `
-                    <li><a onclick="switchTab('tab-students', this)" class="active">التلاميذ والأداءات</a></li>
-                    <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة</a></li>
-                    <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
-                    <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
-                    <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
-                    <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
-                    <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
-                `;
-            } 
-            else if (role === 'admin_supervisor') {
-                badge.innerText = 'صلاحية: الحارس العام';
-                // حجب لوحة المؤشرات الإحصائية والمالية تماماً عن الحارس العام
-                document.getElementById('tab-dash').style.display = 'none';
-                document.getElementById('tab-attendance-grades').classList.add('active');
-                menuContainer.innerHTML = `
-                    <li><a onclick="switchTab('tab-attendance-grades', this)" class="active">متابعة الغياب والنقط</a></li>
-                    <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
-                `;
-            }
+        menuContainer.innerHTML = '';
+
+        if (role === 'admin_general' || role === 'admin') {
+            badge.innerText = 'صلاحية: المدير العام';
+            if(welcome) welcome.innerText = 'مرحباً بالمدير العام. تملك الصلاحية المطلقة للإشراف على كافة أقسام المؤسسة.';
+            
+            // إظهار لوحة القيادة كبداية افتراضية للمدير
+            document.getElementById('tab-dash').classList.add('active');
+            
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-dash', this)" class="active">لوحة القيادة الشاملة</a></li>
+                <li><a onclick="switchTab('tab-students', this)">التلاميذ والأداءات</a></li>
+                <li><a onclick="switchTab('tab-attendance-grades', this)">الغياب والنقط</a></li>
+                <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة والواتساب</a></li>
+                <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
+                <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+                <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
+            `;
+        } 
+        else if (role === 'admin_finance_mgmt') {
+            badge.innerText = 'صلاحية: المسؤول الإداري والمالي';
+            
+            // إخفاء لوحة المؤشرات المالية تماماً عن المسؤول المالي إذا أردت، أو إظهار قسم التلاميذ كافتتاحي
+            let dashTab = document.getElementById('tab-dash');
+            if(dashTab) dashTab.style.display = 'none';
+            
+            document.getElementById('tab-students').classList.add('active');
+            
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-students', this)" class="active">التلاميذ والأداءات</a></li>
+                <li><a onclick="switchTab('tab-teachers', this)">رواتب الأساتذة</a></li>
+                <li><a onclick="switchTab('tab-staff', this)">الموظفون الإداريون</a></li>
+                <li><a onclick="switchTab('tab-transport', this)">النقل المدرسي والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-finance', this)">الخزينة والمصاريف</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+                <li><a onclick="switchTab('tab-comms', this)">الرسائل والتواصل</a></li>
+            `;
+        } 
+        else if (role === 'admin_supervisor') {
+            badge.innerText = 'صلاحية: الحارس العام';
+            
+            // حجب لوحة المؤشرات الإحصائية والمالية الشاملة تماماً عن الحارس العام
+            let dashTab = document.getElementById('tab-dash');
+            if(dashTab) dashTab.style.display = 'none';
+            
+            document.getElementById('tab-attendance-grades').classList.add('active');
+            
+            menuContainer.innerHTML = `
+                <li><a onclick="switchTab('tab-attendance-grades', this)" class="active">متابعة الغياب والنقط</a></li>
+                <li><a onclick="switchTab('tab-activities', this)">الأنشطة التربوية</a></li>
+            `;
         }
+
+        // جلب التلاميذ من Supabase فور فتح الصفحة
+        loadStudentsFromSupabase();
+                }
 
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
 
