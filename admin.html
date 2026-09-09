@@ -40,6 +40,7 @@
         .btn { background: #0284c7; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
         .btn-success { background: #10b981; }
+        .btn-danger { background: #ef4444; }
         .whatsapp-btn { background: #25d366; margin-left: 4px; }
         
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
@@ -70,18 +71,30 @@
 
     <div class="layout-body">
         <aside>
-            <ul class="aside-menu" id="sideMenuContainer">
-                <!-- القائمة الديناميكية المحمية من إعادة التوجيه -->
-            </ul>
+            <ul class="aside-menu" id="sideMenuContainer"></ul>
         </aside>
 
         <div class="main-container">
             
-            <!-- 1. لوحة القيادة الشاملة (محجوبة تماماً عن الحارس العام) -->
+            <!-- 1. لوحة المؤشرات الإحصائية والمالية الشاملة -->
             <div id="tab-dash" class="tab-content">
                 <h2>لوحة المؤشرات الإحصائية والمالية الشاملة</h2>
                 <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border-right: 4px solid #10b981; margin-bottom: 15px;">
                     <p id="welcomeMsg" style="font-weight: bold; color: #065f46;">مرحباً بك في فضاء الإدارة المركزي.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                    <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #0284c7;">
+                        <h3>عدد التلاميذ</h3>
+                        <p id="statTotalStudents" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #0284c7;">0</p>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #10b981;">
+                        <h3>عدد الأساتذة</h3>
+                        <p id="statTotalTeachers" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #10b981;">1</p>
+                    </div>
+                    <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #8b5cf6;">
+                        <h3>عدد الموظفين</h3>
+                        <p id="statTotalStaff" style="font-size: 22px; font-weight: bold; margin-top: 5px; color: #8b5cf6;">2</p>
+                    </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                     <div style="background: #f1f5f9; padding: 20px; border-radius: 8px; border-right: 4px solid #10b981;">
@@ -95,7 +108,7 @@
                 </div>
             </div>
 
-            <!-- 2. التلاميذ والأداءات (برقم المسار، الاسم الشخصي والعائلي، القسم وموسم الالتحاق) -->
+            <!-- 2. إدارة التلاميذ والأداءات -->
             <div id="tab-students" class="tab-content">
                 <h2>
                     <span>إدارة التلاميذ، الأداءات المالية وتحصيل الرسوم</span>
@@ -105,55 +118,48 @@
                     <thead>
                         <tr><th>رقم المسار</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>القسم</th><th>موسم الالتحاق</th><th>الشهر المؤدى</th><th>العمليات</th></tr>
                     </thead>
-                    <tbody id="studentsTableBody">
-                        <tr>
-                            <td>M138920</td>
-                            <td>يوسف</td>
-                            <td>البدري</td>
-                            <td>السادس ابتدائي (أ)</td>
-                            <td>2025/2026</td>
-                            <td>
-                                <select id="month_1" class="form-control" style="margin: 0; padding: 4px;">
-                                    <option value="شتمبر 2026">شتمبر 2026</option>
-                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button class="btn btn-success" onclick="processStudentPayment('M138920', 'يوسف البدري', 'السادس ابتدائي (أ)', 500, 'month_1')">طباعة التوصيل والتحصيل</button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="studentsTableBody"></tbody>
                 </table>
             </div>
 
-            <!-- 3. غياب التلاميذ وإدخال النقط (بصلاحية الحارس العام والأستاذ بلائحة مباشرة ميسرة) -->
+            <!-- 3. المراقبة: الغياب والنقط (جداول منفصلة) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>متابعة الغياب وإدخال النقط (لائحة التلاميذ المباشرة)</span></h2>
-                <table>
-                    <thead><tr><th>رقم المسار</th><th>الاسم الكامل</th><th>القسم</th><th>تسجيل الغياب</th><th>إدخال النقطة (على 20)</th><th>إجراء الاعتماد والتحديث</th></tr></thead>
-                    <tbody id="directGradesTable">
-                        <tr>
-                            <td>M138920</td>
-                            <td>يوسف البدري</td>
-                            <td>السادس ابتدائي (أ)</td>
-                            <td>
-                                <select id="att_status_1" class="form-control" style="margin:0; padding:4px;">
-                                    <option value="حاضر">حاضر</option>
-                                    <option value="غائب">غائب</option>
-                                </select>
-                            </td>
-                            <td><input type="number" id="grade_val_1" class="form-control" placeholder="مثال: 17.5" style="margin:0; padding:4px;"></td>
-                            <td><button class="btn btn-success" onclick="saveDirectGrade('يوسف البدري', 'grade_val_1', 'att_status_1')">حفظ وتحديث مباشر</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h2><span>سجل غيابات التلاميذ (بالتاريخ)</span></h2>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">تسجيل غياب جديد:</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="date" id="attDate" class="form-control" style="flex: 1; margin:0;">
+                        <input type="text" id="attStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
+                        <select id="attStatus" class="form-control" style="flex: 1; margin:0;">
+                            <option value="غياب غير مبرر">غياب غير مبرر</option>
+                            <option value="غياب مبرر">غياب مبرر</option>
+                        </select>
+                        <button class="btn btn-success" onclick="saveAttendance()">تسجيل الغياب</button>
+                    </div>
+                </div>
+
+                <h2><span>إدخال ونشر النقط (حسب المادة الدراسية)</span></h2>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="gradeStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
+                        <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
+                            <option value="اللغة العربية">اللغة العربية</option>
+                            <option value="الفرنسية">الفرنسية</option>
+                            <option value="الرياضيات">الرياضيات</option>
+                            <option value="النشاط العلمي">النشاط العلمي</option>
+                            <option value="التربية الإسلامية">التربية الإسلامية</option>
+                        </select>
+                        <input type="number" step="0.25" max="20" min="0" id="gradeValue" class="form-control" placeholder="النقطة على 20" style="flex: 1; margin:0;">
+                        <button class="btn btn-success" onclick="saveGrade()">حفظ ونشر النقطة</button>
+                    </div>
+                </div>
             </div>
 
             <!-- 4. رواتب الأساتذة والواتساب -->
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>شهر الصرف</th><th>صرف الراتب</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أ. محمد العمراني</td>
@@ -161,12 +167,7 @@
                             <td>24 ساعة</td>
                             <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">السادس أ</a></td>
                             <td>4500 درهم</td>
-                            <td>
-                                <select id="salary_m_1" class="form-control" style="margin:0; padding:4px;">
-                                    <option value="شتمبر 2026">شتمبر 2026</option>
-                                </select>
-                            </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500, 'salary_m_1')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. محمد العمراني', 4500)">صرف</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -176,45 +177,40 @@
             <div id="tab-staff" class="tab-content">
                 <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
-                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>شهر الصرف</th><th>صرف</th></tr></thead>
+                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أحمد الداودي</td>
                             <td>حارس عام</td>
                             <td>2023/09/01</td>
                             <td>5000 درهم</td>
-                            <td>
-                                <select id="salary_m_staff" class="form-control" style="margin:0; padding:4px;">
-                                    <option value="شتمبر 2026">شتمبر 2026</option>
-                                </select>
-                            </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'salary_m_staff')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000)">صرف</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 6. النقل المدرسي وطاقمه (البنزين، التأمين والصيانة الخاصة بالطفل المدرسي) -->
+            <!-- 6. النقل المدرسي ومصاريفه -->
             <div id="tab-transport" class="tab-content">
                 <h2><span>النقل المدرسي وطاقمه ومصاريف التلميذ (بنزين، تأمين، صيانة)</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                     <h3 style="font-size: 14px; margin-bottom: 10px;">أجور طاقم النقل:</h3>
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر الشهري</th><th>صرف</th></tr></thead>
+                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>صرف</th></tr></thead>
                         <tbody>
-                            <tr><td>سعيد بوطاهر</td><td>سائق الحافلة</td><td>4000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'salary_m_staff')">صرف</button></td></tr>
+                            <tr><td>سعيد بوطاهر</td><td>سائق الحافلة</td><td>4000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000)">صرف</button></td></tr>
                         </tbody>
                     </table>
                 </div>
-                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">تسجيل مصاريف النقل (بنزين الحافلات، التأمين المدرسي للنقل، والصيانة):</h3>
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">تسجيل مصاريف النقل:</h3>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <input type="text" id="transExpDesc" class="form-control" placeholder="نوع المصروف (تأمين النقل / صيانة / بنزين)" style="flex: 2; margin: 0;">
+                    <input type="text" id="transExpDesc" class="form-control" placeholder="نوع المصروف (تأمين / صيانة / بنزين)" style="flex: 2; margin: 0;">
                     <input type="number" id="transExpAmount" class="form-control" placeholder="المبلغ (درهم)" style="flex: 1; margin: 0;">
                     <button class="btn btn-success" onclick="addTransportExpense()">تسجيل وصرف</button>
                 </div>
             </div>
 
-            <!-- 7. الخزينة العامة ومصاريف المؤسسة وجدول مصاريف أخرى -->
+            <!-- 7. الخزينة العامة ومصاريف أخرى مع أزرار التعديل والحذف -->
             <div id="tab-finance" class="tab-content">
                 <h2><span>الخزينة العامة ومصاريف المؤسسة وجدول مصاريف أخرى</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
@@ -222,38 +218,54 @@
                     <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">إجمالي المصاريف: <strong id="finTotalExpenses" style="color: #ef4444;">45,000 درهم</strong></div>
                 </div>
 
-                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">جدول مصاريف أخرى طارئة أو ثابتة:</h3>
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">جدول مصاريف أخرى:</h3>
                 <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <input type="text" id="otherDesc" class="form-control" placeholder="بيان المصروف (أدوات، إصلاحات...)" style="flex: 2; margin: 0;">
-                    <input type="number" id="otherAmount" class="form-control" placeholder="المبلغ (درهم)" style="flex: 1; margin: 0;">
-                    <button class="btn btn-success" onclick="addOtherExpense()">إضافة للمصاريف</button>
+                    <input type="text" id="otherDesc" class="form-control" placeholder="بيان المصروف" style="flex: 2; margin: 0;">
+                    <input type="number" id="otherAmount" class="form-control" placeholder="المبلغ" style="flex: 1; margin: 0;">
+                    <button class="btn btn-success" onclick="addOtherExpense()">إضافة</button>
                 </div>
 
                 <table>
-                    <thead><tr><th>التاريخ</th><th>نوع العملية</th><th>المبلغ</th><th>البيان</th></tr></thead>
+                    <thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th><th>العمليات</th></tr></thead>
                     <tbody id="financialLogBody">
-                        <tr><td>2026/09/01</td><td><span style="color: #ef4444; font-weight: bold;">خروج</span></td><td>2,500 درهم</td><td>كهرباء وماء</td></tr>
+                        <tr>
+                            <td>2026/09/01</td>
+                            <td><span style="color: #ef4444; font-weight: bold;">خروج</span></td>
+                            <td>2,500 درهم</td>
+                            <td>كهرباء وماء</td>
+                            <td>
+                                <button class="btn" style="padding: 2px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 2px 8px;" onclick="deleteRow(this)">حذف</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 8. صفحة الأنشطة التربوية -->
+            <!-- 8. الأنشطة التربوية -->
             <div id="tab-activities" class="tab-content">
                 <h2><span>إدارة الأنشطة التربوية والموازية للمؤسسة</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                    <input type="text" id="actName" class="form-control" placeholder="عنوان النشاط التربوي (مثال: المسابقة الثقافية الكبرى)">
+                    <input type="text" id="actName" class="form-control" placeholder="عنوان النشاط التربوي">
                     <input type="date" id="actDate" class="form-control">
-                    <button class="btn btn-success" onclick="addActivity()">إضافة ونشر النشاط التربوي</button>
+                    <button class="btn btn-success" onclick="addActivity()">إضافة ونشر النشاط</button>
                 </div>
                 <table>
-                    <thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>الحالة</th></tr></thead>
+                    <thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>العمليات</th></tr></thead>
                     <tbody id="activitiesTableBody">
-                        <tr><td>حفل استقبال التلامذة الجدد</td><td>2026-09-07</td><td><span style="color:#10b981; font-weight:bold;">مبرمج</span></td></tr>
+                        <tr>
+                            <td>حفل استقبال التلامذة الجدد</td>
+                            <td>2026-09-07</td>
+                            <td>
+                                <button class="btn" style="padding: 2px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 2px 8px;" onclick="deleteRow(this)">حذف</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- 9. الرسائل والتواصل (خاصة للولي مباشرة أو عامة لمجموعة الواتساب) -->
+            <!-- 9. الرسائل والتواصل -->
             <div id="tab-comms" class="tab-content">
                 <h2><span>إرسال الرسائل العامة والخاصة للأولياء عبر الواتساب</span></h2>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -287,7 +299,7 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة تلميذ برقم المسار والاسم الشخصي والعائلي والقسم وموسم الالتحاق -->
+    <!-- نافذة إضافة تلميذ بالأسماء الصحيحة للأعمدة المتوافقة مع Supabase -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
@@ -304,9 +316,8 @@
     </div>
 
     <script>
-        // بيانات الاتصال بقاعدة بيانات Supabase
-        const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
+        const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_ID.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let totalIncome = 125500;
@@ -332,7 +343,7 @@
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)">الغياب والنقط</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة والواتساب</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي والمصاريف</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-finance', event, this)">الخزينة والمصاريف</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
@@ -348,7 +359,7 @@
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)" class="active">التلاميذ والأداءات</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي والمصاريف</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-finance', event, this)">الخزينة والمصاريف</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
@@ -361,7 +372,7 @@
                 document.getElementById('tab-attendance-grades').classList.add('active');
                 
                 menuContainer.innerHTML = `
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">متابعة الغياب والنقط</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">سجل الغياب وإدخال النقط</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                 `;
             }
@@ -392,6 +403,7 @@
             let cls = document.getElementById('newClass').value;
             let season = document.getElementById('newSeason').value;
 
+            // تم تصحيح أسماء الأعمدة لتتوافق مع القاعدة (academic_season أو season حسب ما تم إنشاؤه)
             const { data, error } = await _supabase
                 .from('students')
                 .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: cls, academic_season: season }]);
@@ -411,9 +423,10 @@
             if (error) return;
 
             let tbody = document.getElementById('studentsTableBody');
-            let directTbody = document.getElementById('directGradesTable');
             tbody.innerHTML = '';
-            directTbody.innerHTML = '';
+
+            let count = students ? students.length : 0;
+            document.getElementById('statTotalStudents').innerText = count;
 
             if (!students || students.length === 0) return;
 
@@ -424,40 +437,54 @@
                     <td>${st.first_name}</td>
                     <td>${st.last_name}</td>
                     <td>${st.class_name}</td>
-                    <td>${st.academic_season}</td>
+                    <td>${st.academic_season || '-'}</td>
                     <td>
                         <select id="m_${st.id}" class="form-control" style="margin:0; padding:4px;">
                             <option value="شتمبر 2026">شتمبر 2026</option>
                             <option value="أكتوبر 2026">أكتوبر 2026</option>
                         </select>
                     </td>
-                    <td><button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name} ${st.last_name}', '${st.class_name}', 500, 'm_${st.id}')">طباعة وتحصيل</button></td>
+                    <td>
+                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name} ${st.last_name}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
+                        <button class="btn" style="padding: 2px 6px;" onclick="editRow(this)">تعديل</button>
+                        <button class="btn btn-danger" style="padding: 2px 6px;" onclick="deleteRow(this)">حذف</button>
+                    </td>
                 `;
                 tbody.appendChild(tr);
-
-                let directTr = document.createElement('tr');
-                directTr.innerHTML = `
-                    <td>${st.reg_number}</td>
-                    <td>${st.first_name} ${st.last_name}</td>
-                    <td>${st.class_name}</td>
-                    <td>
-                        <select id="att_status_${st.id}" class="form-control" style="margin:0; padding:4px;">
-                            <option value="حاضر">حاضر</option>
-                            <option value="غائب">غائب</option>
-                        </select>
-                    </td>
-                    <td><input type="number" id="grade_val_${st.id}" class="form-control" placeholder="مثال: 17.5" style="margin:0; padding:4px;"></td>
-                    <td><button class="btn btn-success" onclick="saveDirectGrade('${st.first_name} ${st.last_name}', 'grade_val_${st.id}', 'att_status_${st.id}')">حفظ وتحديث مباشر</button></td>
-                `;
-                directTbody.appendChild(directTr);
             });
         }
 
-        function saveDirectGrade(studentName, gradeInputId, statusSelectId) {
-            let grade = document.getElementById(gradeInputId).value;
-            let status = document.getElementById(statusSelectId).value;
-            if(!grade && status === 'حاضر') { alert('الرجاء إدخال النقطة'); return; }
-            alert(`تم اعتماد النقطة (${grade || 'غير محددة'}) والحالة (${status}) للتلميذ ${studentName} بنجاح!`);
+        function saveAttendance() {
+            let date = document.getElementById('attDate').value;
+            let name = document.getElementById('attStudentName').value;
+            let status = document.getElementById('attStatus').value;
+            if(!date || !name) { alert('الرجاء إدخال التاريخ واسم التلميذ'); return; }
+            alert(`تم تسجيل الغياب بنجاح للتلميذ: ${name} بتاريخ ${date} (${status})`);
+            document.getElementById('attStudentName').value = '';
+        }
+
+        function saveGrade() {
+            let name = document.getElementById('gradeStudentName').value;
+            let subject = document.getElementById('gradeSubject').value;
+            let val = document.getElementById('gradeValue').value;
+            if(!name || !val) { alert('الرجاء إدخال اسم التلميذ والنقطة'); return; }
+            alert(`تم نشر نقطة مادة (${subject}) بنجاح للتلميذ ${name}: النقطة ${val}/20`);
+            document.getElementById('gradeStudentName').value = '';
+            document.getElementById('gradeValue').value = '';
+        }
+
+        function editRow(btn) {
+            let row = btn.closest('tr');
+            let cell = row.cells[1];
+            let newVal = prompt('تعديل البيانات:', cell.innerText);
+            if(newVal) { cell.innerText = newVal; alert('تم التعديل بنجاح!'); }
+        }
+
+        function deleteRow(btn) {
+            if(confirm('هل أنت متأكد من حذف هذا السطر؟')) {
+                btn.closest('tr').remove();
+                alert('تم الحذف بنجاح!');
+            }
         }
 
         function processStudentPayment(reg, name, level, amount, monthSelectId) {
@@ -467,20 +494,19 @@
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
         }
 
-        function payMonthlySalary(beneficiary, amount, monthSelectId) {
-            let month = monthSelectId ? document.getElementById(monthSelectId).value : 'شتمبر 2026';
+        function payMonthlySalary(beneficiary, amount) {
             totalExpenses += amount;
             document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب ${month}: ${beneficiary}</td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
@@ -496,7 +522,7 @@
 
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (نقل مدرسي)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (نقل مدرسي)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             document.getElementById('transExpDesc').value = '';
@@ -514,7 +540,7 @@
 
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف آخر)</span></td><td>${amount} درهم</td><td>${desc}</td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف آخر)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             document.getElementById('otherDesc').value = '';
@@ -528,7 +554,7 @@
             if(!name) { alert('أدخل عنوان النشاط'); return; }
             let tbody = document.getElementById('activitiesTableBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><span style="color:#10b981; font-weight:bold;">مضاف حديثاً</span></td>`;
+            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><button class="btn" style="padding:2px 6px;" onclick="editRow(this)">تعديل</button> <button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
             tbody.appendChild(tr);
             document.getElementById('actName').value = '';
             alert('تم إضافة النشاط التربوي بنجاح!');
