@@ -216,7 +216,7 @@
                 </div>
             </div>
 
-            <!-- 5. رواتب الأساتذة -->
+            <!-- 5. رواتب الأساتذة والمربيات -->
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة والمربيات الشهرية ومجموعات الواتساب</span></h2>
                 <table>
@@ -253,7 +253,7 @@
 
             <!-- 7. النقل المدرسي ومصاريفه التفصيلية -->
             <div id="tab-transport" class="tab-content">
-                <h2><span>النقل المدرسي وطاقمه ومصاريف الحافلات (بنزين، تأمين، صيانة...)</span></h2>
+                <h2><span>النقل المدرسي وطاقمه ومصاريف الحافلات</span></h2>
                 
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
@@ -265,7 +265,6 @@
                     </table>
                 </div>
 
-                <!-- جدول مصاريف النقل المدرسي التفصيلية -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
                         <h3 style="font-size: 14px; color: #0f172a;">جدول مصاريف سيارات وحافلات النقل المدرسي:</h3>
@@ -277,7 +276,7 @@
                     <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
                         <input type="date" id="transDate" class="form-control" style="flex: 1; margin:0;" value="2026-09-09">
                         <select id="transCategory" class="form-control" style="flex: 2; margin:0;">
-                            <option value="بنزين وكاربريران">بنزين / الوقود</option>
+                            <option value="بنزين / الوقود">بنزين / الوقود</option>
                             <option value="تأمين سيارات النقل">تأمين سيارات النقل (Assurance)</option>
                             <option value="الفحص التقني">الفحص التقني (Visite Technique)</option>
                             <option value="الضريبة السنوية">الضريبة السنوية (La Vignette)</option>
@@ -444,7 +443,7 @@
 
         // مستويات الأسلاك التعليمية مع جعل التعليم الأولي 3 مستويات دقيقة
         const cycleLevels = {
-            "التعليم الأولي (الروض)": ["مستوى أول (التمهيدي - أطفال 3 سنوات)", "مستوى ثانٍ (المستوى المتوسط - أطفال 4 سنوات)", "مستوى ثالث (القسم التحضيري للروض - أطفال 5 سنوات)"],
+            "التعليم الأولي (الروض)": ["المستوى الأول (تمهيدي 3 سنوات)", "المستوى الثاني (تمهيدي 4 سنوات)", "المستوى الثالث (تحضيري للروض 5 سنوات)"],
             "التعليم الابتدائي": ["المستوى الأول ابتدائي", "المستوى الثاني ابتدائي", "المستوى الثالث ابتدائي", "المستوى الرابع ابتدائي", "المستوى الخامس ابتدائي", "المستوى السادس ابتدائي"],
             "التعليم الثانوي الإعدادي": ["الأولى إعدادي", "الثانية إعدادي", "الثالثة إعدادي"],
             "التعليم الثانوي التأهيلي": ["الجذع المشترك", "الأولى باكالوريا", "الثانية باكالوريا"]
@@ -585,9 +584,17 @@
             let cls = document.getElementById('newClass').value;
             let season = document.getElementById('newSeason').value;
 
+            let payload = {
+                reg_number: reg,
+                first_name: fName,
+                last_name: lName,
+                class_name: `${cycle} - ${level} (${cls})`,
+                season: season
+            };
+
             const { data, error } = await _supabase
                 .from('students')
-                .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: `${cycle} - ${level} (${cls})`, season: season }]);
+                .insert([payload]);
 
             if (error) {
                 alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
@@ -687,7 +694,6 @@
             }
         }
 
-        // إضافة مصروف نقل وتحديث الإجمالي وتضاف للخزينة العامة
         function addTransportExpense() {
             let date = document.getElementById('transDate').value;
             let category = document.getElementById('transCategory').value;
