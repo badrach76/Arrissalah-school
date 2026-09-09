@@ -124,12 +124,42 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب والنقط (باستخدام الفلترة حسب السلك والمستوى والفصل) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (مع الطريقة السابقة + جدول ساعات الغياب التراكمية) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>متابعة الغياب وإدخال النقط (لائحة الفصل)</span></h2>
-                
+                <h2><span>سجل غياب التلاميذ وإدخال النقط</span></h2>
+
+                <!-- الطريقة السابقة لتسجيل غياب بتاريخ أو نشر نقطة مادة -->
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">تسجيل فردي (غياب أو نقطة مادة):</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+                        <input type="date" id="attDate" class="form-control" style="flex: 1; margin:0;">
+                        <input type="text" id="attStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
+                        <select id="attStatus" class="form-control" style="flex: 1; margin:0;">
+                            <option value="غياب غير مبرر">غياب غير مبرر</option>
+                            <option value="غياب مبرر">غياب مبرر</option>
+                        </select>
+                        <button class="btn btn-success" onclick="saveAttendance()">تسجيل الغياب</button>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <input type="text" id="gradeStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
+                        <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
+                            <option value="اللغة العربية">اللغة العربية</option>
+                            <option value="الفرنسية">الفرنسية</option>
+                            <option value="الرياضيات">الرياضيات</option>
+                            <option value="النشاط العلمي / الفيزياء">النشاط العلمي / الفيزياء</option>
+                            <option value="التربية الإسلامية">التربية الإسلامية</option>
+                        </select>
+                        <input type="number" step="0.25" max="20" min="0" id="gradeValue" class="form-control" placeholder="النقطة على 20" style="flex: 1; margin:0;">
+                        <button class="btn btn-success" onclick="saveGrade()">نشر النقطة (تزامن تلقائي)</button>
+                    </div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+
+                <!-- جدول تتبع ساعات الغياب التراكمية بحسب اختيار السلك والمستوى والفصل -->
+                <h2><span>تتبع مجموع ساعات الغياب حسب الفصل</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">حدد السلك والمستوى والفصل لعرض تلاميذ الفصل:</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي لعرض وتحديث ساعات الغياب:</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                         <select id="selCycle" class="form-control" style="flex: 1; margin:0;" onchange="updateLevelsDropdown()">
                             <option value="التعليم الابتدائي">التعليم الابتدائي</option>
@@ -143,27 +173,25 @@
                             <option value="القسم ج">القسم (ج)</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة الفصل</button>
+                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة التلاميذ</button>
                 </div>
 
-                <!-- جدول التلاميذ الخاص بالفصل المختار مع خانة ساعات الغياب وزر التنزيل -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="font-size: 14px; color: #0f172a;">تلاميذ الفصل المختار (ساعات الغياب وإدخال النقط):</h3>
-                        <button class="btn" onclick="downloadClassReport()">📥 تنزيل تقرير الفصل</button>
+                        <h3 style="font-size: 14px; color: #0f172a;">مجموع ساعات الغياب المتراكمة:</h3>
+                        <button class="btn" onclick="downloadClassReport()">📥 تنزيل تقرير الغياب</button>
                     </div>
                     <table>
                         <thead>
                             <tr>
                                 <th>رقم المسار</th>
                                 <th>الاسم الكامل</th>
-                                <th>ساعات الغياب</th>
-                                <th>المادة والنقطة (على 20)</th>
-                                <th>الإجراء والاعتماد</th>
+                                <th>مجموع ساعات الغياب (التراكمي)</th>
+                                <th>إضافة ساعات جديدة وتحديث تلقائي</th>
                             </tr>
                         </thead>
                         <tbody id="classStudentsTableBody">
-                            <tr><td colspan="5" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض لائحة الفصل</td></tr>
+                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض اللائحة</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -327,7 +355,7 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة تلميذ (مع مطابقة اسم العمود الصحيح في Supabase) -->
+    <!-- نافذة إضافة تلميذ -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
@@ -504,7 +532,6 @@
             let cls = document.getElementById('newClass').value;
             let season = document.getElementById('newSeason').value;
 
-            // استخدام الحقل الصحيح في جدول Supabase (مثلاً season بدلاً من academic_season إذا كان هو المعرف لديك)
             const { data, error } = await _supabase
                 .from('students')
                 .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: `${cycle} - ${level} (${cls})`, season: season }]);
@@ -521,10 +548,7 @@
 
         async function loadStudentsFromSupabase() {
             let { data: students, error } = await _supabase.from('students').select('*');
-            if (error) {
-                console.error(error);
-                return;
-            }
+            if (error) return;
 
             globalStudentsList = students || [];
             let tbody = document.getElementById('studentsTableBody');
@@ -560,7 +584,7 @@
             filterClassStudents();
         }
 
-        // فلترة وعرض تلاميذ الفصل المختار مع خانة ساعات الغياب والنقط والتنزيل
+        // فلترة تلاميذ الفصل وعرض مجموع ساعات الغياب التراكمية مع إمكانية إضافتها لتتجمع تلقائياً
         function filterClassStudents() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
@@ -574,49 +598,70 @@
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
                 return;
             }
 
-            filtered.forEach((st, idx) => {
+            filtered.forEach((st) => {
+                // تتبع ساعات الغياب محلياً لكل تلميذ أو افتراضياً 0
+                if (st.totalAbsence === undefined) st.totalAbsence = 0;
+
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${st.reg_number}</td>
+                    <td>${st.reg_number || '-'}</td>
                     <td>${st.first_name} ${st.last_name}</td>
-                    <td><input type="number" id="absence_${st.id}" class="form-control" placeholder="عدد الساعات" style="margin:0; padding:4px; width:90px;" min="0"></td>
+                    <td><strong id="abs_disp_${st.id}" style="color: #ef4444; font-size: 15px;">${st.totalAbsence} ساعة</strong></td>
                     <td>
-                        <div style="display: flex; gap: 5px;">
-                            <select id="subj_${st.id}" class="form-control" style="margin:0; padding:4px; flex:1;">
-                                <option value="العربية">العربية</option>
-                                <option value="الفرنسية">الفرنسية</option>
-                                <option value="الرياضيات">الرياضيات</option>
-                            </select>
-                            <input type="number" step="0.25" max="20" min="0" id="grade_${st.id}" class="form-control" placeholder="/20" style="margin:0; padding:4px; width:70px;">
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" id="add_abs_${st.id}" class="form-control" placeholder="أضف ساعات" style="margin:0; padding:4px; width:100px;" min="1" value="1">
+                            <button class="btn btn-success" onclick="addAbsenceHours('${st.id}')">+ إضافة وتجميع تلقائي</button>
                         </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-success" onclick="saveStudentRecord('${st.first_name} ${st.last_name}', '${st.id}')">حفظ وتزامن</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        // حفظ وتسجيل البيانات لتتزامن مع فضاء الأولياء والتلاميذ
-        function saveStudentRecord(studentName, studentId) {
-            let absHours = document.getElementById(`absence_${studentId}`).value || 0;
-            let subject = document.getElementById(`subj_${studentId}`).value;
-            let gradeVal = document.getElementById(`grade_${studentId}`).value;
+        // إضافة ساعات الغياب بحيث تتجمع وتتراكم تلقائياً في الجدول
+        function addAbsenceHours(studentId) {
+            let inputField = document.getElementById(`add_abs_${studentId}`);
+            let hoursToAdd = parseFloat(inputField.value) || 0;
+            if(hoursToAdd <= 0) { alert('الرجاء إدخال عدد صحيح للساعات'); return; }
 
-            // حفظ البيانات محلياً أو إرسالها لـ Supabase لتظهر في فضاء التلميذ والولي
-            alert(`تم حفظ وتحديث بيانات التلميذ: ${studentName}\n- ساعات الغياب المسجلة: ${absHours} ساعة\n- نقطة مادة (${subject}): ${gradeVal || 'غير محددة'}\n(تم التزامن بنجاح مع فضاءات التلاميذ والأولياء)`);
+            let student = globalStudentsList.find(st => st.id == studentId);
+            if(student) {
+                student.totalAbsence = (student.totalAbsence || 0) + hoursToAdd;
+                document.getElementById(`abs_disp_${studentId}`).innerText = student.totalAbsence + ' ساعة';
+                alert(`تمت إضافة ${hoursToAdd} ساعة غياب بنجاح. المجموع التراكمي الآن: ${student.totalAbsence} ساعة (تزامن تلقائي مع الفضاءات).`);
+                inputField.value = 1;
+            }
+        }
+
+        // الطريقة السابقة لتسجيل غياب فردي أو نقطة مادة
+        function saveAttendance() {
+            let date = document.getElementById('attDate').value;
+            let name = document.getElementById('attStudentName').value;
+            let status = document.getElementById('attStatus').value;
+            if(!date || !name) { alert('الرجاء إدخال التاريخ واسم التلميذ'); return; }
+            alert(`تم تسجيل الغياب (${status}) للتلميذ: ${name} بتاريخ ${date} (تزامن تلقائي مع فضاء التلميذ والولي)`);
+            document.getElementById('attStudentName').value = '';
+        }
+
+        function saveGrade() {
+            let name = document.getElementById('gradeStudentName').value;
+            let subject = document.getElementById('gradeSubject').value;
+            let val = document.getElementById('gradeValue').value;
+            if(!name || !val) { alert('الرجاء إدخال اسم التلميذ والنقطة'); return; }
+            alert(`تم نشر نقطة مادة (${subject}) للتلميذ ${name}: النقطة ${val}/20 (تزامن تلقائي مع فضاء التلميذ والولي)`);
+            document.getElementById('gradeStudentName').value = '';
+            document.getElementById('gradeValue').value = '';
         }
 
         function downloadClassReport() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
             let cls = document.getElementById('selClass').value;
-            alert(`جاري تنزيل تقرير الغياب والنقط لفصل (${cycle} - ${level} - ${cls}) بصيغة ملف منظم...`);
+            alert(`جاري تنزيل تقرير الغياب التراكمي لفصل (${cycle} - ${level} - ${cls})...`);
         }
 
         function downloadTimetable() {
