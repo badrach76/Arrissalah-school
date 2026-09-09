@@ -20,7 +20,7 @@
         .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
 
         .layout-body { display: flex; flex: 1; }
-        aside { width: 260px; background: #0f172a; color: white; padding: 20px; flex-shrink: 0; }
+        aside { width: 260px; background: #0f172a; color: white; padding: 20px; flex-shrink: 0; transition: 0.3s; z-index: 999; }
         .aside-menu { list-style: none; }
         .aside-menu li { margin-bottom: 8px; }
         .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 12px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: 0.3s; }
@@ -49,8 +49,10 @@
         .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 12px; outline: none; }
 
         @media (max-width: 768px) {
+            .menu-toggle { display: block; }
             .layout-body { flex-direction: column; }
-            aside { width: 100%; height: auto; margin-bottom: 15px; }
+            aside { width: 100%; display: none; }
+            aside.mobile-open { display: block; }
             .main-container { padding: 15px; }
         }
     </style>
@@ -62,7 +64,7 @@
             <div class="logo">مؤسسة الرسالة</div>
             <div class="sub-logo">للتعليم الخصوصي</div>
         </a>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <button class="menu-toggle" onclick="toggleSidebar()">☰ القائمة</button>
         <ul class="nav-menu" id="navMenu">
             <li><span id="userRoleBadge" style="font-weight: bold; color: #0284c7; font-size: 13px; background: #e0f2fe; padding: 4px 10px; border-radius: 4px;">الإدارة</span></li>
             <li><a href="login.html" onclick="localStorage.removeItem('user_role');" style="color: #ef4444;">تسجيل خروج</a></li>
@@ -70,7 +72,7 @@
     </header>
 
     <div class="layout-body">
-        <aside>
+        <aside id="appAside">
             <ul class="aside-menu" id="sideMenuContainer"></ul>
         </aside>
 
@@ -122,7 +124,7 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط (مع اختيار السلك والمستوى والفصل) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط -->
             <div id="tab-attendance-grades" class="tab-content">
                 <h2><span>متابعة الغياب وإدخال النقط (حسب السلك، المستوى والفصل)</span></h2>
                 
@@ -134,9 +136,7 @@
                             <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
                             <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
                         </select>
-                        <select id="selLevel" class="form-control" style="flex: 1; margin:0;">
-                            <!-- يتم تحديث المستويات ديناميكياً -->
-                        </select>
+                        <select id="selLevel" class="form-control" style="flex: 1; margin:0;"></select>
                         <select id="selClass" class="form-control" style="flex: 1; margin:0;">
                             <option value="القسم أ">القسم (أ)</option>
                             <option value="القسم ب">القسم (ب)</option>
@@ -145,7 +145,6 @@
                     </div>
                 </div>
 
-                <!-- جدول تسجيل الغياب -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">سجل غياب التلاميذ (بالتاريخ):</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
@@ -159,7 +158,6 @@
                     </div>
                 </div>
 
-                <!-- جدول إدخال النقط بالمادة -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">إدخال ونشر النقط (حسب المادة الدراسية):</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -177,7 +175,7 @@
                 </div>
             </div>
 
-            <!-- 4. استعمال الزمن (حسب السلك والمستوى والفصل مع التنزيل) -->
+            <!-- 4. استعمال الزمن -->
             <div id="tab-timetable" class="tab-content">
                 <h2><span>جداول استعمال الزمن (للتلاميذ والأساتذة)</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
@@ -188,9 +186,7 @@
                             <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
                             <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
                         </select>
-                        <select id="ttLevel" class="form-control" style="flex: 1; margin:0;">
-                            <!-- مستويات السلك -->
-                        </select>
+                        <select id="ttLevel" class="form-control" style="flex: 1; margin:0;"></select>
                         <select id="ttType" class="form-control" style="flex: 1; margin:0;">
                             <option value="تلاميذ">استعمال زمن التلاميذ</option>
                             <option value="أساتذة">استعمال زمن الأساتذة</option>
@@ -200,7 +196,7 @@
                 </div>
             </div>
 
-            <!-- 5. رواتب الأساتذة والواتساب -->
+            <!-- 5. رواتب الأساتذة -->
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب</span></h2>
                 <table>
@@ -235,7 +231,7 @@
                 </table>
             </div>
 
-            <!-- 7. النقل المدرسي ومصاريفه -->
+            <!-- 7. النقل المدرسي -->
             <div id="tab-transport" class="tab-content">
                 <h2><span>النقل المدرسي وطاقمه ومصاريف التلميذ (بنزين، تأمين، صيانة)</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
@@ -249,7 +245,7 @@
                 </div>
             </div>
 
-            <!-- 8. الخزينة ومصاريف أخرى -->
+            <!-- 8. الخزينة والمصاريف -->
             <div id="tab-finance" class="tab-content">
                 <h2><span>الخزينة العامة ومصاريف المؤسسة وجدول مصاريف أخرى</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
@@ -338,7 +334,7 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة تلميذ مع اختيار السلك والمستوى -->
+    <!-- نافذة إضافة تلميذ -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
@@ -373,7 +369,6 @@
         let totalIncome = 125500;
         let totalExpenses = 45000;
 
-        // مستويات الأسلاك التعليمية المغربية
         const cycleLevels = {
             "التعليم الابتدائي": ["المستوى الأول ابتدائي", "المستوى الثاني ابتدائي", "المستوى الثالث ابتدائي", "المستوى الرابع ابتدائي", "المستوى الخامس ابتدائي", "المستوى السادس ابتدائي"],
             "التعليم الثانوي الإعدادي": ["الأولى إعدادي", "الثانية إعدادي", "الثالثة إعدادي"],
@@ -442,7 +437,11 @@
             loadStudentsFromSupabase();
         }
 
-        // تحديث المستويات بناءً على السلك المختار في واجهة الغياب والنقط
+        function toggleSidebar() {
+            let aside = document.getElementById('appAside');
+            aside.classList.toggle('mobile-open');
+        }
+
         function updateLevelsDropdown() {
             let cycle = document.getElementById('selCycle').value;
             let levelSelect = document.getElementById('selLevel');
@@ -455,7 +454,6 @@
             });
         }
 
-        // تحديث المستويات في نافذة إضافة تلميذ
         function updateModalLevels() {
             let cycle = document.getElementById('modalCycle').value;
             let levelSelect = document.getElementById('modalLevel');
@@ -468,7 +466,6 @@
             });
         }
 
-        // تحديث المستويات في صفحة استعمال الزمن
         function updateTTLevels() {
             let cycle = document.getElementById('ttCycle').value;
             let levelSelect = document.getElementById('ttLevel');
@@ -481,15 +478,28 @@
             });
         }
 
-        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-
+        // دالة التبديل المحسنة: تعرض الصفحة المطلوبة وتغلق القائمة الجانبية في الهاتف تلقائياً
         function switchTab(tabId, event, element) {
             if (event) event.preventDefault();
+            
+            // إخفاء جميع الأقسام وتفعيل القسم المطلوب
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.aside-menu a').forEach(el => el.classList.remove('active'));
+            
             let target = document.getElementById(tabId);
-            if (target) target.classList.add('active');
-            if (element) element.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+            }
+            if (element) {
+                element.classList.add('active');
+            }
+
+            // غلق القائمة الجانبية تلقائياً في الشاشات الصغيرة عند الاختيار
+            let aside = document.getElementById('appAside');
+            if (aside) {
+                aside.classList.remove('mobile-open');
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
