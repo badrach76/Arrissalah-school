@@ -305,8 +305,8 @@
 
     <script>
         // بيانات الاتصال بقاعدة بيانات Supabase
-        const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_ID.supabase.co';
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+        const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
         const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         let totalIncome = 125500;
