@@ -1,6 +1,6 @@
 // بيانات الاتصال بمشروع Supabase الخاص بك
-const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_ID.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
 
 // تهيئة العميل (Client)
 const { createClient } = supabase;
