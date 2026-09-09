@@ -37,7 +37,7 @@
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         
-        .btn { background: #0284c7; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn { background: #0284c7; color: white; border: none; padding: 9px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
         .btn-success { background: #10b981; }
         .btn-danger { background: #ef4444; }
@@ -46,7 +46,25 @@
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .close-modal { position: absolute; inset-inline-end: 20px; top: 15px; font-size: 22px; cursor: pointer; color: #64748b; }
-        .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; margin-bottom: 12px; outline: none; }
+        
+        /* التناسق الموحد التام بين حقول النص والقوائم المنسدلة */
+        .form-control { 
+            width: 100%; 
+            padding: 10px 12px; 
+            border: 1px solid #cbd5e1; 
+            border-radius: 6px; 
+            font-size: 13px; 
+            font-family: 'Cairo', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            margin-bottom: 12px; 
+            outline: none; 
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            border-color: #0284c7;
+            box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+        }
 
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
@@ -66,7 +84,7 @@
         </a>
         <button class="menu-toggle" onclick="toggleSidebar()">☰ القائمة</button>
         <ul class="nav-menu" id="navMenu">
-            <li><span id="userRoleBadge" style="font-weight: bold; color: #0284c7; font-size: 13px; background: #e0f2fe; padding: 4px 10px; border-radius: 4px;">الإدارة</span></li>
+            <li><span id="userRoleBadge" style="font-weight: bold; color: #0284c7; font-size: 13px; background: #e0f2fe; padding: 6px 12px; border-radius: 6px;">الإدارة</span></li>
             <li><a href="login.html" onclick="localStorage.removeItem('user_role');" style="color: #ef4444;">تسجيل خروج</a></li>
         </ul>
     </header>
@@ -441,7 +459,6 @@
         let totalTransportExpenses = 1200;
         let globalStudentsList = [];
 
-        // مستويات الأسلاك التعليمية مع جعل التعليم الأولي 3 مستويات دقيقة
         const cycleLevels = {
             "التعليم الأولي (الروض)": ["المستوى الأول (تمهيدي 3 سنوات)", "المستوى الثاني (تمهيدي 4 سنوات)", "المستوى الثالث (تحضيري للروض 5 سنوات)"],
             "التعليم الابتدائي": ["المستوى الأول ابتدائي", "المستوى الثاني ابتدائي", "المستوى الثالث ابتدائي", "المستوى الرابع ابتدائي", "المستوى الخامس ابتدائي", "المستوى السادس ابتدائي"],
@@ -573,40 +590,41 @@
             document.getElementById('addStudentModal').style.display = 'flex';
         }
         function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
-async function saveNewStudent(e) {
-    e.preventDefault();
-    let reg = document.getElementById('newReg').value;
-    let fName = document.getElementById('newFirstName').value;
-    let lName = document.getElementById('newLastName').value;
-    let cycle = document.getElementById('modalCycle').value;
-    let level = document.getElementById('modalLevel').value;
-    let cls = document.getElementById('newClass').value;
-    let season = document.getElementById('newSeason').value;
 
-    let payload = {
-        reg_number: reg,
-        first_name: fName,
-        last_name: lName,
-        class_name: `${cycle} - ${level} (${cls})`,
-        season: season,
-        "الاسم": fName,
-        "العائلة": lName,
-        "مسار": reg
-    };
+        async function saveNewStudent(e) {
+            e.preventDefault();
+            let reg = document.getElementById('newReg').value;
+            let fName = document.getElementById('newFirstName').value;
+            let lName = document.getElementById('newLastName').value;
+            let cycle = document.getElementById('modalCycle').value;
+            let level = document.getElementById('modalLevel').value;
+            let cls = document.getElementById('newClass').value;
+            let season = document.getElementById('newSeason').value;
 
-    const { data, error } = await _supabase
-        .from('students')
-        .insert([payload]);
+            let payload = {
+                reg_number: reg,
+                first_name: fName,
+                last_name: lName,
+                class_name: `${cycle} - ${level} (${cls})`,
+                season: season,
+                "الاسم": fName,
+                "العائلة": lName,
+                "مسار": reg
+            };
 
-    if (error) {
-        alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
-    } else {
-        alert('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase!');
-        closeAddStudentModal();
-        e.target.reset();
-        loadStudentsFromSupabase();
-    }
-}
+            const { data, error } = await _supabase
+                .from('students')
+                .insert([payload]);
+
+            if (error) {
+                alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
+            } else {
+                alert('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase!');
+                closeAddStudentModal();
+                e.target.reset();
+                loadStudentsFromSupabase();
+            }
+        }
 
         async function loadStudentsFromSupabase() {
             let { data: students, error } = await _supabase.from('students').select('*');
@@ -624,20 +642,20 @@ async function saveNewStudent(e) {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${st.reg_number || st.مسار || '-'}</td>
-                    <td>${st.first_name || '-'}</td>
-                    <td>${st.last_name || '-'}</td>
+                    <td>${st.first_name || st.الاسم || '-'}</td>
+                    <td>${st.last_name || st.العائلة || '-'}</td>
                     <td>${st.class_name || '-'}</td>
                     <td>${st.season || '-'}</td>
                     <td>
-                        <select id="m_${st.id}" class="form-control" style="margin:0; padding:4px;">
+                        <select id="m_${st.id}" class="form-control" style="margin:0; padding:6px 10px;">
                             <option value="شتمبر 2026">شتمبر 2026</option>
                             <option value="أكتوبر 2026">أكتوبر 2026</option>
                         </select>
                     </td>
                     <td>
                         <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number || st.مسار}', '${st.first_name || st.الاسم}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
-                        <button class="btn" style="padding: 2px 6px;" onclick="editRow(this)">تعديل</button>
-                        <button class="btn btn-danger" style="padding: 2px 6px;" onclick="deleteRow(this)">حذف</button>
+                        <button class="btn" style="padding: 6px 10px;" onclick="editRow(this)">تعديل</button>
+                        <button class="btn btn-danger" style="padding: 6px 10px;" onclick="deleteRow(this)">حذف</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -666,7 +684,7 @@ async function saveNewStudent(e) {
             filtered.forEach((st) => {
                 if (st.totalAbsence === undefined) st.totalAbsence = 0;
 
-                let fullName = st.first_name ? `${st.first_name} ${st.last_name || ''}` : (st.الاسم || 'تلميذ');
+                let fullName = st.first_name ? `${st.first_name} ${st.last_name || ''}` : `${st.الاسم || ''} ${st.العائلة || ''}`;
                 let regNum = st.reg_number || st.مسار || '-';
 
                 let tr = document.createElement('tr');
@@ -676,7 +694,7 @@ async function saveNewStudent(e) {
                     <td><strong id="abs_disp_${st.id}" style="color: #ef4444; font-size: 15px;">${st.totalAbsence} ساعة</strong></td>
                     <td>
                         <div style="display: flex; gap: 8px;">
-                            <input type="number" id="add_abs_${st.id}" class="form-control" placeholder="أضف ساعات" style="margin:0; padding:4px; width:100px;" min="1" value="1">
+                            <input type="number" id="add_abs_${st.id}" class="form-control" placeholder="أضف ساعات" style="margin:0; width:110px;" min="1" value="1">
                             <button class="btn btn-success" onclick="addAbsenceHours('${st.id}')">+ إضافة وتجميع تلقائي</button>
                         </div>
                     </td>
@@ -721,8 +739,8 @@ async function saveNewStudent(e) {
                 <td>${amount.toLocaleString()} درهم</td>
                 <td>${note}</td>
                 <td>
-                    <button class="btn" style="padding: 2px 6px;" onclick="editRow(this)">تعديل</button>
-                    <button class="btn btn-danger" style="padding: 2px 6px;" onclick="deleteTransportRow(this, ${amount})">حذف</button>
+                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, ${amount})">حذف</button>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -797,7 +815,7 @@ async function saveNewStudent(e) {
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
@@ -809,7 +827,7 @@ async function saveNewStudent(e) {
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
@@ -825,7 +843,7 @@ async function saveNewStudent(e) {
 
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف عام)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف عام)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
             document.getElementById('otherDesc').value = '';
@@ -839,7 +857,7 @@ async function saveNewStudent(e) {
             if(!name) { alert('أدخل عنوان النشاط'); return; }
             let tbody = document.getElementById('activitiesTableBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><button class="btn" style="padding:2px 6px;" onclick="editRow(this)">تعديل</button> <button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><button class="btn" style="padding:4px 8px;" onclick="editRow(this)">تعديل</button> <button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             tbody.appendChild(tr);
             document.getElementById('actName').value = '';
             alert('تم إضافة النشاط التربوي بنجاح!');
