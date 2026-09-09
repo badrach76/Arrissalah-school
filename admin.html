@@ -116,34 +116,38 @@
                 </h2>
                 <table>
                     <thead>
-                        <tr><th>رقم المسار</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>القسم</th><th>موسم الالتحاق</th><th>الشهر المؤدى</th><th>العمليات</th></tr>
+                        <tr><th>رقم المسار</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>السلك والمستوى</th><th>القسم</th><th>موسم الالتحاق</th><th>الشهر</th><th>العمليات</th></tr>
                     </thead>
                     <tbody id="studentsTableBody"></tbody>
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط (مع اختيار المستوى والفصل أولاً) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (مع اختيار السلك والمستوى والفصل) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>متابعة الغياب وإدخال النقط (حسب المستوى والفصل)</span></h2>
+                <h2><span>متابعة الغياب وإدخال النقط (حسب السلك، المستوى والفصل)</span></h2>
                 
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">حدد المستوى والفصل المستهدف أولاً:</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">حدد السلك والمستوى والفصل الدراسي أولاً:</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <select id="selCycle" class="form-control" style="flex: 1; margin:0;" onchange="updateLevelsDropdown()">
+                            <option value="التعليم الابتدائي">التعليم الابتدائي</option>
+                            <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
+                            <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
+                        </select>
                         <select id="selLevel" class="form-control" style="flex: 1; margin:0;">
-                            <option value="السادس ابتدائي">السادس ابتدائي</option>
-                            <option value="الخامس ابتدائي">الخامس ابتدائي</option>
-                            <option value="الثالث إعدادي">الثالث إعدادي</option>
+                            <!-- يتم تحديث المستويات ديناميكياً -->
                         </select>
                         <select id="selClass" class="form-control" style="flex: 1; margin:0;">
                             <option value="القسم أ">القسم (أ)</option>
                             <option value="القسم ب">القسم (ب)</option>
+                            <option value="القسم ج">القسم (ج)</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- جدول تسجيل الغياب -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">سجل غياب التلاميذ (بالتاريخ والمستوى):</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">سجل غياب التلاميذ (بالتاريخ):</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                         <input type="date" id="attDate" class="form-control" style="flex: 1; margin:0;">
                         <input type="text" id="attStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
@@ -157,14 +161,14 @@
 
                 <!-- جدول إدخال النقط بالمادة -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">إدخال ونشر النقط (اختيار المادة الدراسية):</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">إدخال ونشر النقط (حسب المادة الدراسية):</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <input type="text" id="gradeStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
                         <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
                             <option value="اللغة العربية">اللغة العربية</option>
                             <option value="الفرنسية">الفرنسية</option>
                             <option value="الرياضيات">الرياضيات</option>
-                            <option value="النشاط العلمي">النشاط العلمي</option>
+                            <option value="النشاط العلمي / الفيزياء">النشاط العلمي / الفيزياء</option>
                             <option value="التربية الإسلامية">التربية الإسلامية</option>
                         </select>
                         <input type="number" step="0.25" max="20" min="0" id="gradeValue" class="form-control" placeholder="النقطة على 20" style="flex: 1; margin:0;">
@@ -173,24 +177,28 @@
                 </div>
             </div>
 
-            <!-- 4. استعمال الزمن (للتلاميذ والأساتذة مع خيار التنزيل) -->
-            <main id="tab-timetable" class="tab-content">
+            <!-- 4. استعمال الزمن (حسب السلك والمستوى والفصل مع التنزيل) -->
+            <div id="tab-timetable" class="tab-content">
                 <h2><span>جداول استعمال الزمن (للتلاميذ والأساتذة)</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">اختر المستوى والفصل لتنزيل وعرض استعمال الزمن الخاص بالتلاميذ أو الأساتذة:</p>
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">حدد السلك والمستوى والفصل لتنزيل أو عرض استعمال الزمن:</p>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <select id="ttCycle" class="form-control" style="flex: 1; margin:0;" onchange="updateTTLevels()">
+                            <option value="التعليم الابتدائي">التعليم الابتدائي</option>
+                            <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
+                            <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
+                        </select>
                         <select id="ttLevel" class="form-control" style="flex: 1; margin:0;">
-                            <option value="السادس ابتدائي">السادس ابتدائي</option>
-                            <option value="الثالث إعدادي">الثالث إعدادي</option>
+                            <!-- مستويات السلك -->
                         </select>
                         <select id="ttType" class="form-control" style="flex: 1; margin:0;">
                             <option value="تلاميذ">استعمال زمن التلاميذ</option>
                             <option value="أساتذة">استعمال زمن الأساتذة</option>
                         </select>
-                        <button class="btn" onclick="downloadTimetable()">📥 تحميل جدول استعمال الزمن (PDF / صورة)</button>
+                        <button class="btn" onclick="downloadTimetable()">📥 تحميل واستعراض الجدول</button>
                     </div>
                 </div>
-            </main>
+            </div>
 
             <!-- 5. رواتب الأساتذة والواتساب -->
             <div id="tab-teachers" class="tab-content">
@@ -330,7 +338,7 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة تلميذ -->
+    <!-- نافذة إضافة تلميذ مع اختيار السلك والمستوى -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
@@ -339,7 +347,18 @@
                 <input type="text" id="newReg" class="form-control" placeholder="رقم المسار (مثال: M138920)" required>
                 <input type="text" id="newFirstName" class="form-control" placeholder="الاسم الشخصي" required>
                 <input type="text" id="newLastName" class="form-control" placeholder="الاسم العائلي" required>
-                <input type="text" id="newClass" class="form-control" placeholder="القسم" required>
+                
+                <label style="font-size: 12px; font-weight: bold; color: #475569;">السلك التعليمي:</label>
+                <select id="modalCycle" class="form-control" onchange="updateModalLevels()">
+                    <option value="التعليم الابتدائي">التعليم الابتدائي</option>
+                    <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
+                    <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
+                </select>
+
+                <label style="font-size: 12px; font-weight: bold; color: #475569;">المستوى الدراسي:</label>
+                <select id="modalLevel" class="form-control"></select>
+
+                <input type="text" id="newClass" class="form-control" placeholder="القسم (مثال: القسم أ)" required>
                 <input type="text" id="newSeason" class="form-control" placeholder="موسم الالتحاق (مثال: 2026/2027)" required>
                 <button type="submit" class="btn btn-success" style="width: 100%; padding: 10px;">حفظ التلميذ</button>
             </form>
@@ -353,6 +372,13 @@
 
         let totalIncome = 125500;
         let totalExpenses = 45000;
+
+        // مستويات الأسلاك التعليمية المغربية
+        const cycleLevels = {
+            "التعليم الابتدائي": ["المستوى الأول ابتدائي", "المستوى الثاني ابتدائي", "المستوى الثالث ابتدائي", "المستوى الرابع ابتدائي", "المستوى الخامس ابتدائي", "المستوى السادس ابتدائي"],
+            "التعليم الثانوي الإعدادي": ["الأولى إعدادي", "الثانية إعدادي", "الثالثة إعدادي"],
+            "التعليم الثانوي التأهيلي": ["الجذع المشترك", "الأولى باكالوريا", "الثانية باكالوريا"]
+        };
 
         function initAdminPanel() {
             let role = localStorage.getItem('user_role') || 'admin_general';
@@ -401,7 +427,7 @@
             else if (role === 'admin_supervisor') {
                 badge.innerText = 'صلاحية: الحارس العام';
                 let dashTab = document.getElementById('tab-dash');
-                if(dashTab) dashTab.style.display = 'none'; // حجب لوحة المؤشرات المالية تماماً عن الحارس العام
+                if(dashTab) dashTab.style.display = 'none';
                 document.getElementById('tab-attendance-grades').classList.add('active');
                 
                 menuContainer.innerHTML = `
@@ -411,7 +437,48 @@
                 `;
             }
 
+            updateLevelsDropdown();
+            updateTTLevels();
             loadStudentsFromSupabase();
+        }
+
+        // تحديث المستويات بناءً على السلك المختار في واجهة الغياب والنقط
+        function updateLevelsDropdown() {
+            let cycle = document.getElementById('selCycle').value;
+            let levelSelect = document.getElementById('selLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
+        }
+
+        // تحديث المستويات في نافذة إضافة تلميذ
+        function updateModalLevels() {
+            let cycle = document.getElementById('modalCycle').value;
+            let levelSelect = document.getElementById('modalLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
+        }
+
+        // تحديث المستويات في صفحة استعمال الزمن
+        function updateTTLevels() {
+            let cycle = document.getElementById('ttCycle').value;
+            let levelSelect = document.getElementById('ttLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
         }
 
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
@@ -426,7 +493,10 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function openAddStudentModal() { document.getElementById('addStudentModal').style.display = 'flex'; }
+        function openAddStudentModal() {
+            updateModalLevels();
+            document.getElementById('addStudentModal').style.display = 'flex';
+        }
         function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
 
         async function saveNewStudent(e) {
@@ -434,12 +504,14 @@
             let reg = document.getElementById('newReg').value;
             let fName = document.getElementById('newFirstName').value;
             let lName = document.getElementById('newLastName').value;
+            let cycle = document.getElementById('modalCycle').value;
+            let level = document.getElementById('modalLevel').value;
             let cls = document.getElementById('newClass').value;
             let season = document.getElementById('newSeason').value;
 
             const { data, error } = await _supabase
                 .from('students')
-                .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: cls, season: season }]);
+                .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: `${cycle} - ${level} (${cls})`, season: season }]);
 
             if (error) {
                 alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
@@ -470,6 +542,7 @@
                     <td>${st.first_name}</td>
                     <td>${st.last_name}</td>
                     <td>${st.class_name}</td>
+                    <td>${st.class_name}</td>
                     <td>${st.season || st.academic_season || '-'}</td>
                     <td>
                         <select id="m_${st.id}" class="form-control" style="margin:0; padding:4px;">
@@ -488,6 +561,7 @@
         }
 
         function saveAttendance() {
+            let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
             let cls = document.getElementById('selClass').value;
             let date = document.getElementById('attDate').value;
@@ -495,11 +569,12 @@
             let status = document.getElementById('attStatus').value;
             
             if(!date || !name) { alert('الرجاء إدخال التاريخ واسم التلميذ'); return; }
-            alert(`تم تسجيل الغياب (${status}) للمستوى (${level} - ${cls}) للتلميذ: ${name} بتاريخ ${date}`);
+            alert(`تم تسجيل الغياب (${status}) لـ (${cycle} - ${level} - ${cls}) للتلميذ: ${name} بتاريخ ${date}`);
             document.getElementById('attStudentName').value = '';
         }
 
         function saveGrade() {
+            let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
             let cls = document.getElementById('selClass').value;
             let name = document.getElementById('gradeStudentName').value;
@@ -507,15 +582,16 @@
             let val = document.getElementById('gradeValue').value;
             
             if(!name || !val) { alert('الرجاء إدخال اسم التلميذ والنقطة'); return; }
-            alert(`تم نشر نقطة مادة (${subject}) للمستوى (${level} - ${cls}) للتلميذ ${name}: النقطة ${val}/20`);
+            alert(`تم نشر نقطة مادة (${subject}) لـ (${cycle} - ${level} - ${cls}) للتلميذ ${name}: النقطة ${val}/20`);
             document.getElementById('gradeStudentName').value = '';
             document.getElementById('gradeValue').value = '';
         }
 
         function downloadTimetable() {
+            let cycle = document.getElementById('ttCycle').value;
             let level = document.getElementById('ttLevel').value;
             let type = document.getElementById('ttType').value;
-            alert(`جاري تحميل جدول استعمال الزمن لـ (${type}) للمستوى (${level})...`);
+            alert(`جاري تحميل جدول استعمال الزمن (${type}) لـ (${cycle} - ${level})...`);
         }
 
         function editRow(btn) {
