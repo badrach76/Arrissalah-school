@@ -122,12 +122,29 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة: الغياب والنقط (جداول منفصلة) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (مع اختيار المستوى والفصل أولاً) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>سجل غيابات التلاميذ (بالتاريخ)</span></h2>
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">تسجيل غياب جديد:</h3>
+                <h2><span>متابعة الغياب وإدخال النقط (حسب المستوى والفصل)</span></h2>
+                
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">حدد المستوى والفصل المستهدف أولاً:</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <select id="selLevel" class="form-control" style="flex: 1; margin:0;">
+                            <option value="السادس ابتدائي">السادس ابتدائي</option>
+                            <option value="الخامس ابتدائي">الخامس ابتدائي</option>
+                            <option value="الثالث إعدادي">الثالث إعدادي</option>
+                        </select>
+                        <select id="selClass" class="form-control" style="flex: 1; margin:0;">
+                            <option value="القسم أ">القسم (أ)</option>
+                            <option value="القسم ب">القسم (ب)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- جدول تسجيل الغياب -->
+                <div style="background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">سجل غياب التلاميذ (بالتاريخ والمستوى):</h3>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                         <input type="date" id="attDate" class="form-control" style="flex: 1; margin:0;">
                         <input type="text" id="attStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
                         <select id="attStatus" class="form-control" style="flex: 1; margin:0;">
@@ -138,8 +155,9 @@
                     </div>
                 </div>
 
-                <h2><span>إدخال ونشر النقط (حسب المادة الدراسية)</span></h2>
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <!-- جدول إدخال النقط بالمادة -->
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0f172a;">إدخال ونشر النقط (اختيار المادة الدراسية):</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <input type="text" id="gradeStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
                         <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
@@ -155,7 +173,26 @@
                 </div>
             </div>
 
-            <!-- 4. رواتب الأساتذة والواتساب -->
+            <!-- 4. استعمال الزمن (للتلاميذ والأساتذة مع خيار التنزيل) -->
+            <main id="tab-timetable" class="tab-content">
+                <h2><span>جداول استعمال الزمن (للتلاميذ والأساتذة)</span></h2>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 10px;">اختر المستوى والفصل لتنزيل وعرض استعمال الزمن الخاص بالتلاميذ أو الأساتذة:</p>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <select id="ttLevel" class="form-control" style="flex: 1; margin:0;">
+                            <option value="السادس ابتدائي">السادس ابتدائي</option>
+                            <option value="الثالث إعدادي">الثالث إعدادي</option>
+                        </select>
+                        <select id="ttType" class="form-control" style="flex: 1; margin:0;">
+                            <option value="تلاميذ">استعمال زمن التلاميذ</option>
+                            <option value="أساتذة">استعمال زمن الأساتذة</option>
+                        </select>
+                        <button class="btn" onclick="downloadTimetable()">📥 تحميل جدول استعمال الزمن (PDF / صورة)</button>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 5. رواتب الأساتذة والواتساب -->
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة الشهرية ومجموعات الواتساب</span></h2>
                 <table>
@@ -173,7 +210,7 @@
                 </table>
             </div>
 
-            <!-- 5. الموظفون الإداريون -->
+            <!-- 6. الموظفون الإداريون -->
             <div id="tab-staff" class="tab-content">
                 <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
@@ -190,7 +227,7 @@
                 </table>
             </div>
 
-            <!-- 6. النقل المدرسي ومصاريفه -->
+            <!-- 7. النقل المدرسي ومصاريفه -->
             <div id="tab-transport" class="tab-content">
                 <h2><span>النقل المدرسي وطاقمه ومصاريف التلميذ (بنزين، تأمين، صيانة)</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
@@ -202,15 +239,9 @@
                         </tbody>
                     </table>
                 </div>
-                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">تسجيل مصاريف النقل:</h3>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <input type="text" id="transExpDesc" class="form-control" placeholder="نوع المصروف (تأمين / صيانة / بنزين)" style="flex: 2; margin: 0;">
-                    <input type="number" id="transExpAmount" class="form-control" placeholder="المبلغ (درهم)" style="flex: 1; margin: 0;">
-                    <button class="btn btn-success" onclick="addTransportExpense()">تسجيل وصرف</button>
-                </div>
             </div>
 
-            <!-- 7. الخزينة العامة ومصاريف أخرى مع أزرار التعديل والحذف -->
+            <!-- 8. الخزينة ومصاريف أخرى -->
             <div id="tab-finance" class="tab-content">
                 <h2><span>الخزينة العامة ومصاريف المؤسسة وجدول مصاريف أخرى</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
@@ -242,7 +273,7 @@
                 </table>
             </div>
 
-            <!-- 8. الأنشطة التربوية -->
+            <!-- 9. الأنشطة التربوية -->
             <div id="tab-activities" class="tab-content">
                 <h2><span>إدارة الأنشطة التربوية والموازية للمؤسسة</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
@@ -265,7 +296,7 @@
                 </table>
             </div>
 
-            <!-- 9. الرسائل والتواصل -->
+            <!-- 10. الرسائل والتواصل -->
             <div id="tab-comms" class="tab-content">
                 <h2><span>إرسال الرسائل العامة والخاصة للأولياء عبر الواتساب</span></h2>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -299,7 +330,7 @@
         </div>
     </div>
 
-    <!-- نافذة إضافة تلميذ بالأسماء الصحيحة للأعمدة المتوافقة مع Supabase -->
+    <!-- نافذة إضافة تلميذ -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
@@ -341,6 +372,7 @@
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-dash', event, this)" class="active">لوحة القيادة الشاملة</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)">التلاميذ والأداءات</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)">الغياب والنقط</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة والواتساب</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
@@ -357,6 +389,7 @@
                 
                 menuContainer.innerHTML = `
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)" class="active">التلاميذ والأداءات</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
@@ -373,6 +406,7 @@
                 
                 menuContainer.innerHTML = `
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">سجل الغياب وإدخال النقط</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن والتنزيل</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                 `;
             }
@@ -403,10 +437,9 @@
             let cls = document.getElementById('newClass').value;
             let season = document.getElementById('newSeason').value;
 
-            // تم تصحيح أسماء الأعمدة لتتوافق مع القاعدة (academic_season أو season حسب ما تم إنشاؤه)
             const { data, error } = await _supabase
                 .from('students')
-                .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: cls, academic_season: season }]);
+                .insert([{ reg_number: reg, first_name: fName, last_name: lName, class_name: cls, season: season }]);
 
             if (error) {
                 alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
@@ -437,7 +470,7 @@
                     <td>${st.first_name}</td>
                     <td>${st.last_name}</td>
                     <td>${st.class_name}</td>
-                    <td>${st.academic_season || '-'}</td>
+                    <td>${st.season || st.academic_season || '-'}</td>
                     <td>
                         <select id="m_${st.id}" class="form-control" style="margin:0; padding:4px;">
                             <option value="شتمبر 2026">شتمبر 2026</option>
@@ -455,22 +488,34 @@
         }
 
         function saveAttendance() {
+            let level = document.getElementById('selLevel').value;
+            let cls = document.getElementById('selClass').value;
             let date = document.getElementById('attDate').value;
             let name = document.getElementById('attStudentName').value;
             let status = document.getElementById('attStatus').value;
+            
             if(!date || !name) { alert('الرجاء إدخال التاريخ واسم التلميذ'); return; }
-            alert(`تم تسجيل الغياب بنجاح للتلميذ: ${name} بتاريخ ${date} (${status})`);
+            alert(`تم تسجيل الغياب (${status}) للمستوى (${level} - ${cls}) للتلميذ: ${name} بتاريخ ${date}`);
             document.getElementById('attStudentName').value = '';
         }
 
         function saveGrade() {
+            let level = document.getElementById('selLevel').value;
+            let cls = document.getElementById('selClass').value;
             let name = document.getElementById('gradeStudentName').value;
             let subject = document.getElementById('gradeSubject').value;
             let val = document.getElementById('gradeValue').value;
+            
             if(!name || !val) { alert('الرجاء إدخال اسم التلميذ والنقطة'); return; }
-            alert(`تم نشر نقطة مادة (${subject}) بنجاح للتلميذ ${name}: النقطة ${val}/20`);
+            alert(`تم نشر نقطة مادة (${subject}) للمستوى (${level} - ${cls}) للتلميذ ${name}: النقطة ${val}/20`);
             document.getElementById('gradeStudentName').value = '';
             document.getElementById('gradeValue').value = '';
+        }
+
+        function downloadTimetable() {
+            let level = document.getElementById('ttLevel').value;
+            let type = document.getElementById('ttType').value;
+            alert(`جاري تحميل جدول استعمال الزمن لـ (${type}) للمستوى (${level})...`);
         }
 
         function editRow(btn) {
@@ -510,24 +555,6 @@
             logBody.appendChild(tr);
 
             alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
-        }
-
-        function addTransportExpense() {
-            let desc = document.getElementById('transExpDesc').value;
-            let amount = parseFloat(document.getElementById('transExpAmount').value);
-            if(!desc || !amount) { alert('أدخل نوع المصروف والمبلغ'); return; }
-
-            totalExpenses += amount;
-            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
-
-            let logBody = document.getElementById('financialLogBody');
-            let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (نقل مدرسي)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:2px 6px;" onclick="deleteRow(this)">حذف</button></td>`;
-            logBody.appendChild(tr);
-
-            document.getElementById('transExpDesc').value = '';
-            document.getElementById('transExpAmount').value = '';
-            alert('تم تسجيل مصروف النقل وخصمه من الميزانية بنجاح!');
         }
 
         function addOtherExpense() {
