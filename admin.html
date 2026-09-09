@@ -589,7 +589,9 @@
                 first_name: fName,
                 last_name: lName,
                 class_name: `${cycle} - ${level} (${cls})`,
-                season: season
+                season: season,
+                "الاسم": fName + " " + lName,
+                "مسار": reg
             };
 
             const { data, error } = await _supabase
@@ -621,7 +623,7 @@
             globalStudentsList.forEach((st) => {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${st.reg_number || '-'}</td>
+                    <td>${st.reg_number || st.مسار || '-'}</td>
                     <td>${st.first_name || '-'}</td>
                     <td>${st.last_name || '-'}</td>
                     <td>${st.class_name || '-'}</td>
@@ -633,7 +635,7 @@
                         </select>
                     </td>
                     <td>
-                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name} ${st.last_name}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
+                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number || st.مسار}', '${st.first_name || st.الاسم}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
                         <button class="btn" style="padding: 2px 6px;" onclick="editRow(this)">تعديل</button>
                         <button class="btn btn-danger" style="padding: 2px 6px;" onclick="deleteRow(this)">حذف</button>
                     </td>
@@ -664,10 +666,13 @@
             filtered.forEach((st) => {
                 if (st.totalAbsence === undefined) st.totalAbsence = 0;
 
+                let fullName = st.first_name ? `${st.first_name} ${st.last_name || ''}` : (st.الاسم || 'تلميذ');
+                let regNum = st.reg_number || st.مسار || '-';
+
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${st.reg_number || '-'}</td>
-                    <td>${st.first_name} ${st.last_name}</td>
+                    <td>${regNum}</td>
+                    <td>${fullName}</td>
                     <td><strong id="abs_disp_${st.id}" style="color: #ef4444; font-size: 15px;">${st.totalAbsence} ساعة</strong></td>
                     <td>
                         <div style="display: flex; gap: 8px;">
