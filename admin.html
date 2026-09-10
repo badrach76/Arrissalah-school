@@ -591,40 +591,42 @@
         }
         function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
 
-        async function saveNewStudent(e) {
-            e.preventDefault();
-            let reg = document.getElementById('newReg').value;
-            let fName = document.getElementById('newFirstName').value;
-            let lName = document.getElementById('newLastName').value;
-            let cycle = document.getElementById('modalCycle').value;
-            let level = document.getElementById('modalLevel').value;
-            let cls = document.getElementById('newClass').value;
-            let season = document.getElementById('newSeason').value;
+async function saveNewStudent(e) {
+    e.preventDefault();
+    let reg = document.getElementById('newReg').value;
+    let fName = document.getElementById('newFirstName').value;
+    let lName = document.getElementById('newLastName').value;
+    let cycle = document.getElementById('modalCycle').value;
+    let level = document.getElementById('modalLevel').value;
+    let cls = document.getElementById('newClass').value;
+    let season = document.getElementById('newSeason').value;
 
-            let payload = {
-                reg_number: reg,
-                first_name: fName,
-                last_name: lName,
-                class_name: `${cycle} - ${level} (${cls})`,
-                season: season,
-                "الاسم": fName,
-                "العائلة": lName,
-                "مسار": reg
-            };
+    let payload = {
+        reg_number: reg,
+        first_name: fName,
+        last_name: lName,
+        class_name: `${cycle} - ${level} (${cls})`,
+        season: season,
+        "الاسم": fName,
+        "العائلة": lName,
+        "مسار": reg,
+        "المستوى": level,
+        "الموسم": season
+    };
 
-            const { data, error } = await _supabase
-                .from('students')
-                .insert([payload]);
+    const { data, error } = await _supabase
+        .from('students')
+        .insert([payload]);
 
-            if (error) {
-                alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
-            } else {
-                alert('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase!');
-                closeAddStudentModal();
-                e.target.reset();
-                loadStudentsFromSupabase();
-            }
-        }
+    if (error) {
+        alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
+    } else {
+        alert('تم حفظ التلميذ أو طفل الروض بنجاح!');
+        closeAddStudentModal();
+        e.target.reset();
+        loadStudentsFromSupabase();
+    }
+}
 
         async function loadStudentsFromSupabase() {
             let { data: students, error } = await _supabase.from('students').select('*');
