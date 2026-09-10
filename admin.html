@@ -141,9 +141,9 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط (منفصل بالكامل) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (فضاء الأساتذة والحراس العامين - منفصل بالكامل) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>سجل غياب التلاميذ وإدخال النقط (فضاء الأساتذة والحراس العامين)</span></h2>
+                <h2><span>فضاء الأساتذة: سجل الغياب ولائحة إدخال النقط المستقلة</span></h2>
 
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي للعمل عليه:</h3>
@@ -161,7 +161,7 @@
                             <option value="القسم ج">القسم (ج)</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة تلاميذ الفصل</button>
+                    <button class="btn btn-success" onclick="filterClassStudents()">عرض تلاميذ هذا الفصل</button>
                 </div>
 
                 <!-- أ) قسم تتبع وتسيير الغياب لكل تلميذ -->
@@ -180,7 +180,7 @@
                             </tr>
                         </thead>
                         <tbody id="classStudentsTableBody">
-                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض اللائحة</td></tr>
+                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض التلاميذ</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -239,7 +239,7 @@
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة والمربيات الشهرية ومجموعات الواتساب</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أ. فاطمة الزهراء</td>
@@ -255,7 +255,7 @@
                                     <option value="دجنبر 2026">دجنبر 2026</option>
                                 </select>
                             </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف الراتب</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -265,7 +265,7 @@
             <div id="tab-staff" class="tab-content">
                 <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
-                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أحمد الداودي</td>
@@ -280,7 +280,7 @@
                                     <option value="دجنبر 2026">دجنبر 2026</option>
                                 </select>
                             </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف الراتب</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -293,7 +293,7 @@
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني</th><th>صرف</th></tr></thead>
+                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني بالأداء</th><th>صرف الأجر</th></tr></thead>
                         <tbody>
                             <tr>
                                 <td>سعيد بوطاهر</td>
@@ -307,7 +307,7 @@
                                         <option value="دجنبر 2026">دجنبر 2026</option>
                                     </select>
                                 </td>
-                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف</button></td>
+                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف الراتب</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -513,7 +513,7 @@
                 menuContainer.innerHTML = `
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-dash', event, this)" class="active">لوحة القيادة الشاملة</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)">التلاميذ والأداءات</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)">الغياب والنقط</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)">فضاء الأساتذة (الغياب والنقط)</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة والواتساب</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
@@ -547,7 +547,7 @@
                 document.getElementById('tab-attendance-grades').classList.add('active');
                 
                 menuContainer.innerHTML = `
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">سجل الغياب وإدخال النقط</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">فضاء الأساتذة (الغياب والنقط)</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن والتنزيل</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                 `;
@@ -693,6 +693,7 @@
             filterClassStudents();
         }
 
+        // دالة عرض وتصفية التلاميذ في فضاء الأساتذة (الغياب والنقط منفصلين تماماً)
         function filterClassStudents() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
@@ -715,6 +716,7 @@
                 return;
             }
 
+            // 1. تعبئة جدول تتبع الغياب
             filtered.forEach((st) => {
                 if (st.totalAbsence === undefined) st.totalAbsence = 0;
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
@@ -734,6 +736,7 @@
                 tbodyAbsence.appendChild(tr);
             });
 
+            // 2. تعبئة جدول إدخال النقط المستقل
             filtered.forEach((st) => {
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
 
