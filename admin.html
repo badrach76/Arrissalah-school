@@ -141,7 +141,7 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط (منفصل ومستقل لكل تلميذ) -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (منفصل بالكامل) -->
             <div id="tab-attendance-grades" class="tab-content">
                 <h2><span>سجل غياب التلاميذ وإدخال النقط (فضاء الأساتذة والحراس العامين)</span></h2>
 
@@ -239,7 +239,7 @@
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة والمربيات الشهرية ومجموعات الواتساب</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أ. فاطمة الزهراء</td>
@@ -247,7 +247,15 @@
                             <td>24 ساعة</td>
                             <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">روض أ</a></td>
                             <td>4000 درهم</td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000)">صرف</button></td>
+                            <td>
+                                <select id="sal_m_1" class="form-control" style="margin:0; padding:6px 10px;">
+                                    <option value="شتمبر 2026">شتمبر 2026</option>
+                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                    <option value="نونبر 2026">نونبر 2026</option>
+                                    <option value="دجنبر 2026">دجنبر 2026</option>
+                                </select>
+                            </td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -257,14 +265,22 @@
             <div id="tab-staff" class="tab-content">
                 <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
-                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أحمد الداودي</td>
                             <td>حارس عام</td>
                             <td>2023/09/01</td>
                             <td>5000 درهم</td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000)">صرف</button></td>
+                            <td>
+                                <select id="sal_m_2" class="form-control" style="margin:0; padding:6px 10px;">
+                                    <option value="شتمبر 2026">شتمبر 2026</option>
+                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                    <option value="نونبر 2026">نونبر 2026</option>
+                                    <option value="دجنبر 2026">دجنبر 2026</option>
+                                </select>
+                            </td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -277,9 +293,22 @@
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>صرف</th></tr></thead>
+                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني</th><th>صرف</th></tr></thead>
                         <tbody>
-                            <tr><td>سعيد بوطاهر</td><td>سائق الحافلة</td><td>4000 درهم</td><td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000)">صرف</button></td></tr>
+                            <tr>
+                                <td>سعيد بوطاهر</td>
+                                <td>سائق الحافلة</td>
+                                <td>4000 درهم</td>
+                                <td>
+                                    <select id="sal_m_3" class="form-control" style="margin:0; padding:6px 10px;">
+                                        <option value="شتمبر 2026">شتمبر 2026</option>
+                                        <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                        <option value="نونبر 2026">نونبر 2026</option>
+                                        <option value="دجنبر 2026">دجنبر 2026</option>
+                                    </select>
+                                </td>
+                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف</button></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -648,6 +677,8 @@
                         <select id="m_${st.id}" class="form-control" style="margin:0; padding:6px 10px;">
                             <option value="شتمبر 2026">شتمبر 2026</option>
                             <option value="أكتوبر 2026">أكتوبر 2026</option>
+                            <option value="نونبر 2026">نونبر 2026</option>
+                            <option value="دجنبر 2026">دجنبر 2026</option>
                         </select>
                     </td>
                     <td>
@@ -662,7 +693,6 @@
             filterClassStudents();
         }
 
-        // فصل عرض لائحة الغياب ولائحة النقط بشكل مستقل لكل تلميذ
         function filterClassStudents() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
@@ -685,7 +715,6 @@
                 return;
             }
 
-            // تعبئة جدول الغياب
             filtered.forEach((st) => {
                 if (st.totalAbsence === undefined) st.totalAbsence = 0;
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
@@ -705,7 +734,6 @@
                 tbodyAbsence.appendChild(tr);
             });
 
-            // تعبئة جدول إدخال النقط المستقل لكل تلميذ
             filtered.forEach((st) => {
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
 
@@ -747,7 +775,7 @@
                 return;
             }
 
-            alert(`تم بنجاح نشر وحفظ نقطة مادة (${subject}) للتلميذ: ${studentName} بنقطة ${gradeVal}/20 (تزامن تلقائي).`);
+            alert(`تم بنجاح نشر وحفظ نقطة مادة (${subject}) للتلميذ: ${studentName} بنقطة ${gradeVal}/20.`);
         }
 
         function addTransportExpense() {
@@ -780,7 +808,7 @@
 
             document.getElementById('transAmount').value = '';
             document.getElementById('transNote').value = '';
-            alert('تم تسجيل مصروف النقل بنجاح وتحديث الإجمالي والميزانية العامة!');
+            alert('تم تسجيل مصروف النقل بنجاح!');
         }
 
         function deleteTransportRow(btn, amount) {
@@ -835,16 +863,17 @@
             alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
         }
 
-        function payMonthlySalary(beneficiary, amount) {
+        function payMonthlySalary(beneficiary, amount, monthSelectId) {
+            let month = document.getElementById(monthSelectId).value;
             totalExpenses += amount;
             document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
             
             let logBody = document.getElementById('financialLogBody');
             let tr = document.createElement('tr');
-            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب شهر ${month}: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
-            alert(`تم صرف راتب "${beneficiary}" وإضافته للمصاريف العامة!`);
+            alert(`تم صرف راتب شهر (${month}) لـ "${beneficiary}" بنجاح وإضافته للمصاريف العامة!`);
         }
 
         function addOtherExpense() {
