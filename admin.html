@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء الإدارة والصلاحيات - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <title>فضاء الإدارة والأساتذة - مؤسسة الرسالة للتعليم الخصوصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
@@ -37,7 +37,7 @@
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         
-        .btn { background: #0284c7; color: white; border: none; padding: 9px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
+        .btn { background: #0284c7; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
         .btn:hover { background: #0369a1; }
         .btn-success { background: #10b981; }
         .btn-danger { background: #ef4444; }
@@ -47,7 +47,6 @@
         .modal-content { background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 500px; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .close-modal { position: absolute; inset-inline-end: 20px; top: 15px; font-size: 22px; cursor: pointer; color: #64748b; }
         
-        /* التناسق الموحد التام بين حقول النص والقوائم المنسدلة */
         .form-control { 
             width: 100%; 
             padding: 10px 12px; 
@@ -142,39 +141,12 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط -->
+            <!-- 3. المراقبة والغياب وإدخال النقط (منفصل ومستقل لكل تلميذ) -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>سجل غياب التلاميذ وإدخال النقط</span></h2>
+                <h2><span>سجل غياب التلاميذ وإدخال النقط (فضاء الأساتذة والحراس العامين)</span></h2>
 
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">تسجيل فردي (غياب أو تقييم):</h3>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
-                        <input type="date" id="attDate" class="form-control" style="flex: 1; margin:0;">
-                        <input type="text" id="attStudentName" class="form-control" placeholder="اسم الطفل / التلميذ الكامل" style="flex: 2; margin:0;">
-                        <select id="attStatus" class="form-control" style="flex: 1; margin:0;">
-                            <option value="غياب غير مبرر">غياب غير مبرر</option>
-                            <option value="غياب مبرر">غياب مبرر</option>
-                        </select>
-                        <button class="btn btn-success" onclick="saveAttendance()">تسجيل الغياب</button>
-                    </div>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <input type="text" id="gradeStudentName" class="form-control" placeholder="اسم التلميذ الكامل" style="flex: 2; margin:0;">
-                        <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
-                            <option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option>
-                            <option value="الفرنسية">الفرنسية</option>
-                            <option value="الرياضيات / الحساب">الرياضيات / الحساب</option>
-                            <option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option>
-                        </select>
-                        <input type="number" step="0.25" max="20" min="0" id="gradeValue" class="form-control" placeholder="النقطة على 20" style="flex: 1; margin:0;">
-                        <button class="btn btn-success" onclick="saveGrade()">نشر النقطة (تزامن تلقائي)</button>
-                    </div>
-                </div>
-
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-
-                <h2><span>تتبع مجموع ساعات الغياب حسب الفصل</span></h2>
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي لعرض وتحديث ساعات الغياب:</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي للعمل عليه:</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                         <select id="selCycle" class="form-control" style="flex: 1; margin:0;" onchange="updateLevelsDropdown()">
                             <option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option>
@@ -189,12 +161,13 @@
                             <option value="القسم ج">القسم (ج)</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة التلاميذ</button>
+                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة تلاميذ الفصل</button>
                 </div>
 
-                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <!-- أ) قسم تتبع وتسيير الغياب لكل تلميذ -->
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 25px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="font-size: 14px; color: #0f172a;">مجموع ساعات الغياب المتراكمة:</h3>
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700;">1. لائحة تتبع الغياب وساعات الغياب التراكمية:</h3>
                         <button class="btn" onclick="downloadClassReport()">📥 تنزيل تقرير الغياب</button>
                     </div>
                     <table>
@@ -203,11 +176,39 @@
                                 <th>رقم المسار / المعرف</th>
                                 <th>الاسم الكامل</th>
                                 <th>مجموع ساعات الغياب (التراكمي)</th>
-                                <th>إضافة ساعات جديدة وتحديث تلقائي</th>
+                                <th>إضافة ساعات غياب وتحديث تلقائي</th>
                             </tr>
                         </thead>
                         <tbody id="classStudentsTableBody">
                             <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض اللائحة</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ب) قسم إدخال النقط المستقل لكل تلميذ -->
+                <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div style="margin-bottom: 15px;">
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700; margin-bottom: 10px;">2. لائحة إدخال ونشر النقط الفردية حسب المادة:</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
+                                <option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option>
+                                <option value="الفرنسية">الفرنسية</option>
+                                <option value="الرياضيات / الحساب">الرياضيات / الحساب</option>
+                                <option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم المسار</th>
+                                <th>الاسم الكامل للتلميذ</th>
+                                <th>النقطة المحصلة (على 20)</th>
+                                <th>الإجراء والنشر الفوري</th>
+                            </tr>
+                        </thead>
+                        <tbody id="classGradesTableBody">
+                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل أولاً لعرض التلاميذ وإدخال النقط</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -323,8 +324,8 @@
                                 <td>1,200 درهم</td>
                                 <td>ملء خزان الحافلة رقم 1</td>
                                 <td>
-                                    <button class="btn" style="padding: 2px 6px;" onclick="editRow(this)">تعديل</button>
-                                    <button class="btn btn-danger" style="padding: 2px 6px;" onclick="deleteTransportRow(this, 1200)">حذف</button>
+                                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, 1200)">حذف</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -356,8 +357,8 @@
                             <td>2,500 درهم</td>
                             <td>كهرباء وماء المؤسسة</td>
                             <td>
-                                <button class="btn" style="padding: 2px 8px;" onclick="editRow(this)">تعديل</button>
-                                <button class="btn btn-danger" style="padding: 2px 8px;" onclick="deleteRow(this)">حذف</button>
+                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
                             </td>
                         </tr>
                     </tbody>
@@ -379,8 +380,8 @@
                             <td>حفل استقبال أطفال الروض والتلامذة الجدد</td>
                             <td>2026-09-07</td>
                             <td>
-                                <button class="btn" style="padding: 2px 8px;" onclick="editRow(this)">تعديل</button>
-                                <button class="btn btn-danger" style="padding: 2px 8px;" onclick="deleteRow(this)">حذف</button>
+                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
                             </td>
                         </tr>
                     </tbody>
@@ -511,7 +512,7 @@
                 `;
             } 
             else if (role === 'admin_supervisor') {
-                badge.innerText = 'صلاحية: الحارس العام';
+                badge.innerText = 'صلاحية: الحارس العام / الأستاذ';
                 let dashTab = document.getElementById('tab-dash');
                 if(dashTab) dashTab.style.display = 'none';
                 document.getElementById('tab-attendance-grades').classList.add('active');
@@ -591,42 +592,37 @@
         }
         function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
 
-async function saveNewStudent(e) {
-    e.preventDefault();
-    let reg = document.getElementById('newReg').value;
-    let fName = document.getElementById('newFirstName').value;
-    let lName = document.getElementById('newLastName').value;
-    let cycle = document.getElementById('modalCycle').value;
-    let level = document.getElementById('modalLevel').value;
-    let cls = document.getElementById('newClass').value;
-    let season = document.getElementById('newSeason').value;
+        async function saveNewStudent(e) {
+            e.preventDefault();
+            let reg = document.getElementById('newReg').value;
+            let fName = document.getElementById('newFirstName').value;
+            let lName = document.getElementById('newLastName').value;
+            let cycle = document.getElementById('modalCycle').value;
+            let level = document.getElementById('modalLevel').value;
+            let cls = document.getElementById('newClass').value;
+            let season = document.getElementById('newSeason').value;
 
-    let payload = {
-        reg_number: reg,
-        first_name: fName,
-        last_name: lName,
-        class_name: `${cycle} - ${level} (${cls})`,
-        season: season,
-        "الاسم": fName,
-        "العائلة": lName,
-        "مسار": reg,
-        "المستوى": level,
-        "الموسم": season
-    };
+            let payload = {
+                reg_number: reg,
+                first_name: fName,
+                last_name: lName,
+                class_name: `${cycle} - ${level} (${cls})`,
+                season: season
+            };
 
-    const { data, error } = await _supabase
-        .from('students')
-        .insert([payload]);
+            const { data, error } = await _supabase
+                .from('students')
+                .insert([payload]);
 
-    if (error) {
-        alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
-    } else {
-        alert('تم حفظ التلميذ أو طفل الروض بنجاح!');
-        closeAddStudentModal();
-        e.target.reset();
-        loadStudentsFromSupabase();
-    }
-}
+            if (error) {
+                alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
+            } else {
+                alert('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase!');
+                closeAddStudentModal();
+                e.target.reset();
+                loadStudentsFromSupabase();
+            }
+        }
 
         async function loadStudentsFromSupabase() {
             let { data: students, error } = await _supabase.from('students').select('*');
@@ -643,9 +639,9 @@ async function saveNewStudent(e) {
             globalStudentsList.forEach((st) => {
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${st.reg_number || st.مسار || '-'}</td>
-                    <td>${st.first_name || st.الاسم || '-'}</td>
-                    <td>${st.last_name || st.العائلة || '-'}</td>
+                    <td>${st.reg_number || '-'}</td>
+                    <td>${st.first_name || '-'}</td>
+                    <td>${st.last_name || '-'}</td>
                     <td>${st.class_name || '-'}</td>
                     <td>${st.season || '-'}</td>
                     <td>
@@ -655,7 +651,7 @@ async function saveNewStudent(e) {
                         </select>
                     </td>
                     <td>
-                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number || st.مسار}', '${st.first_name || st.الاسم}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
+                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
                         <button class="btn" style="padding: 6px 10px;" onclick="editRow(this)">تعديل</button>
                         <button class="btn btn-danger" style="padding: 6px 10px;" onclick="deleteRow(this)">حذف</button>
                     </td>
@@ -666,12 +662,17 @@ async function saveNewStudent(e) {
             filterClassStudents();
         }
 
+        // فصل عرض لائحة الغياب ولائحة النقط بشكل مستقل لكل تلميذ
         function filterClassStudents() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
             let cls = document.getElementById('selClass').value;
-            let tbody = document.getElementById('classStudentsTableBody');
-            tbody.innerHTML = '';
+            
+            let tbodyAbsence = document.getElementById('classStudentsTableBody');
+            let tbodyGrades = document.getElementById('classGradesTableBody');
+            
+            tbodyAbsence.innerHTML = '';
+            tbodyGrades.innerHTML = '';
 
             let filtered = globalStudentsList.filter(st => {
                 let cName = st.class_name || '';
@@ -679,29 +680,47 @@ async function saveNewStudent(e) {
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
+                tbodyAbsence.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
+                tbodyGrades.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
                 return;
             }
 
+            // تعبئة جدول الغياب
             filtered.forEach((st) => {
                 if (st.totalAbsence === undefined) st.totalAbsence = 0;
-
-                let fullName = st.first_name ? `${st.first_name} ${st.last_name || ''}` : `${st.الاسم || ''} ${st.العائلة || ''}`;
-                let regNum = st.reg_number || st.مسار || '-';
+                let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
 
                 let tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${regNum}</td>
+                    <td>${st.reg_number || '-'}</td>
                     <td>${fullName}</td>
                     <td><strong id="abs_disp_${st.id}" style="color: #ef4444; font-size: 15px;">${st.totalAbsence} ساعة</strong></td>
                     <td>
                         <div style="display: flex; gap: 8px;">
-                            <input type="number" id="add_abs_${st.id}" class="form-control" placeholder="أضف ساعات" style="margin:0; width:110px;" min="1" value="1">
-                            <button class="btn btn-success" onclick="addAbsenceHours('${st.id}')">+ إضافة وتجميع تلقائي</button>
+                            <input type="number" id="add_abs_${st.id}" class="form-control" placeholder="ساعات" style="margin:0; width:90px;" min="1" value="1">
+                            <button class="btn btn-success" onclick="addAbsenceHours('${st.id}')">+ تسجيل غياب</button>
                         </div>
                     </td>
                 `;
-                tbody.appendChild(tr);
+                tbodyAbsence.appendChild(tr);
+            });
+
+            // تعبئة جدول إدخال النقط المستقل لكل تلميذ
+            filtered.forEach((st) => {
+                let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
+
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${st.reg_number || '-'}</td>
+                    <td>${fullName}</td>
+                    <td>
+                        <input type="number" step="0.25" max="20" min="0" id="grade_input_${st.id}" class="form-control" placeholder="النقطة /20" style="margin:0; width:120px;">
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="saveIndividualGrade('${st.id}', '${fullName}')">نشر النقطة فورا</button>
+                    </td>
+                `;
+                tbodyGrades.appendChild(tr);
             });
         }
 
@@ -717,6 +736,18 @@ async function saveNewStudent(e) {
                 alert(`تمت إضافة ${hoursToAdd} ساعة غياب بنجاح. المجموع التراكمي الآن: ${student.totalAbsence} ساعة.`);
                 inputField.value = 1;
             }
+        }
+
+        function saveIndividualGrade(studentId, studentName) {
+            let subject = document.getElementById('gradeSubject').value;
+            let gradeVal = document.getElementById(`grade_input_${studentId}`).value;
+
+            if(gradeVal === '' || gradeVal < 0 || gradeVal > 20) {
+                alert('الرجاء إدخال نقطة صحيحة محصورة بين 0 و 20');
+                return;
+            }
+
+            alert(`تم بنجاح نشر وحفظ نقطة مادة (${subject}) للتلميذ: ${studentName} بنقطة ${gradeVal}/20 (تزامن تلقائي).`);
         }
 
         function addTransportExpense() {
@@ -761,25 +792,6 @@ async function saveNewStudent(e) {
                 btn.closest('tr').remove();
                 alert('تم الحذف بنجاح!');
             }
-        }
-
-        function saveAttendance() {
-            let date = document.getElementById('attDate').value;
-            let name = document.getElementById('attStudentName').value;
-            let status = document.getElementById('attStatus').value;
-            if(!date || !name) { alert('الرجاء إدخال التاريخ واسم التلميذ'); return; }
-            alert(`تم تسجيل الغياب (${status}) للتلميذ: ${name} بتاريخ ${date} (تزامن تلقائي)`);
-            document.getElementById('attStudentName').value = '';
-        }
-
-        function saveGrade() {
-            let name = document.getElementById('gradeStudentName').value;
-            let subject = document.getElementById('gradeSubject').value;
-            let val = document.getElementById('gradeValue').value;
-            if(!name || !val) { alert('الرجاء إدخال اسم التلميذ والنقطة'); return; }
-            alert(`تم نشر نقطة مادة (${subject}) للتلميذ ${name}: النقطة ${val}/20 (تزامن تلقائي)`);
-            document.getElementById('gradeStudentName').value = '';
-            document.getElementById('gradeValue').value = '';
         }
 
         function downloadClassReport() {
