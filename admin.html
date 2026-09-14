@@ -141,12 +141,12 @@
                 </table>
             </div>
 
-            <!-- 3. المراقبة والغياب وإدخال النقط (منفصل بالكامل) -->
+            <!-- 3. فضاء الأساتذة: الغياب والنقط المنفصلان تماماً -->
             <div id="tab-attendance-grades" class="tab-content">
-                <h2><span>سجل غياب التلاميذ وإدخال النقط (فضاء الأساتذة والحراس العامين)</span></h2>
+                <h2><span>فضاء الأساتذة: سجل الغياب اليومي ولائحة إدخال النقط المستقلة</span></h2>
 
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي للعمل عليه:</h3>
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">اختر الفصل الدراسي:</h3>
                     <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
                         <select id="selCycle" class="form-control" style="flex: 1; margin:0;" onchange="updateLevelsDropdown()">
                             <option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option>
@@ -161,42 +161,40 @@
                             <option value="القسم ج">القسم (ج)</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" onclick="filterClassStudents()">عرض لائحة تلاميذ الفصل</button>
+                    <button class="btn btn-success" onclick="filterClassStudents()">عرض تلاميذ الفصل</button>
                 </div>
 
-                <!-- أ) قسم تتبع وتسيير الغياب لكل تلميذ -->
+                <!-- أ) جدول لائحة الغياب اليومية (مرتبط بـ attendances) -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 25px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700;">1. لائحة تتبع الغياب وساعات الغياب التراكمية:</h3>
-                        <button class="btn" onclick="downloadClassReport()">📥 تنزيل تقرير الغياب</button>
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700;">1. لائحة الغياب اليومية (تسجيل فوري في جدول attendances):</h3>
+                        <input type="date" id="attendanceDate" class="form-control" style="width: 180px; margin:0;" value="">
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>رقم المسار / المعرف</th>
-                                <th>الاسم الكامل</th>
-                                <th>مجموع ساعات الغياب (التراكمي)</th>
-                                <th>إضافة ساعات غياب وتحديث تلقائي</th>
+                                <th>رقم المسار</th>
+                                <th>الاسم الكامل للتلميذ</th>
+                                <th>حالة الحضور والغياب والتأخر</th>
+                                <th>حفظ حالة الغياب</th>
                             </tr>
                         </thead>
                         <tbody id="classStudentsTableBody">
-                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر السلك والمستوى والقسم ثم اضغط عرض اللائحة</td></tr>
+                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل ثم اضغط عرض تلاميذ الفصل</td></tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- ب) قسم إدخال النقط المستقل لكل تلميذ -->
+                <!-- ب) جدول لائحة إدخال النقط المستقلة (مرتبط بـ grades) -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <div style="margin-bottom: 15px;">
-                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700; margin-bottom: 10px;">2. لائحة إدخال ونشر النقط الفردية حسب المادة:</h3>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                            <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
-                                <option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option>
-                                <option value="الفرنسية">الفرنسية</option>
-                                <option value="الرياضيات / الحساب">الرياضيات / الحساب</option>
-                                <option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option>
-                            </select>
-                        </div>
+                    <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700; margin:0;">2. لائحة إدخال النقط المستقلة (جدول grades):</h3>
+                        <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
+                            <option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option>
+                            <option value="الفرنسية">الفرنسية</option>
+                            <option value="الرياضيات / الحساب">الرياضيات / الحساب</option>
+                            <option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option>
+                        </select>
                     </div>
                     <table>
                         <thead>
@@ -204,13 +202,16 @@
                                 <th>رقم المسار</th>
                                 <th>الاسم الكامل للتلميذ</th>
                                 <th>النقطة المحصلة (على 20)</th>
-                                <th>الإجراء والنشر الفوري</th>
+                                <th>الإجراء</th>
                             </tr>
                         </thead>
                         <tbody id="classGradesTableBody">
-                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل أولاً لعرض التلاميذ وإدخال النقط</td></tr>
+                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل أولاً لعرض قائمة النقط</td></tr>
                         </tbody>
                     </table>
+                    <div style="margin-top: 15px; text-align: left;">
+                        <button class="btn btn-success" onclick="saveAllClassGrades()" style="padding: 10px 20px; font-size: 14px;">حفظ نقط الفصل بالكامل</button>
+                    </div>
                 </div>
             </div>
 
@@ -239,7 +240,7 @@
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة والمربيات الشهرية ومجموعات الواتساب</span></h2>
                 <table>
-                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أ. فاطمة الزهراء</td>
@@ -255,7 +256,7 @@
                                     <option value="دجنبر 2026">دجنبر 2026</option>
                                 </select>
                             </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف الراتب</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -265,7 +266,7 @@
             <div id="tab-staff" class="tab-content">
                 <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
                 <table>
-                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني</th><th>الإجراء</th></tr></thead>
+                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
                     <tbody>
                         <tr>
                             <td>أحمد الداودي</td>
@@ -280,7 +281,7 @@
                                     <option value="دجنبر 2026">دجنبر 2026</option>
                                 </select>
                             </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف</button></td>
+                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف الراتب</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -293,7 +294,7 @@
                 <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
                     <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني</th><th>صرف</th></tr></thead>
+                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني بالأداء</th><th>صرف الأجر</th></tr></thead>
                         <tbody>
                             <tr>
                                 <td>سعيد بوطاهر</td>
@@ -307,11 +308,685 @@
                                         <option value="دجنبر 2026">دجنبر 2026</option>
                                     </select>
                                 </td>
-                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف</button></td>
+                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف الراتب</button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;"
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="font-size: 14px; color: #0f172a;">جدول مصاريف سيارات وحافلات النقل المدرسي:</h3>
+                        <div style="background: #f0fdf4; padding: 8px 15px; border-radius: 6px; border: 1px solid #10b981;">
+                            إجمالي مصاريف النقل: <strong id="transportTotalDisplay" style="color: #10b981; font-size: 16px;">1,200 درهم</strong>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <input type="date" id="transDate" class="form-control" style="flex: 1; margin:0;" value="2026-09-09">
+                        <select id="transCategory" class="form-control" style="flex: 2; margin:0;">
+                            <option value="بنزين / الوقود">بنزين / الوقود</option>
+                            <option value="تأمين سيارات النقل">تأمين سيارات النقل (Assurance)</option>
+                            <option value="الفحص التقني">الفحص التقني (Visite Technique)</option>
+                            <option value="الضريبة السنوية">الضريبة السنوية (La Vignette)</option>
+                            <option value="الصيانة وإصلاح الأعطال">الصيانة وإصلاح الأعطال الميكانيكية</option>
+                            <option value="مصاريف أخرى للنقل">مصاريف أخرى مرتبطة بالنقل</option>
+                        </select>
+                        <input type="number" id="transAmount" class="form-control" placeholder="المبلغ بالدرهم" style="flex: 1; margin:0;" min="1">
+                        <input type="text" id="transNote" class="form-control" placeholder="ملاحظة أو رقم الحافلة" style="flex: 2; margin:0;">
+                        <button class="btn btn-success" onclick="addTransportExpense()">+ إضافة مصروف نقل</button>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>نوع المصروف</th>
+                                <th>المبلغ (درهم)</th>
+                                <th>الملاحظات / الحافلة</th>
+                                <th>العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transportTableBody">
+                            <tr>
+                                <td>2026-09-05</td>
+                                <td>بنزين / الوقود</td>
+                                <td>1,200 درهم</td>
+                                <td>ملء خزان الحافلة رقم 1</td>
+                                <td>
+                                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, 1200)">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 8. الخزينة والمصاريف -->
+            <div id="tab-finance" class="tab-content">
+                <h2><span>الخزينة العامة ومصاريف المؤسسة العامة</span></h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">إجمالي المداخيل: <strong id="finTotalIncome" style="color: #10b981;">125,500 درهم</strong></div>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">إجمالي المصاريف: <strong id="finTotalExpenses" style="color: #ef4444;">45,000 درهم</strong></div>
+                </div>
+
+                <h3 style="font-size: 14px; margin-bottom: 10px; color: #ef4444;">سجل المصاريف العامة والتشغيلية:</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <input type="text" id="otherDesc" class="form-control" placeholder="بيان المصروف (كهرباء، ماء، صيانة عامة...)" style="flex: 2; margin: 0;">
+                    <input type="number" id="otherAmount" class="form-control" placeholder="المبلغ" style="flex: 1; margin: 0;">
+                    <button class="btn btn-success" onclick="addOtherExpense()">إضافة للخزينة</button>
+                </div>
+
+                <table>
+                    <thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th><th>العمليات</th></tr></thead>
+                    <tbody id="financialLogBody">
+                        <tr>
+                            <td>2026/09/01</td>
+                            <td><span style="color: #ef4444; font-weight: bold;">خروج</span></td>
+                            <td>2,500 درهم</td>
+                            <td>كهرباء وماء المؤسسة</td>
+                            <td>
+                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 9. الأنشطة التربوية -->
+            <div id="tab-activities" class="tab-content">
+                <h2><span>إدارة الأنشطة التربوية والموازية للمؤسسة</span></h2>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <input type="text" id="actName" class="form-control" placeholder="عنوان النشاط التربوي">
+                    <input type="date" id="actDate" class="form-control">
+                    <button class="btn btn-success" onclick="addActivity()">إضافة ونشر النشاط</button>
+                </div>
+                <table>
+                    <thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>العمليات</th></tr></thead>
+                    <tbody id="activitiesTableBody">
+                        <tr>
+                            <td>حفل استقبال أطفال الروض والتلامذة الجدد</td>
+                            <td>2026-09-07</td>
+                            <td>
+                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 10. الرسائل والتواصل -->
+            <div id="tab-comms" class="tab-content">
+                <h2><span>إرسال الرسائل العامة والخاصة للأولياء عبر الواتساب</span></h2>
+                <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع الرسالة:</label>
+                        <select id="msgType" class="form-control" onchange="toggleMsgFields()">
+                            <option value="private">رسالة خاصة لولي أمر (مباشرة على رقمه الخاص)</option>
+                            <option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option>
+                        </select>
+                    </div>
+
+                    <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">رقم واتساب ولي الأمر:</label>
+                        <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
+                    </div>
+
+                    <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
+                        <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور الرسمية" readonly style="background: #e2e8f0;">
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">محتوى الرسالة:</label>
+                        <textarea id="msgContent" class="form-control" rows="4" placeholder="اكتب نص الرسالة..."></textarea>
+                    </div>
+
+                    <button class="btn" style="background: #25d366; font-size: 14px; padding: 10px 20px;" onclick="sendWhatsAppMessage()">إرسال عبر واتساب الآن</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- نافذة إضافة تلميذ أو طفل روض -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAddStudentModal()">&times;</span>
+            <h3 style="font-size: 16px; margin-bottom: 15px; color: #0284c7;">إضافة تلميذ أو طفل جديد</h3>
+            <form onsubmit="saveNewStudent(event)">
+                <input type="text" id="newReg" class="form-control" placeholder="رقم المسار أو المعرف" required>
+                <input type="text" id="newFirstName" class="form-control" placeholder="الاسم الشخصي" required>
+                <input type="text" id="newLastName" class="form-control" placeholder="الاسم العائلي" required>
+                
+                <label style="font-size: 12px; font-weight: bold; color: #475569;">السلك التعليمي:</label>
+                <select id="modalCycle" class="form-control" onchange="updateModalLevels()">
+                    <option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option>
+                    <option value="التعليم الابتدائي">التعليم الابتدائي</option>
+                    <option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option>
+                    <option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option>
+                </select>
+
+                <label style="font-size: 12px; font-weight: bold; color: #475569;">المستوى الدراسي:</label>
+                <select id="modalLevel" class="form-control"></select>
+
+                <input type="text" id="newClass" class="form-control" placeholder="القسم (مثال: القسم أ)" required>
+                <input type="text" id="newSeason" class="form-control" placeholder="موسم الالتحاق (مثال: 2026/2027)" required>
+                <button type="submit" class="btn btn-success" style="width: 100%; padding: 10px;">حفظ التلميذ</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_ID.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+        const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let totalIncome = 125500;
+        let totalExpenses = 45000;
+        let totalTransportExpenses = 1200;
+        let globalStudentsList = [];
+
+        const cycleLevels = {
+            "التعليم الأولي (الروض)": ["المستوى الأول (تمهيدي 3 سنوات)", "المستوى الثاني (تمهيدي 4 سنوات)", "المستوى الثالث (تحضيري للروض 5 سنوات)"],
+            "التعليم الابتدائي": ["المستوى الأول ابتدائي", "المستوى الثاني ابتدائي", "المستوى الثالث ابتدائي", "المستوى الرابع ابتدائي", "المستوى الخامس ابتدائي", "المستوى السادس ابتدائي"],
+            "التعليم الثانوي الإعدادي": ["الأولى إعدادي", "الثانية إعدادي", "الثالثة إعدادي"],
+            "التعليم الثانوي التأهيلي": ["الجذع المشترك", "الأولى باكالوريا", "الثانية باكالوريا"]
+        };
+
+        function initAdminPanel() {
+            let role = localStorage.getItem('user_role') || 'admin_general';
+            let menuContainer = document.getElementById('sideMenuContainer');
+            let badge = document.getElementById('userRoleBadge');
+            let welcome = document.getElementById('welcomeMsg');
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            menuContainer.innerHTML = '';
+
+            // تعيين تاريخ اليوم افتراضياً لحقل الغياب
+            let todayStr = new Date().toISOString().split('T')[0];
+            let attDateEl = document.getElementById('attendanceDate');
+            if(attDateEl) attDateEl.value = todayStr;
+
+            if (role === 'admin_general' || role === 'admin') {
+                badge.innerText = 'صلاحية: المدير العام';
+                if(welcome) welcome.innerText = 'مرحباً بالمدير العام. تملك الصلاحية المطلقة للإشراف على كافة أقسام المؤسسة.';
+                document.getElementById('tab-dash').classList.add('active');
+                
+                menuContainer.innerHTML = `
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-dash', event, this)" class="active">لوحة القيادة الشاملة</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)">التلاميذ والأداءات</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)">فضاء الأساتذة (الغياب والنقط)</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة والواتساب</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-finance', event, this)">الخزينة والمصاريف</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
+                `;
+            } 
+            else if (role === 'admin_finance_mgmt') {
+                badge.innerText = 'صلاحية: المسؤول الإداري والمالي';
+                let dashTab = document.getElementById('tab-dash');
+                if(dashTab) dashTab.style.display = 'none';
+                document.getElementById('tab-students').classList.add('active');
+                
+                menuContainer.innerHTML = `
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)" class="active">التلاميذ والأداءات</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-finance', event, this)">الخزينة والمصاريف</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
+                `;
+            } 
+            else if (role === 'admin_supervisor') {
+                badge.innerText = 'صلاحية: الحارس العام / الأستاذ';
+                let dashTab = document.getElementById('tab-dash');
+                if(dashTab) dashTab.style.display = 'none';
+                document.getElementById('tab-attendance-grades').classList.add('active');
+                
+                menuContainer.innerHTML = `
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">فضاء الأساتذة (الغياب والنقط)</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن والتنزيل</a></li>
+                    <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
+                `;
+            }
+
+            updateLevelsDropdown();
+            updateTTLevels();
+            loadStudentsFromSupabase();
+        }
+
+        function toggleSidebar() {
+            let aside = document.getElementById('appAside');
+            aside.classList.toggle('mobile-open');
+        }
+
+        function updateLevelsDropdown() {
+            let cycle = document.getElementById('selCycle').value;
+            let levelSelect = document.getElementById('selLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
+            filterClassStudents();
+        }
+
+        function updateModalLevels() {
+            let cycle = document.getElementById('modalCycle').value;
+            let levelSelect = document.getElementById('modalLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
+        }
+
+        function updateTTLevels() {
+            let cycle = document.getElementById('ttCycle').value;
+            let levelSelect = document.getElementById('ttLevel');
+            levelSelect.innerHTML = '';
+            cycleLevels[cycle].forEach(lvl => {
+                let opt = document.createElement('option');
+                opt.value = lvl;
+                opt.innerText = lvl;
+                levelSelect.appendChild(opt);
+            });
+        }
+
+        function switchTab(tabId, event, element) {
+            if (event) event.preventDefault();
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.aside-menu a').forEach(el => el.classList.remove('active'));
+            
+            let target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+            if (element) element.classList.add('active');
+
+            let aside = document.getElementById('appAside');
+            if (aside) aside.classList.remove('mobile-open');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openAddStudentModal() {
+            updateModalLevels();
+            document.getElementById('addStudentModal').style.display = 'flex';
+        }
+        function closeAddStudentModal() { document.getElementById('addStudentModal').style.display = 'none'; }
+
+        async function saveNewStudent(e) {
+            e.preventDefault();
+            let reg = document.getElementById('newReg').value;
+            let fName = document.getElementById('newFirstName').value;
+            let lName = document.getElementById('newLastName').value;
+            let cycle = document.getElementById('modalCycle').value;
+            let level = document.getElementById('modalLevel').value;
+            let cls = document.getElementById('newClass').value;
+            let season = document.getElementById('newSeason').value;
+
+            let payload = {
+                reg_number: reg,
+                first_name: fName,
+                last_name: lName,
+                class_name: `${cycle} - ${level} (${cls})`,
+                season: season
+            };
+
+            const { data, error } = await _supabase
+                .from('students')
+                .insert([payload]);
+
+            if (error) {
+                alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
+            } else {
+                alert('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase!');
+                closeAddStudentModal();
+                e.target.reset();
+                loadStudentsFromSupabase();
+            }
+        }
+
+        async function loadStudentsFromSupabase() {
+            let { data: students, error } = await _supabase.from('students').select('*');
+            if (error) return;
+
+            globalStudentsList = students || [];
+            let tbody = document.getElementById('studentsTableBody');
+            tbody.innerHTML = '';
+
+            document.getElementById('statTotalStudents').innerText = globalStudentsList.length;
+
+            if (globalStudentsList.length === 0) return;
+
+            globalStudentsList.forEach((st) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${st.reg_number || '-'}</td>
+                    <td>${st.first_name || '-'}</td>
+                    <td>${st.last_name || '-'}</td>
+                    <td>${st.class_name || '-'}</td>
+                    <td>${st.season || '-'}</td>
+                    <td>
+                        <select id="m_${st.id}" class="form-control" style="margin:0; padding:6px 10px;">
+                            <option value="شتمبر 2026">شتمبر 2026</option>
+                            <option value="أكتوبر 2026">أكتوبر 2026</option>
+                            <option value="نونبر 2026">نونبر 2026</option>
+                            <option value="دجنبر 2026">دجنبر 2026</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="processStudentPayment('${st.reg_number}', '${st.first_name}', '${st.class_name}', 500, 'm_${st.id}')">تحصيل</button>
+                        <button class="btn" style="padding: 6px 10px;" onclick="editRow(this)">تعديل</button>
+                        <button class="btn btn-danger" style="padding: 6px 10px;" onclick="deleteRow(this)">حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            filterClassStudents();
+        }
+
+        // 1. عرض التلاميذ وتعبئة الجداول المنفصلة (الغياب والنقط)
+        function filterClassStudents() {
+            let cycle = document.getElementById('selCycle').value;
+            let level = document.getElementById('selLevel').value;
+            let cls = document.getElementById('selClass').value;
+            
+            let tbodyAbsence = document.getElementById('classStudentsTableBody');
+            let tbodyGrades = document.getElementById('classGradesTableBody');
+            
+            tbodyAbsence.innerHTML = '';
+            tbodyGrades.innerHTML = '';
+
+            let filtered = globalStudentsList.filter(st => {
+                let cName = st.class_name || '';
+                return cName.includes(cycle) && cName.includes(level) && cName.includes(cls);
+            });
+
+            if (filtered.length === 0) {
+                tbodyAbsence.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
+                tbodyGrades.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #64748b;">لا يوجد تلاميذ مسجلين في هذا الفصل حالياً.</td></tr>`;
+                return;
+            }
+
+            // أ) تعبئة جدول الغياب اليومي السريع
+            filtered.forEach((st) => {
+                let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${st.reg_number || '-'}</td>
+                    <td>${fullName}</td>
+                    <td>
+                        <select id="att_status_${st.id}" class="form-control" style="margin:0;">
+                            <option value="حاضر">حاضر / حاضرة</option>
+                            <option value="غياب مبرر">غياب مبرر</option>
+                            <option value="غياب غير مبرر">غياب غير مبرر</option>
+                            <option value="تأخر">تأخر</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-success" onclick="saveStudentAttendance('${st.id}', '${fullName}')">تسجيل غياب اليوم</button>
+                    </td>
+                `;
+                tbodyAbsence.appendChild(tr);
+            });
+
+            // ب) تعبئة جدول إدخال النقط المستقل
+            filtered.forEach((st) => {
+                let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${st.reg_number || '-'}</td>
+                    <td>${fullName}</td>
+                    <td>
+                        <input type="number" step="0.25" max="20" min="0" id="grade_input_${st.id}" class="form-control grade-input-field" data-id="${st.id}" placeholder="النقطة /20" style="margin:0; width:120px;">
+                    </td>
+                    <td>
+                        <button class="btn" style="padding: 6px 10px;" onclick="saveSingleGrade('${st.id}', '${fullName}')">حفظ فردي</button>
+                    </td>
+                `;
+                tbodyGrades.appendChild(tr);
+            });
+        }
+
+        // تخزين الغياب اليومي في جدول attendances بـ Supabase
+        async function saveStudentAttendance(studentId, studentName) {
+            let dateVal = document.getElementById('attendanceDate').value;
+            let statusVal = document.getElementById(`att_status_${studentId}`).value;
+
+            if(!dateVal) { alert('الرجاء اختيار تاريخ اليوم أولاً'); return; }
+
+            let payload = {
+                student_id: studentId,
+                absence_date: dateVal,
+                status: statusVal,
+                hours: statusVal.includes('غياب') ? 2 : 0
+            };
+
+            const { error } = await _supabase.from('attendances').insert([payload]);
+            if(error) {
+                alert('خطأ في حفظ الغياب بقاعدة البيانات: ' + error.message);
+            } else {
+                alert(`تم بنجاح تسجيل حالة (${statusVal}) للتلميذ: ${studentName} في جدول attendances.`);
+            }
+        }
+
+        // تخزين نقطة فردية في جدول grades بـ Supabase
+        async function saveSingleGrade(studentId, studentName) {
+            let subject = document.getElementById('gradeSubject').value;
+            let gradeVal = document.getElementById(`grade_input_${studentId}`).value;
+
+            if(gradeVal === '' || gradeVal < 0 || gradeVal > 20) {
+                alert('الرجاء إدخال نقطة صحيحة محصورة بين 0 و 20');
+                return;
+            }
+
+            let payload = {
+                student_id: studentId,
+                subject: subject,
+                grade_value: parseFloat(gradeVal)
+            };
+
+            const { error } = await _supabase.from('grades').insert([payload]);
+            if(error) {
+                alert('خطأ في حفظ النقطة بقاعدة البيانات: ' + error.message);
+            } else {
+                alert(`تم بنجاح حفظ ونشر نقطة مادة (${subject}) للتلميذ ${studentName} بنقطة ${gradeVal}/20 في جدول grades.`);
+            }
+        }
+
+        // زر تخزين كل نقط الفصل دفعة واحدة في جدول grades
+        async function saveAllClassGrades() {
+            let subject = document.getElementById('gradeSubject').value;
+            let inputs = document.querySelectorAll('.grade-input-field');
+            let recordsToInsert = [];
+
+            inputs.forEach(input => {
+                let val = input.value;
+                let sId = input.getAttribute('data-id');
+                if(val !== '' && val >= 0 && val <= 20) {
+                    recordsToInsert.push({
+                        student_id: sId,
+                        subject: subject,
+                        grade_value: parseFloat(val)
+                    });
+                }
+            });
+
+            if(recordsToInsert.length === 0) {
+                alert('الرجاء إدخال نقطة واحدة على الأقل قبل الضغط على حفظ الفصل');
+                return;
+            }
+
+            const { error } = await _supabase.from('grades').insert(recordsToInsert);
+            if(error) {
+                alert('خطأ أثناء حفظ نقط الفصل: ' + error.message);
+            } else {
+                alert(`تم بنجاح تخزين وإرسال سجل نقط مادة (${subject}) لكافة تلاميذ القسم في جدول grades بـ Supabase!`);
+            }
+        }
+
+        function addTransportExpense() {
+            let date = document.getElementById('transDate').value;
+            let category = document.getElementById('transCategory').value;
+            let amount = parseFloat(document.getElementById('transAmount').value);
+            let note = document.getElementById('transNote').value || '-';
+
+            if(!amount || amount <= 0) { alert('الرجاء إدخال مبلغ صحيح للمصروف'); return; }
+
+            totalTransportExpenses += amount;
+            totalExpenses += amount;
+
+            document.getElementById('transportTotalDisplay').innerText = totalTransportExpenses.toLocaleString() + ' درهم';
+            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+
+            let tbody = document.getElementById('transportTableBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${date}</td>
+                <td>${category}</td>
+                <td>${amount.toLocaleString()} درهم</td>
+                <td>${note}</td>
+                <td>
+                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, ${amount})">حذف</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            document.getElementById('transAmount').value = '';
+            document.getElementById('transNote').value = '';
+            alert('تم تسجيل مصروف النقل بنجاح!');
+        }
+
+        function deleteTransportRow(btn, amount) {
+            if(confirm('هل أنت متأكد من حذف هذا المصروف؟')) {
+                totalTransportExpenses -= amount;
+                totalExpenses -= amount;
+                document.getElementById('transportTotalDisplay').innerText = totalTransportExpenses.toLocaleString() + ' درهم';
+                document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+                btn.closest('tr').remove();
+                alert('تم الحذف بنجاح!');
+            }
+        }
+
+        function downloadClassReport() {
+            let cycle = document.getElementById('selCycle').value;
+            let level = document.getElementById('selLevel').value;
+            let cls = document.getElementById('selClass').value;
+            alert(`جاري تنزيل تقرير الغياب التراكمي لفصل (${cycle} - ${level} - ${cls})...`);
+        }
+
+        function downloadTimetable() {
+            let cycle = document.getElementById('ttCycle').value;
+            let level = document.getElementById('ttLevel').value;
+            let type = document.getElementById('ttType').value;
+            alert(`جاري تحميل جدول استعمال الزمن (${type}) لـ (${cycle} - ${level})...`);
+        }
+
+        function editRow(btn) {
+            let row = btn.closest('tr');
+            let cell = row.cells[1];
+            let newVal = prompt('تعديل البيانات:', cell.innerText);
+            if(newVal) { cell.innerText = newVal; alert('تم التعديل بنجاح!'); }
+        }
+
+        function deleteRow(btn) {
+            if(confirm('هل أنت متأكد من حذف هذا السطر؟')) {
+                btn.closest('tr').remove();
+                alert('تم الحذف بنجاح!');
+            }
+        }
+
+        function processStudentPayment(reg, name, level, amount, monthSelectId) {
+            let month = document.getElementById(monthSelectId).value;
+            totalIncome += amount;
+            document.getElementById('finTotalIncome').innerText = totalIncome.toLocaleString() + ' درهم';
+            
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
+            logBody.appendChild(tr);
+
+            alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
+        }
+
+        function payMonthlySalary(beneficiary, amount, monthSelectId) {
+            let month = document.getElementById(monthSelectId).value;
+            totalExpenses += amount;
+            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+            
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب شهر ${month}: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
+            logBody.appendChild(tr);
+
+            alert(`تم صرف راتب شهر (${month}) لـ "${beneficiary}" بنجاح وإضافته للمصاريف العامة!`);
+        }
+
+        function addOtherExpense() {
+            let desc = document.getElementById('otherDesc').value;
+            let amount = parseFloat(document.getElementById('otherAmount').value);
+            if(!desc || !amount) { alert('أدخل البيان والمبلغ بشكل صحيح'); return; }
+
+            totalExpenses += amount;
+            document.getElementById('finTotalExpenses').innerText = totalExpenses.toLocaleString() + ' درهم';
+
+            let logBody = document.getElementById('financialLogBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (مصروف عام)</span></td><td>${amount} درهم</td><td>${desc}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
+            logBody.appendChild(tr);
+
+            document.getElementById('otherDesc').value = '';
+            document.getElementById('otherAmount').value = '';
+            alert('تم تسجيل المصروف بنجاح وخصمه من الميزانية العامة!');
+        }
+
+        function addActivity() {
+            let name = document.getElementById('actName').value;
+            let date = document.getElementById('actDate').value;
+            if(!name) { alert('أدخل عنوان النشاط'); return; }
+            let tbody = document.getElementById('activitiesTableBody');
+            let tr = document.createElement('tr');
+            tr.innerHTML = `<td>${name}</td><td>${date || 'غير محدد'}</td><td><button class="btn" style="padding:4px 8px;" onclick="editRow(this)">تعديل</button> <button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
+            tbody.appendChild(tr);
+            document.getElementById('actName').value = '';
+            alert('تم إضافة النشاط التربوي بنجاح!');
+        }
+
+        function toggleMsgFields() {
+            let type = document.getElementById('msgType').value;
+            document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
+            document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
+        }
+
+        function sendWhatsAppMessage() {
+            let type = document.getElementById('msgType').value;
+            let msg = document.getElementById('msgContent').value;
+            if(!msg) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
+            let enc = encodeURIComponent(msg);
+
+            if(type === 'private') {
+                let phone = document.getElementById('parentPhone').value;
+                if(!phone) { alert('الرجاء إدخال رقم واتساب الولي الخاص!'); return; }
+                window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+            } else {
+                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
