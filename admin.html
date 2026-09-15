@@ -418,34 +418,77 @@
                 </table>
             </div>
 
-            <!-- 10. الرسائل والتواصل -->
+            <!-- 10. الرسائل والتواصل الموجهة للأساتذة والأولياء -->
             <div id="tab-comms" class="tab-content">
-                <h2><span>إرسال الرسائل العامة والخاصة للأولياء عبر الواتساب</span></h2>
+                <h2><span>الرسائل والتواصل الموجه للأساتذة وأولياء الأمور</span></h2>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    
                     <div class="form-group" style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع الرسالة:</label>
-                        <select id="msgType" class="form-control" onchange="toggleMsgFields()">
-                            <option value="private">رسالة خاصة لولي أمر (مباشرة على رقمه الخاص)</option>
-                            <option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">وجهة الرسالة:</label>
+                        <select id="msgTargetAudience" class="form-control" onchange="toggleAudienceFields()">
+                            <option value="teachers">رسائل وتوجيهات موجهة للأساتذة</option>
+                            <option value="parents">رسائل وتواصل موجه لأولياء الأمور</option>
                         </select>
                     </div>
 
-                    <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">رقم واتساب ولي الأمر:</label>
-                        <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
+                    <!-- إعدادات رسائل الأساتذة -->
+                    <div id="teachersMsgSection">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نطاق إرسال الرسالة للأساتذة:</label>
+                            <select id="teacherMsgScope" class="form-control" onchange="toggleTeacherScopeFields()">
+                                <option value="all_teachers">رسالة جماعية لكافة الأساتذة (جميع الأسلاك)</option>
+                                <option value="cycle_teachers">رسالة حسب السلك التعليمي</option>
+                                <option value="level_teachers">رسالة حسب المستوى الدراسي</option>
+                                <option value="private_teacher">رسالة خاصة لأستاذ معين (حسب المادة والسلك)</option>
+                            </select>
+                        </div>
+
+                        <div id="teacherCycleField" class="form-group" style="margin-bottom: 15px; display: none;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">اختر السلك التعليمي:</label>
+                            <select class="form-control">
+                                <option>التعليم الابتدائي</option>
+                                <option>التعليم الأولي (الروض)</option>
+                                <option>التعليم الثانوي الإعدادي</option>
+                                <option>التعليم الثانوي التأهيلي</option>
+                            </select>
+                        </div>
+
+                        <div id="teacherPrivateField" class="form-group" style="margin-bottom: 15px; display: none;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">حدد الأستاذ والمادة:</label>
+                            <select class="form-control">
+                                <option>الأستاذ محمد العمراني (اللغة العربية - الابتدائي)</option>
+                                <option>الأستاذة فاطمة الزهراء (الرياضيات - الروض)</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
-                        <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور الرسمية" readonly style="background: #e2e8f0;">
+                    <!-- إعدادات رسائل الأولياء (القديمة المعتمدة) -->
+                    <div id="parentsMsgSection" style="display: none;">
+                        <div class="form-group" style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع رسالة الأولياء:</label>
+                            <select id="msgType" class="form-control" onchange="toggleMsgFields()">
+                                <option value="private">رسالة خاصة لولي أمر (على رقمه الخاص)</option>
+                                <option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option>
+                            </select>
+                        </div>
+
+                        <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">رقم واتساب ولي الأمر:</label>
+                            <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
+                        </div>
+
+                        <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
+                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
+                            <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور الرسمية" readonly style="background: #e2e8f0;">
+                        </div>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 15px;">
-                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">محتوى الرسالة:</label>
-                        <textarea id="msgContent" class="form-control" rows="4" placeholder="اكتب نص الرسالة..."></textarea>
+                        <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">محتوى الرسالة / التوجيه:</label>
+                        <textarea id="msgContent" class="form-control" rows="4" placeholder="اكتب نص الرسالة هنا..."></textarea>
                     </div>
 
-                    <button class="btn" style="background: #25d366; font-size: 14px; padding: 10px 20px;" onclick="sendWhatsAppMessage()">إرسال عبر واتساب الآن</button>
+                    <button class="btn" style="background: #25d366; font-size: 14px; padding: 10px 20px;" onclick="sendWhatsAppMessage()">إرسال عبر واتساب أو النظام الآن</button>
                 </div>
             </div>
 
@@ -506,7 +549,6 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             menuContainer.innerHTML = '';
 
-            // تعيين تاريخ اليوم افتراضياً لحقل الغياب
             let todayStr = new Date().toISOString().split('T')[0];
             let attDateEl = document.getElementById('attendanceDate');
             if(attDateEl) attDateEl.value = todayStr;
@@ -645,9 +687,7 @@
                 season: season
             };
 
-            const { data, error } = await _supabase
-                .from('students')
-                .insert([payload]);
+            const { data, error } = await _supabase.from('students').insert([payload]);
 
             if (error) {
                 alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
@@ -699,7 +739,6 @@
             filterClassStudents();
         }
 
-        // 1. عرض التلاميذ وتعبئة الجداول المنفصلة (الغياب والنقط)
         function filterClassStudents() {
             let cycle = document.getElementById('selCycle').value;
             let level = document.getElementById('selLevel').value;
@@ -722,7 +761,6 @@
                 return;
             }
 
-            // أ) تعبئة جدول الغياب اليومي السريع
             filtered.forEach((st) => {
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
                 let tr = document.createElement('tr');
@@ -744,7 +782,6 @@
                 tbodyAbsence.appendChild(tr);
             });
 
-            // ب) تعبئة جدول إدخال النقط المستقل
             filtered.forEach((st) => {
                 let fullName = `${st.first_name || ''} ${st.last_name || ''}`;
                 let tr = document.createElement('tr');
@@ -762,11 +799,9 @@
             });
         }
 
-        // تخزين الغياب اليومي في جدول attendances بـ Supabase
         async function saveStudentAttendance(studentId, studentName) {
             let dateVal = document.getElementById('attendanceDate').value;
             let statusVal = document.getElementById(`att_status_${studentId}`).value;
-
             if(!dateVal) { alert('الرجاء اختيار تاريخ اليوم أولاً'); return; }
 
             let payload = {
@@ -780,11 +815,10 @@
             if(error) {
                 alert('خطأ في حفظ الغياب بقاعدة البيانات: ' + error.message);
             } else {
-                alert(`تم بنجاح تسجيل حالة (${statusVal}) للتلميذ: ${studentName} في جدول attendances.`);
+                alert(`تم بنجاح تسجيل حالة (${statusVal}) للتلميذ: ${studentName}.`);
             }
         }
 
-        // تخزين نقطة فردية في جدول grades بـ Supabase
         async function saveSingleGrade(studentId, studentName) {
             let subject = document.getElementById('gradeSubject').value;
             let gradeVal = document.getElementById(`grade_input_${studentId}`).value;
@@ -804,11 +838,10 @@
             if(error) {
                 alert('خطأ في حفظ النقطة بقاعدة البيانات: ' + error.message);
             } else {
-                alert(`تم بنجاح حفظ ونشر نقطة مادة (${subject}) للتلميذ ${studentName} بنقطة ${gradeVal}/20 في جدول grades.`);
+                alert(`تم بنجاح حفظ ونشر نقطة مادة (${subject}) للتلميذ ${studentName}.`);
             }
         }
 
-        // زر تخزين كل نقط الفصل دفعة واحدة في جدول grades
         async function saveAllClassGrades() {
             let subject = document.getElementById('gradeSubject').value;
             let inputs = document.querySelectorAll('.grade-input-field');
@@ -835,7 +868,7 @@
             if(error) {
                 alert('خطأ أثناء حفظ نقط الفصل: ' + error.message);
             } else {
-                alert(`تم بنجاح تخزين وإرسال سجل نقط مادة (${subject}) لكافة تلاميذ القسم في جدول grades بـ Supabase!`);
+                alert(`تم بنجاح تخزين سجل نقط مادة (${subject}) لكافة تلاميذ القسم!`);
             }
         }
 
@@ -883,13 +916,6 @@
             }
         }
 
-        function downloadClassReport() {
-            let cycle = document.getElementById('selCycle').value;
-            let level = document.getElementById('selLevel').value;
-            let cls = document.getElementById('selClass').value;
-            alert(`جاري تنزيل تقرير الغياب التراكمي لفصل (${cycle} - ${level} - ${cls})...`);
-        }
-
         function downloadTimetable() {
             let cycle = document.getElementById('ttCycle').value;
             let level = document.getElementById('ttLevel').value;
@@ -921,7 +947,7 @@
             tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #10b981; font-weight: bold;">دخل</span></td><td>${amount} درهم</td><td>${name} (${month})</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
-            alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name} وتسجيله بالخزينة!`);
+            alert(`تم تحصيل ${amount} درهم عن ${month} للتلميذ ${name}!`);
         }
 
         function payMonthlySalary(beneficiary, amount, monthSelectId) {
@@ -934,7 +960,7 @@
             tr.innerHTML = `<td>${new Date().toLocaleDateString('en-CA')}</td><td><span style="color: #ef4444; font-weight: bold;">خروج (راتب)</span></td><td>${amount} درهم</td><td>صرف راتب شهر ${month}: ${beneficiary}</td><td><button class="btn btn-danger" style="padding:4px 8px;" onclick="deleteRow(this)">حذف</button></td>`;
             logBody.appendChild(tr);
 
-            alert(`تم صرف راتب شهر (${month}) لـ "${beneficiary}" بنجاح وإضافته للمصاريف العامة!`);
+            alert(`تم صرف راتب شهر (${month}) لـ "${beneficiary}" بنجاح!`);
         }
 
         function addOtherExpense() {
@@ -952,7 +978,7 @@
 
             document.getElementById('otherDesc').value = '';
             document.getElementById('otherAmount').value = '';
-            alert('تم تسجيل المصروف بنجاح وخصمه من الميزانية العامة!');
+            alert('تم تسجيل المصروف بنجاح!');
         }
 
         function addActivity() {
@@ -967,6 +993,19 @@
             alert('تم إضافة النشاط التربوي بنجاح!');
         }
 
+        // الوظائف المحدثة للرسائل والتواصل الموجهة للأساتذة والأولياء
+        function toggleAudienceFields() {
+            let audience = document.getElementById('msgTargetAudience').value;
+            document.getElementById('teachersMsgSection').style.display = (audience === 'teachers') ? 'block' : 'none';
+            document.getElementById('parentsMsgSection').style.display = (audience === 'parents') ? 'block' : 'none';
+        }
+
+        function toggleTeacherScopeFields() {
+            let scope = document.getElementById('teacherMsgScope').value;
+            document.getElementById('teacherCycleField').style.display = (scope === 'cycle_teachers' || scope === 'level_teachers') ? 'block' : 'none';
+            document.getElementById('teacherPrivateField').style.display = (scope === 'private_teacher') ? 'block' : 'none';
+        }
+
         function toggleMsgFields() {
             let type = document.getElementById('msgType').value;
             document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
@@ -974,17 +1013,23 @@
         }
 
         function sendWhatsAppMessage() {
-            let type = document.getElementById('msgType').value;
+            let audience = document.getElementById('msgTargetAudience').value;
             let msg = document.getElementById('msgContent').value;
             if(!msg) { alert('الرجاء كتابة محتوى الرسالة أولاً!'); return; }
             let enc = encodeURIComponent(msg);
 
-            if(type === 'private') {
-                let phone = document.getElementById('parentPhone').value;
-                if(!phone) { alert('الرجاء إدخال رقم واتساب الولي الخاص!'); return; }
-                window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+            if(audience === 'teachers') {
+                let scope = document.getElementById('teacherMsgScope').value;
+                alert(`تم بنجاح إرسال التوجيه التربوي للأساتذة (النطاق: ${scope})!`);
             } else {
-                window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
+                let type = document.getElementById('msgType').value;
+                if(type === 'private') {
+                    let phone = document.getElementById('parentPhone').value;
+                    if(!phone) { alert('الرجاء إدخال رقم واتساب ولي الأمر الخاص!'); return; }
+                    window.open(`https://wa.me/${phone}?text=${enc}`, '_blank');
+                } else {
+                    window.open(`https://chat.whatsapp.com/123456789ABCDEF?text=${enc}`, '_blank');
+                }
             }
         }
     </script>
