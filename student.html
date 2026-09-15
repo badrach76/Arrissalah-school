@@ -90,15 +90,17 @@
                 <p style="font-size: 13px; color: #ef4444;">التنبيهات الإدارية: لديك غياب واحد مسجل ومبرر خلال هذا الأسبوع.</p>
             </div>
 
-            <!-- الجدول الزمني -->
+            <!-- الجدول الزمني (استعمال الزمن مع أيام الأسبوع) -->
             <div class="box">
-                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص الدراسية</h2>
+                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص الدراسية (استعمال الزمن)</h2>
                 <button class="btn" onclick="printScheduleReport()" style="margin-bottom: 10px;">طباعة الجدول الزمني</button>
                 <table id="scheduleTable">
-                    <thead><tr><th>التوقيت الزمني</th><th>المادة</th><th>الأستاذ المكلف</th><th>القاعة</th></tr></thead>
+                    <thead><tr><th>يوم الأسبوع</th><th>التوقيت الزمني</th><th>المادة</th><th>الأستاذ المكلف</th><th>القاعة</th></tr></thead>
                     <tbody>
-                        <tr><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
-                        <tr><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr>
+                        <tr><td><strong>الإثنين</strong></td><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
+                        <tr><td><strong>الإثنين</strong></td><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr>
+                        <tr><td><strong>الثلاثاء</strong></td><td>08:30 - 10:30</td><td>النشاط العلمي</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
+                        <tr><td><strong>الأربعاء</strong></td><td>09:00 - 11:00</td><td>اللغة الفرنسية</td><td>الأستاذة سناء العلوي</td><td>القسم 02</td></tr>
                     </tbody>
                 </table>
             </div>
