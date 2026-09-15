@@ -8,7 +8,6 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         
-        /* خلفية مشرقة، راقية، وذات طابع تعليمي مؤسساتي (بدون ألوان غامقة كئيبة) */
         body { 
             background-color: #f8fafc; 
             background-image: 
@@ -23,12 +22,14 @@
         }
         
         /* شريط التنقل الذكي والقائمة العائمة */
-        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08); padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         
-        /* الحلة الأنيقة للاسم والشعار */
-        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
-        .logo { font-size: 20px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; background: linear-gradient(135deg, #0284c7, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .sub-logo { font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
+        /* تنسيق اللوغو الحقيقي في الشريط العلوي */
+        .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .brand-logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 8px; }
+        .brand-texts { display: flex; flex-direction: column; }
+        .logo { font-size: 17px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; }
+        .sub-logo { font-size: 10.5px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; }
 
         /* زر القائمة المنسدلة */
         .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
@@ -40,7 +41,7 @@
         .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; color: #334155; font-size: 13px; transition: 0.3s; }
         .lang-btn:hover { background: #e2e8f0; }
 
-        /* الواجهة الترحيبية بلون أزرق مؤسساتي ناصع ومريح */
+        /* الواجهة الترحيبية */
         .hero { 
             background: linear-gradient(135deg, rgba(2, 132, 199, 0.9), rgba(3, 105, 161, 0.92)); 
             backdrop-filter: blur(4px);
@@ -90,8 +91,12 @@
 
     <header>
         <a href="index.html" class="brand-container">
-            <div class="logo" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
-            <div class="sub-logo" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
+            <!-- استخدام لوغو المؤسسة الفعلي هنا -->
+            <img src="1000076356.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo-img">
+            <div class="brand-texts">
+                <div class="logo" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
+                <div class="sub-logo" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
+            </div>
         </a>
         
         <button class="menu-toggle" onclick="toggleMenu()">☰</button>
@@ -136,6 +141,7 @@
     </div>
 
     <div id="infoModal" class="modal">
+        .modal-content
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h3 id="modalTitle">عنوان النافذة</h3>
