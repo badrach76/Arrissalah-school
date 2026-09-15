@@ -9,7 +9,6 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         
-        /* ترقية الخلفية لتتطابق مع الطابع الراقي والمشرق */
         body { 
             background-color: #f0f4f8; 
             background-image: 
@@ -24,7 +23,6 @@
         
         header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08); padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         
-        /* تنسيق اللوغو الحقيقي في الشريط العلوي للإدارة */
         .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
         .brand-logo-img { width: 45px; height: 45px; object-fit: contain; border-radius: 8px; }
         .brand-texts { display: flex; flex-direction: column; }
@@ -35,21 +33,23 @@
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
         .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
 
-        .layout-body { display: flex; flex: 1; }
+        .layout-body { display: flex; flex: 1; position: relative; }
         aside { width: 260px; background: #0f172a; color: white; padding: 20px; flex-shrink: 0; transition: 0.3s; z-index: 999; box-shadow: 4px 0 15px rgba(0,0,0,0.05); }
         .aside-menu { list-style: none; }
         .aside-menu li { margin-bottom: 8px; }
         .aside-menu a { color: #94a3b8; text-decoration: none; display: block; padding: 12px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .aside-menu a:hover, .aside-menu a.active { background: #0284c7; color: white; }
 
-        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
+        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: calc(100% - 260px); }
         
+        /* منع التداخل في العرض وتبويبات الإدارة */
         .tab-content { display: none !important; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.04); margin-bottom: 25px; border-right: 4px solid #0284c7; }
         .tab-content.active { display: block !important; }
         
         .tab-content h2 { font-size: 17px; margin-bottom: 15px; color: #0f172a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 600px; }
+        .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; text-align: right; min-width: 600px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         
@@ -86,7 +86,7 @@
             .layout-body { flex-direction: column; }
             aside { width: 100%; display: none; }
             aside.mobile-open { display: block; }
-            .main-container { padding: 15px; }
+            .main-container { width: 100%; padding: 15px; }
         }
     </style>
 </head>
@@ -94,7 +94,6 @@
 
     <header>
         <a href="index.html" class="brand-container">
-            <!-- اللوغو الحقيقي المدمج في فضاء الإدارة -->
             <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo-img">
             <div class="brand-texts">
                 <div class="logo">مؤسسة الرسالة</div>
@@ -153,15 +152,17 @@
                     <span>إدارة التلاميذ والأطفال، الأداءات المالية وتحصيل الرسوم</span>
                     <button class="btn btn-success" onclick="openAddStudentModal()">+ إضافة تلميذ / طفل جديد</button>
                 </h2>
-                <table>
-                    <thead>
-                        <tr><th>رقم المسار / المعرف</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>الفصل والمستوى</th><th>موسم الالتحاق</th><th>الشهر</th><th>العمليات</th></tr>
-                    </thead>
-                    <tbody id="studentsTableBody"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>رقم المسار / المعرف</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>الفصل والمستوى</th><th>موسم الالتحاق</th><th>الشهر</th><th>العمليات</th></tr>
+                        </thead>
+                        <tbody id="studentsTableBody"></tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- 3. فضاء الأساتذة: الغياب والنقط المنفصلان تماماً -->
+            <!-- 3. فضاء الأساتذة: الغياب والنقط -->
             <div id="tab-attendance-grades" class="tab-content">
                 <h2><span>فضاء الأساتذة: سجل الغياب اليومي ولائحة إدخال النقط المستقلة</span></h2>
 
@@ -184,31 +185,26 @@
                     <button class="btn btn-success" onclick="filterClassStudents()">عرض تلاميذ الفصل</button>
                 </div>
 
-                <!-- أ) جدول لائحة الغياب اليومية (مرتبط بـ attendances) -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 25px;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700;">1. لائحة الغياب اليومية (تسجيل فوري في جدول attendances):</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700;">1. لائحة الغياب اليومية:</h3>
                         <input type="date" id="attendanceDate" class="form-control" style="width: 180px; margin:0;" value="">
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>رقم المسار</th>
-                                <th>الاسم الكامل للتلميذ</th>
-                                <th>حالة الحضور والغياب والتأخر</th>
-                                <th>حفظ حالة الغياب</th>
-                            </tr>
-                        </thead>
-                        <tbody id="classStudentsTableBody">
-                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل ثم اضغط عرض تلاميذ الفصل</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>رقم المسار</th><th>الاسم الكامل للتلميذ</th><th>حالة الحضور والغياب والتأخر</th><th>حفظ حالة الغياب</th></tr>
+                            </thead>
+                            <tbody id="classStudentsTableBody">
+                                <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل ثم اضغط عرض تلاميذ الفصل</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <!-- ب) جدول لائحة إدخال النقط المستقلة (مرتبط بـ grades) -->
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
                     <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
-                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700; margin:0;">2. لائحة إدخال النقط المستقلة (جدول grades):</h3>
+                        <h3 style="font-size: 14px; color: #0f172a; font-weight: 700; margin:0;">2. لائحة إدخال النقط المستقلة:</h3>
                         <select id="gradeSubject" class="form-control" style="flex: 2; margin:0;">
                             <option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option>
                             <option value="الفرنسية">الفرنسية</option>
@@ -216,19 +212,16 @@
                             <option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option>
                         </select>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>رقم المسار</th>
-                                <th>الاسم الكامل للتلميذ</th>
-                                <th>النقطة المحصلة (على 20)</th>
-                                <th>الإجراء</th>
-                            </tr>
-                        </thead>
-                        <tbody id="classGradesTableBody">
-                            <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل أولاً لعرض قائمة النقط</td></tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>رقم المسار</th><th>الاسم الكامل للتلميذ</th><th>النقطة المحصلة (على 20)</th><th>الإجراء</th></tr>
+                            </thead>
+                            <tbody id="classGradesTableBody">
+                                <tr><td colspan="4" style="text-align: center; color: #64748b;">اختر الفصل أولاً لعرض قائمة النقط</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div style="margin-top: 15px; text-align: left;">
                         <button class="btn btn-success" onclick="saveAllClassGrades()" style="padding: 10px 20px; font-size: 14px;">حفظ نقط الفصل بالكامل</button>
                     </div>
@@ -259,79 +252,85 @@
             <!-- 5. رواتب الأساتذة والمربيات -->
             <div id="tab-teachers" class="tab-content">
                 <h2><span>رواتب الأساتذة والمربيات الشهرية ومجموعات الواتساب</span></h2>
-                <table>
-                    <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td>أ. فاطمة الزهراء</td>
-                            <td>2023/09/01</td>
-                            <td>24 ساعة</td>
-                            <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">روض أ</a></td>
-                            <td>4000 درهم</td>
-                            <td>
-                                <select id="sal_m_1" class="form-control" style="margin:0; padding:6px 10px;">
-                                    <option value="شتمبر 2026">شتمبر 2026</option>
-                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
-                                    <option value="نونبر 2026">نونبر 2026</option>
-                                    <option value="دجنبر 2026">دجنبر 2026</option>
-                                </select>
-                            </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف الراتب</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 6. الموظفون الإداريون -->
-            <div id="tab-staff" class="tab-content">
-                <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
-                <table>
-                    <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
-                    <tbody>
-                        <tr>
-                            <td>أحمد الداودي</td>
-                            <td>حارس عام</td>
-                            <td>2023/09/01</td>
-                            <td>5000 درهم</td>
-                            <td>
-                                <select id="sal_m_2" class="form-control" style="margin:0; padding:6px 10px;">
-                                    <option value="شتمبر 2026">شتمبر 2026</option>
-                                    <option value="أكتوبر 2026">أكتوبر 2026</option>
-                                    <option value="نونبر 2026">نونبر 2026</option>
-                                    <option value="دجنبر 2026">دجنبر 2026</option>
-                                </select>
-                            </td>
-                            <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف الراتب</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 7. النقل المدرسي ومصاريفه التفصيلية -->
-            <div id="tab-transport" class="tab-content">
-                <h2><span>النقل المدرسي وطاقمه ومصاريف الحافلات</span></h2>
-                
-                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
+                <div class="table-responsive">
                     <table>
-                        <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني بالأداء</th><th>صرف الأجر</th></tr></thead>
+                        <thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
                         <tbody>
                             <tr>
-                                <td>سعيد بوطاهر</td>
-                                <td>سائق الحافلة</td>
+                                <td>أ. فاطمة الزهراء</td>
+                                <td>2023/09/01</td>
+                                <td>24 ساعة</td>
+                                <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">روض أ</a></td>
                                 <td>4000 درهم</td>
                                 <td>
-                                    <select id="sal_m_3" class="form-control" style="margin:0; padding:6px 10px;">
+                                    <select id="sal_m_1" class="form-control" style="margin:0; padding:6px 10px;">
                                         <option value="شتمبر 2026">شتمبر 2026</option>
                                         <option value="أكتوبر 2026">أكتوبر 2026</option>
                                         <option value="نونبر 2026">نونبر 2026</option>
                                         <option value="دجنبر 2026">دجنبر 2026</option>
                                     </select>
                                 </td>
-                                <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف الراتب</button></td>
+                                <td><button class="btn btn-success" onclick="payMonthlySalary('أ. فاطمة الزهراء', 4000, 'sal_m_1')">صرف الراتب</button></td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- 6. الموظفون الإداريون -->
+            <div id="tab-staff" class="tab-content">
+                <h2><span>الموظفون الإداريون ورواتبهم الشهرية</span></h2>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر المعني بالأداء</th><th>الإجراء</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>أحمد الداودي</td>
+                                <td>حارس عام</td>
+                                <td>2023/09/01</td>
+                                <td>5000 درهم</td>
+                                <td>
+                                    <select id="sal_m_2" class="form-control" style="margin:0; padding:6px 10px;">
+                                        <option value="شتمبر 2026">شتمبر 2026</option>
+                                        <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                        <option value="نونبر 2026">نونبر 2026</option>
+                                        <option value="دجنبر 2026">دجنبر 2026</option>
+                                    </select>
+                                </td>
+                                <td><button class="btn btn-success" onclick="payMonthlySalary('أحمد الداودي', 5000, 'sal_m_2')">صرف الراتب</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 7. النقل المدرسي ومصاريفه -->
+            <div id="tab-transport" class="tab-content">
+                <h2><span>النقل المدرسي وطاقمه ومصاريف الحافلات</span></h2>
+                
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                    <h3 style="font-size: 14px; margin-bottom: 10px; color: #0284c7;">أجور طاقم النقل:</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر المعني بالأداء</th><th>صرف الأجر</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>سعيد بوطاهر</td>
+                                    <td>سائق الحافلة</td>
+                                    <td>4000 درهم</td>
+                                    <td>
+                                        <select id="sal_m_3" class="form-control" style="margin:0; padding:6px 10px;">
+                                            <option value="شتمبر 2026">شتمبر 2026</option>
+                                            <option value="أكتوبر 2026">أكتوبر 2026</option>
+                                            <option value="نونبر 2026">نونبر 2026</option>
+                                            <option value="دجنبر 2026">دجنبر 2026</option>
+                                        </select>
+                                    </td>
+                                    <td><button class="btn btn-success" onclick="payMonthlySalary('سعيد بوطاهر (سائق)', 4000, 'sal_m_3')">صرف الراتب</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -357,29 +356,25 @@
                         <button class="btn btn-success" onclick="addTransportExpense()">+ إضافة مصروف نقل</button>
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>التاريخ</th>
-                                <th>نوع المصروف</th>
-                                <th>المبلغ (درهم)</th>
-                                <th>الملاحظات / الحافلة</th>
-                                <th>العمليات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transportTableBody">
-                            <tr>
-                                <td>2026-09-05</td>
-                                <td>بنزين / الوقود</td>
-                                <td>1,200 درهم</td>
-                                <td>ملء خزان الحافلة رقم 1</td>
-                                <td>
-                                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
-                                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, 1200)">حذف</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>التاريخ</th><th>نوع المصروف</th><th>المبلغ (درهم)</th><th>الملاحظات / الحافلة</th><th>العمليات</th></tr>
+                            </thead>
+                            <tbody id="transportTableBody">
+                                <tr>
+                                    <td>2026-09-05</td>
+                                    <td>بنزين / الوقود</td>
+                                    <td>1,200 درهم</td>
+                                    <td>ملء خزان الحافلة رقم 1</td>
+                                    <td>
+                                        <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                        <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteTransportRow(this, 1200)">حذف</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -398,21 +393,23 @@
                     <button class="btn btn-success" onclick="addOtherExpense()">إضافة للخزينة</button>
                 </div>
 
-                <table>
-                    <thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th><th>العمليات</th></tr></thead>
-                    <tbody id="financialLogBody">
-                        <tr>
-                            <td>2026/09/01</td>
-                            <td><span style="color: #ef4444; font-weight: bold;">خروج</span></td>
-                            <td>2,500 درهم</td>
-                            <td>كهرباء وماء المؤسسة</td>
-                            <td>
-                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
-                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th><th>العمليات</th></tr></thead>
+                        <tbody id="financialLogBody">
+                            <tr>
+                                <td>2026/09/01</td>
+                                <td><span style="color: #ef4444; font-weight: bold;">خروج</span></td>
+                                <td>2,500 درهم</td>
+                                <td>كهرباء وماء المؤسسة</td>
+                                <td>
+                                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- 9. الأنشطة التربوية -->
@@ -423,22 +420,24 @@
                     <input type="date" id="actDate" class="form-control">
                     <button class="btn btn-success" onclick="addActivity()">إضافة ونشر النشاط</button>
                 </div>
-                <table>
-                    <thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>العمليات</th></tr></thead>
-                    <tbody id="activitiesTableBody">
-                        <tr>
-                            <td>حفل استقبال أطفال الروض والتلامذة الجدد</td>
-                            <td>2026-09-07</td>
-                            <td>
-                                <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
-                                <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>العمليات</th></tr></thead>
+                        <tbody id="activitiesTableBody">
+                            <tr>
+                                <td>حفل استقبال أطفال الروض والتلامذة الجدد</td>
+                                <td>2026-09-07</td>
+                                <td>
+                                    <button class="btn" style="padding: 4px 8px;" onclick="editRow(this)">تعديل</button>
+                                    <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteRow(this)">حذف</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <!-- 10. الرسائل والتواصل الموجهة للأساتذة والأولياء -->
+            <!-- 10. الرسائل والتواصل -->
             <div id="tab-comms" class="tab-content">
                 <h2><span>الرسائل والتواصل الموجه للأساتذة وأولياء الأمور</span></h2>
                 <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -451,7 +450,6 @@
                         </select>
                     </div>
 
-                    <!-- إعدادات رسائل الأساتذة -->
                     <div id="teachersMsgSection">
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نطاق إرسال الرسالة للأساتذة:</label>
@@ -462,27 +460,8 @@
                                 <option value="private_teacher">رسالة خاصة لأستاذ معين (حسب المادة والسلك)</option>
                             </select>
                         </div>
-
-                        <div id="teacherCycleField" class="form-group" style="margin-bottom: 15px; display: none;">
-                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">اختر السلك التعليمي:</label>
-                            <select class="form-control">
-                                <option>التعليم الابتدائي</option>
-                                <option>التعليم الأولي (الروض)</option>
-                                <option>التعليم الثانوي الإعدادي</option>
-                                <option>التعليم الثانوي التأهيلي</option>
-                            </select>
-                        </div>
-
-                        <div id="teacherPrivateField" class="form-group" style="margin-bottom: 15px; display: none;">
-                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">حدد الأستاذ والمادة:</label>
-                            <select class="form-control">
-                                <option>الأستاذ محمد العمراني (اللغة العربية - الابتدائي)</option>
-                                <option>الأستاذة فاطمة الزهراء (الرياضيات - الروض)</option>
-                            </select>
-                        </div>
                     </div>
 
-                    <!-- إعدادات رسائل الأولياء (القديمة المعتمدة) -->
                     <div id="parentsMsgSection" style="display: none;">
                         <div class="form-group" style="margin-bottom: 15px;">
                             <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">نوع رسالة الأولياء:</label>
@@ -491,15 +470,9 @@
                                 <option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option>
                             </select>
                         </div>
-
                         <div id="privateFields" class="form-group" style="margin-bottom: 15px;">
                             <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">رقم واتساب ولي الأمر:</label>
                             <input type="text" id="parentPhone" class="form-control" placeholder="+212600000000">
-                        </div>
-
-                        <div id="publicFields" class="form-group" style="margin-bottom: 15px; display: none;">
-                            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px;">الوجهة العامة:</label>
-                            <input type="text" class="form-control" value="مجموعة واتساب أولياء الأمور الرسمية" readonly style="background: #e2e8f0;">
                         </div>
                     </div>
 
@@ -590,30 +563,9 @@
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
                 `;
-            } 
-            else if (role === 'admin_finance_mgmt') {
-                badge.innerText = 'صلاحية: المسؤول الإداري والمالي';
-                let dashTab = document.getElementById('tab-dash');
-                if(dashTab) dashTab.style.display = 'none';
-                document.getElementById('tab-students').classList.add('active');
-                
-                menuContainer.innerHTML = `
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-students', event, this)" class="active">التلاميذ والأداءات</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-teachers', event, this)">رواتب الأساتذة</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-staff', event, this)">الموظفون الإداريون</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-transport', event, this)">النقل المدرسي ومصاريفه</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-finance', event, this)">الخزينة والمصاريف</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-activities', event, this)">الأنشطة التربوية</a></li>
-                    <li><a href="javascript:void(0);" onclick="switchTab('tab-comms', event, this)">الرسائل والتواصل</a></li>
-                `;
-            } 
-            else if (role === 'admin_supervisor') {
+            } else {
                 badge.innerText = 'صلاحية: الحارس العام / الأستاذ';
-                let dashTab = document.getElementById('tab-dash');
-                if(dashTab) dashTab.style.display = 'none';
                 document.getElementById('tab-attendance-grades').classList.add('active');
-                
                 menuContainer.innerHTML = `
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-attendance-grades', event, this)" class="active">فضاء الأساتذة (الغياب والنقط)</a></li>
                     <li><a href="javascript:void(0);" onclick="switchTab('tab-timetable', event, this)">استعمال الزمن والتنزيل</a></li>
@@ -707,7 +659,7 @@
                 season: season
             };
 
-            const { data, error } = await _supabase.from('students').insert([payload]);
+            const { error } = await _supabase.from('students').insert([payload]);
 
             if (error) {
                 alert('خطأ في الحفظ بقاعدة البيانات: ' + error.message);
@@ -1019,18 +971,6 @@
             document.getElementById('parentsMsgSection').style.display = (audience === 'parents') ? 'block' : 'none';
         }
 
-        function toggleTeacherScopeFields() {
-            let scope = document.getElementById('teacherMsgScope').value;
-            document.getElementById('teacherCycleField').style.display = (scope === 'cycle_teachers' || scope === 'level_teachers') ? 'block' : 'none';
-            document.getElementById('teacherPrivateField').style.display = (scope === 'private_teacher') ? 'block' : 'none';
-        }
-
-        function toggleMsgFields() {
-            let type = document.getElementById('msgType').value;
-            document.getElementById('privateFields').style.display = (type === 'private') ? 'block' : 'none';
-            document.getElementById('publicFields').style.display = (type === 'public') ? 'block' : 'none';
-        }
-
         function sendWhatsAppMessage() {
             let audience = document.getElementById('msgTargetAudience').value;
             let msg = document.getElementById('msgContent').value;
@@ -1038,8 +978,7 @@
             let enc = encodeURIComponent(msg);
 
             if(audience === 'teachers') {
-                let scope = document.getElementById('teacherMsgScope').value;
-                alert(`تم بنجاح إرسال التوجيه التربوي للأساتذة (النطاق: ${scope})!`);
+                alert('تم بنجاح إرسال التوجيه التربوي للأساتذة!');
             } else {
                 let type = document.getElementById('msgType').value;
                 if(type === 'private') {
