@@ -8,14 +8,13 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         
+        /* خلفية راقية تجمع بين نقاء العلم، الأجواء الأكاديمية الدافئة، والتدرجات المؤسساتية الاحترافية */
         body { 
-            background-color: #f8fafc; 
+            background-color: #f4f8fb; 
             background-image: 
-                linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(14, 165, 233, 0.03) 100%),
-                url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+                radial-gradient(circle at 15% 15%, rgba(2, 132, 199, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%230284c7' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
             color: #1e293b; 
             transition: 0.3s; 
             min-height: 100vh;
@@ -26,7 +25,7 @@
         
         /* تنسيق اللوغو الحقيقي في الشريط العلوي */
         .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .brand-logo-img { width: 50px; height: 50px; object-fit: contain; border-radius: 8px; }
+        .brand-logo-img { width: 48px; height: 48px; object-fit: contain; border-radius: 8px; }
         .brand-texts { display: flex; flex-direction: column; }
         .logo { font-size: 17px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; }
         .sub-logo { font-size: 10.5px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; }
@@ -41,9 +40,12 @@
         .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; color: #334155; font-size: 13px; transition: 0.3s; }
         .lang-btn:hover { background: #e2e8f0; }
 
-        /* الواجهة الترحيبية */
+        /* الواجهة الترحيبية الاحترافية */
         .hero { 
-            background: linear-gradient(135deg, rgba(2, 132, 199, 0.9), rgba(3, 105, 161, 0.92)); 
+            background: linear-gradient(135deg, rgba(2, 132, 199, 0.92), rgba(3, 105, 161, 0.95)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
             backdrop-filter: blur(4px);
             color: white; 
             text-align: center; 
@@ -51,7 +53,7 @@
             border-bottom: 4px solid #38bdf8; 
             box-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
         }
-        .hero h1 { font-size: 34px; font-weight: 900; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .hero h1 { font-size: 34px; font-weight: 900; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
         .hero p { font-size: 16px; opacity: 0.95; max-width: 650px; margin: 0 auto 30px; line-height: 1.7; }
         .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .hero-btn { background: #ffffff; color: #0284c7; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
@@ -91,7 +93,7 @@
 
     <header>
         <a href="index.html" class="brand-container">
-            <!-- استخدام لوغو المؤسسة الفعلي هنا -->
+            <!-- استخدام لوغو المؤسسة الفعلي -->
             <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo-img">
             <div class="brand-texts">
                 <div class="logo" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
@@ -141,7 +143,6 @@
     </div>
 
     <div id="infoModal" class="modal">
-        .modal-content
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h3 id="modalTitle">عنوان النافذة</h3>
