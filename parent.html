@@ -32,12 +32,15 @@
         .aside-menu a { color: #fef3c7; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
 
         .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-right: 4px solid #f59e0b; }
+        .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border-right: 4px solid #f59e0b; margin-bottom: 25px; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
         th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
         th { background: #f1f5f9; color: #475569; font-weight: 700; }
         .btn { background: #f59e0b; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; }
+        .btn-success { background: #10b981; }
         .whatsapp-btn { background: #25d366; }
+
+        .report-box { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 20px; margin-top: 15px; display: none; }
 
         @media (max-width: 768px) {
             .layout-body { flex-direction: column; }
@@ -67,28 +70,73 @@
             <ul class="aside-menu"><li><a href="#" class="active">متابعة الأبناء والغياب</a></li></ul>
         </aside>
         <div class="main-container">
+            
+            <!-- صندوق قائمة الأبناء والغياب وكشف النقاط -->
             <div class="box">
                 <h2 style="font-size: 16px; margin-bottom: 15px;">قائمة الأبناء والمسار والغياب</h2>
                 <div style="overflow-x: auto;">
                     <table>
-                        <thead><tr><th>الاسم الكامل</th><th>المستوى والقسم</th><th>حالة الغياب</th><th>واتساب الفصل</th><th>كشف النقاط</th></tr></thead>
+                        <thead><tr><th>التاريخ</th><th>الاسم الكامل</th><th>المستوى والقسم</th><th>حالة الغياب</th><th>واتساب الفصل</th><th>كشف النقاط</th></tr></thead>
                         <tbody>
                             <tr>
+                                <td>2026/09/15</td>
                                 <td>يوسف البدري</td>
                                 <td>السادس ابتدائي (أ)</td>
                                 <td><span style="color: #ef4444;">غياب مسجل يوم أمس</span></td>
                                 <td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">واتساب الفصل</a></td>
-                                <td><button class="btn" onclick="window.print()">طباعة كشف النقاط</button></td>
+                                <td><button class="btn" onclick="toggleReportPreview()">👁️ إظهار كشف النقاط</button></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- معاينة كشف النقاط على الشاشة مباشرة قبل الطباعة -->
+                <div id="reportPreviewContainer" class="report-box">
+                    <h3 style="font-size: 14px; color: #b45309; margin-bottom: 10px; font-weight: bold;">كشف النقاط المدرسي - يوسف البدري</h3>
+                    <table>
+                        <thead>
+                            <tr><th>المادة الدراسية</th><th>الدورة الأولى (/20)</th><th>الدورة الثانية (/20)</th><th>المعدل السنوي</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>اللغة العربية</td><td>17.00</td><td>16.50</td><td><strong>16.75</strong></td></tr>
+                            <tr><td>الرياضيات</td><td>18.00</td><td>17.50</td><td><strong>17.75</strong></td></tr>
+                            <tr><td>النشاط العلمي</td><td>16.50</td><td>17.00</td><td><strong>16.75</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 15px; text-align: left;">
+                        <button class="btn btn-success" onclick="window.print()">🖨️ طباعة كشف النقاط الرسمي</button>
+                    </div>
+                </div>
             </div>
+
+            <!-- صندوق الجدول الزمني (استعمال الزمن) للأبناء -->
+            <div class="box">
+                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص الدراسية (استعمال الزمن)</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr><th>يوم الأسبوع</th><th>التوقيت الزمني</th><th>المادة الدراسية</th><th>الأستاذ المكلف</th><th>القاعة</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>الإثنين</td><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
+                            <tr><td>الإثنين</td><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr>
+                            <tr><td>الثلاثاء</td><td>08:30 - 10:30</td><td>النشاط العلمي</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
+                            <tr><td>الأربعاء</td><td>09:00 - 11:00</td><td>اللغة الفرنسية</td><td>الأستاذة سناء العلوي</td><td>القسم 02</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
     <script>
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
         document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+
+        function toggleReportPreview() {
+            let box = document.getElementById('reportPreviewContainer');
+            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
     </script>
 </body>
 </html>
