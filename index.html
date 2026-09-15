@@ -7,10 +7,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; transition: 0.3s; }
+        
+        /* ترقية الخلفية لتصبح احترافية مع دمج علامات التعليم الشبه مخفية باستخدام أنماط هندسية ورمزية */
+        body { 
+            background-color: #f8fafc; 
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(2, 132, 199, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 40%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230284c7' fill-opacity='0.025' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+            color: #1e293b; 
+            transition: 0.3s; 
+        }
         
         /* شريط التنقل الذكي والقائمة العائمة */
-        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         
         /* الحلة الأنيقة للاسم والشعار */
         .brand-container { display: flex; flex-direction: column; text-decoration: none; }
@@ -27,8 +37,18 @@
         .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; color: #334155; font-size: 13px; transition: 0.3s; }
         .lang-btn:hover { background: #e2e8f0; }
 
-        /* الواجهة الترحيبية */
-        .hero { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; text-align: center; padding: 80px 20px; border-bottom: 4px solid #0284c7; }
+        /* الواجهة الترحيبية مع لمسة خلفية تعليمية خفيفة */
+        .hero { 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1600&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            color: white; 
+            text-align: center; 
+            padding: 90px 20px; 
+            border-bottom: 4px solid #0284c7; 
+            position: relative;
+        }
         .hero h1 { font-size: 32px; font-weight: 900; margin-bottom: 12px; }
         .hero p { font-size: 16px; opacity: 0.85; max-width: 600px; margin: 0 auto 25px; line-height: 1.6; }
         .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
@@ -40,7 +60,8 @@
         .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
         
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .card-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-top: 4px solid #0284c7; transition: 0.3s; }
+        .card-box { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-top: 4px solid #0284c7; transition: 0.3s; }
+        .card-box:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
         .card-box h3 { font-size: 18px; color: #1e293b; margin-bottom: 10px; font-weight: 700; }
         .card-box p { font-size: 14px; color: #64748b; margin-bottom: 20px; line-height: 1.6; }
         
