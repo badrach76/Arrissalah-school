@@ -1,237 +1,178 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة مؤسسة الرسالة للتعليم الخصوصي - البوابة الرسمية</title>
+    <title data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
-            --accent: #f59e0b;
-            --success: #10b981;
-            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg-gradient); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+        body { background-color: #f8fafc; color: #1e293b; transition: 0.3s; }
+        
+        /* شريط التنقل الذكي والقائمة العائمة */
+        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        
+        /* الحلة الأنيقة للاسم والشعار */
+        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
+        .logo { font-size: 20px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; background: linear-gradient(135deg, #0284c7, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub-logo { font-size: 11px; font-weight: 600; color: #64748b; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* شريط التنقل العلوي الاحترافي الانسيابي */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* زر القائمة المنسدلة */
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
+        
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .nav-menu a:hover { color: #0284c7; }
+        
+        .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; color: #334155; font-size: 13px; transition: 0.3s; }
+        .lang-btn:hover { background: #e2e8f0; }
 
-        .brand-box { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .brand-logo-icon { width: 45px; height: 45px; background: var(--primary); color: white; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 20px; font-weight: 900; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
-        .brand-texts { display: flex; flex-direction: column; }
-        .brand-title { font-size: 18px; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; }
-        .brand-subtitle { font-size: 11px; font-weight: 700; color: var(--primary); text-transform: uppercase; }
+        /* الواجهة الترحيبية */
+        .hero { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; text-align: center; padding: 80px 20px; border-bottom: 4px solid #0284c7; }
+        .hero h1 { font-size: 32px; font-weight: 900; margin-bottom: 12px; }
+        .hero p { font-size: 16px; opacity: 0.85; max-width: 600px; margin: 0 auto 25px; line-height: 1.6; }
+        .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .hero-btn { background: #0284c7; color: white; padding: 12px 25px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+        .hero-btn:hover { background: #0369a1; transform: translateY(-2px); }
+        .hero-btn.alt { background: #10b981; }
+        .hero-btn.alt:hover { background: #059669; }
 
-        .nav-links { display: flex; list-style: none; gap: 25px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: var(--transition); position: relative; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; right: 0; background: var(--primary); transition: var(--transition); border-radius: 2px; }
-        .nav-links a:hover::after { width: 100%; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .card-box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); border-top: 4px solid #0284c7; transition: 0.3s; }
+        .card-box h3 { font-size: 18px; color: #1e293b; margin-bottom: 10px; font-weight: 700; }
+        .card-box p { font-size: 14px; color: #64748b; margin-bottom: 20px; line-height: 1.6; }
+        
+        .action-link { display: inline-block; background: #0284c7; color: white; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
+        .action-link:hover { background: #0369a1; }
 
-        .btn-login-nav { background: var(--primary); color: white !important; padding: 8px 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2); }
-        .btn-login-nav:hover { background: var(--primary-dark) !important; transform: translateY(-2px); }
-        .btn-login-nav::after { display: none !important; }
+        /* النافذة المنبثقة */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: white; padding: 35px; border-radius: 12px; width: 100%; max-width: 550px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); position: relative; }
+        .close-modal { position: absolute; inset-inline-end: 20px; top: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; }
+        .close-modal:hover { color: #ef4444; }
+        .modal-content h3 { color: #0284c7; margin-bottom: 15px; font-size: 20px; }
+        .modal-content p { color: #334155; line-height: 1.8; font-size: 14.5px; }
 
-        /* الهيكل الرئيسي والترحيب */
-        .hero-section {
-            padding: 60px 20px 40px;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .hero-badge { background: #e0f2fe; color: var(--primary); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; display: inline-block; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .hero-title { font-size: 32px; font-weight: 900; color: #0f172a; margin-bottom: 15px; line-height: 1.3; }
-        .hero-desc { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
-
-        /* شبكة الفضاءات باستخدام CSS Grid العصري وتصميم البطاقات النظيفة */
-        .portals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            max-width: 1150px;
-            margin: 20px auto 60px;
-            padding: 0 20px;
-            width: 100%;
-        }
-
-        .portal-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .portal-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; width: 100%; height: 5px;
-            background: var(--card-color, var(--primary));
-        }
-
-        .portal-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .card-icon {
-            width: 55px; height: 55px;
-            border-radius: 14px;
-            background: var(--card-bg-icon, #e0f2fe);
-            color: var(--card-color, var(--primary));
-            display: flex; justify-content: center; align-items: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .portal-card h3 { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
-        .portal-card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; flex: 1; }
-
-        .card-btn {
-            text-decoration: none;
-            background: var(--card-color, var(--primary));
-            color: white;
-            padding: 10px 22px;
-            border-radius: 10px;
-            font-size: 13.5px;
-            font-weight: 700;
-            width: 100%;
-            text-align: center;
-            transition: var(--transition);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .card-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
-
-        /* تذييل الصفحة (Footer) */
-        footer {
-            background: #ffffff;
-            border-top: 1px solid #e2e8f0;
-            padding: 20px;
-            text-align: center;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: auto;
-        }
-
-        /* الاستجابة عبر الهواتف الذكية */
-        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--primary); }
+        footer { text-align: center; padding: 25px; background: #0f172a; color: #94a3b8; font-size: 13px; margin-top: 50px; }
 
         @media (max-width: 768px) {
-            header { padding: 15px 20px; }
             .menu-toggle { display: block; }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 75px; right: 0; left: 0;
-                background: white;
-                padding: 25px;
-                box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-                gap: 15px;
-                text-align: center;
-            }
-            .nav-links.active { display: flex; }
-            .hero-title { font-size: 24px; }
-            .portals-grid { grid-template-columns: 1fr; }
+            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); border-bottom: 1px solid #e2e8f0; }
+            .nav-menu.active { display: flex; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="brand-box">
-            <div class="brand-logo-icon">ر</div>
-            <div class="brand-texts">
-                <span class="brand-title">مؤسسة الرسالة</span>
-                <span class="brand-subtitle">للتعليم الخصوصي</span>
-            </div>
+        <a href="index.html" class="brand-container">
+            <div class="logo" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
+            <div class="sub-logo" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
         </a>
-        <button class="menu-toggle" onclick="toggleNavbar()">☰</button>
-        <ul class="nav-links" id="navMenu">
-            <li><a href="index.html" class="active">الرئيسية</a></li>
-            <li><a href="#portals">فضاءات المؤسسة</a></li>
-            <li><a href="login.html" class="btn-login-nav">تسجيل الدخول</a></li>
+        
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
+            <li><a href="login.html" data-ar="فضاءات الدخول" data-fr="Espaces">فضاءات الدخول</a></li>
+            <li><a href="register.html" data-ar="التسجيل القبلي" data-fr="Pré-inscription">التسجيل القبلي</a></li>
+            <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
         </ul>
     </header>
 
-    <section class="hero-section">
-        <span class="hero-badge">🌟 منصة رقمية تعليمية متكاملة</span>
-        <h1 class="hero-title">مرحباً بكم في البوابة الرسمية لمؤسسة الرسالة</h1>
-        <p class="hero-desc">نظام إداري وتربوي متطور يربط بدقة تامة بين الإدارة، الأساتذة، أولياء الأمور، والتلاميذ مع تتبع فوري للغياب، كشوفات النقاط، واستعمال الزمن.</p>
+    <section class="hero">
+        <h1 data-ar="صرح تربوي متكامل لجيل المستقبل" data-fr="Un pôle éducatif intégré pour la future génération">صرح تربوي متكامل لجيل المستقبل</h1>
+        <p data-ar="نؤمن بأن التعليم رسالة سامية؛ لذا نجمع بين أصالة القيم التربوية ومهارات العصر الحديث لنبني معاً مساراً ناجحاً لأبنائكم." data-fr="Nous croyons que l'éducation est une noble mission. Nous combinons valeurs authentiques et compétences modernes.">نؤمن بأن التعليم رسالة سامية؛ لذا نجمع بين أصالة القيم التربوية ومهارات العصر الحديث لنبني معاً مساراً ناجحاً لأبنائكم.</p>
+        <div class="hero-btns">
+            <a href="login.html" class="hero-btn" data-ar="فضاءات الدخول" data-fr="Espaces Dédiés">فضاءات الدخول</a>
+            <a href="register.html" class="hero-btn alt" data-ar="طلب تسجيل تلميذ جديد" data-fr="Nouvelle Inscription">طلب تسجيل تلميذ جديد</a>
+        </div>
     </section>
 
-    <section id="portals" class="portals-grid">
-        
-        <div class="portal-card" style="--card-color: #0284c7; --card-bg-icon: #e0f2fe;">
-            <div class="card-icon">📊</div>
-            <h3>فضاء الإدارة والقيادة</h3>
-            <p>إشراف شامل على المؤشرات الإحصائية، الخزينة، الأداءات المالية، النقل المدرسي، ورسائل التواصل الموجهة.</p>
-            <a href="login.html" onclick="localStorage.setItem('user_role','admin')" class="card-btn">دخول الإدارة</a>
-        </div>
+    <div class="container">
+        <div class="grid-cards">
+            <div class="card-box" style="border-top-color: #0284c7;">
+                <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre Vision & Mission">رؤيتنا ورسالتنا</h3>
+                <p data-ar="نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية." data-fr="Nous créons un environnement d'apprentissage stimulant et sécurisé.">نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية.</p>
+                <button class="action-link" style="background: #0284c7;" onclick="openModal(currentLang === 'ar' ? 'عن مؤسسة الرسالة' : 'À propos d\'Al Risala', currentLang === 'ar' ? 'تأسست مؤسسة الرسالة للتعليم الخصوصي لتكون منارة علمية وتربوية رائدة تحت إشراف نخبة من الأطر التربوية المتميزة.' : 'Fondé pour être un phare éducatif d\'excellence sous la supervision d\'une équipe pédagogique d\'élite.')" data-ar="قراءة المزيد" data-fr="Lire la suite">قراءة المزيد</button>
+            </div>
 
-        <div class="portal-card" style="--card-color: #10b981; --card-bg-icon: #f0fdf4;">
-            <div class="card-icon">👨‍🏫</div>
-            <h3>فضاء الأساتذة والمربيات</h3>
-            <p>تسجيل الغياب اليومي، إدخال وتعديل نقط الفروض والدورات، رفع وطباعة الدروس (PDF)، وإدارة واتساب الفصول.</p>
-            <a href="login.html" onclick="localStorage.setItem('user_role','teacher')" class="card-btn">دخول الأساتذة</a>
-        </div>
+            <div class="card-box" style="border-top-color: #0ea5e9;">
+                <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles Éducatifs">أسلاكنا التعليمية</h3>
+                <p data-ar="مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا." data-fr="Un parcours éducatif continu de la petite section jusqu'au baccalauréat.">مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا.</p>
+                <button class="action-link" style="background: #0ea5e9;" onclick="openModal(currentLang === 'ar' ? 'تفاصيل الأسلاك التعليمية' : 'Détails des Cycles', currentLang === 'ar' ? '• <b>التعليم الأولي:</b> فضاء محفز لاكتشاف المهارات.<br>• <b>السلك الابتدائي:</b> تأسيس متين في اللغات والعلوم.<br>• <b>السلك الإعدادي:</b> تطوير الفكر النقدي والمنهجي.<br>• <b>السلك الثانوي:</b> إعداد مكثف للبكالوريا.' : '• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام" data-fr="Voir les cycles">استعراض الأقسام</button>
+            </div>
 
-        <div class="portal-card" style="--card-color: #f59e0b; --card-bg-icon: #fef3c7;">
-            <div class="card-icon">👪</div>
-            <h3>فضاء أولياء الأمور (الآباء)</h3>
-            <p>متابعة حضور الأبناء، كشوفات النقاط المدرسية المفصلة (الدورة الأولى، الثانية، والمعدل السنوي)، واستعمال الزمن.</p>
-            <a href="login.html" onclick="localStorage.setItem('user_role','parent')" class="card-btn">دخول أولياء الأمور</a>
+            <div class="card-box" style="border-top-color: #f59e0b;">
+                <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & Avis">الإعلانات والبلاغات</h3>
+                <p data-ar="ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة." data-fr="Restez informés des dernières actualités et des dates importantes.">ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة.</p>
+                <button class="action-link" style="background: #f59e0b;" onclick="openModal(currentLang === 'ar' ? 'الإعلانات الرسمية' : 'Avis Officiels', currentLang === 'ar' ? '📢 <b>أبواب المؤسسة مفتوحة</b> لاستقبال أولياء الأمور وتقديم طلبات التسجيل من الإثنين إلى السبت صباحاً.' : '📢 Nos portes sont ouvertes pour les inscriptions du lundi au samedi matin.')" data-ar="عرض البلاغات" data-fr="Voir les avis">عرض البلاغات</button>
+            </div>
         </div>
+    </div>
 
-        <div class="portal-card" style="--card-color: #8b5cf6; --card-bg-icon: #ede9fe;">
-            <div class="card-icon">🎓</div>
-            <h3>فضاء التلميذ الشخصي</h3>
-            <p>استعراض الجدول الزمني للحصص الدراسية (مرتباً حسب أيام الأسبوع)، كشف النقاط الشخصي، والدروس المنشورة.</p>
-            <a href="login.html" onclick="localStorage.setItem('user_role','student')" class="card-btn">دخول التلميذ</a>
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle">عنوان النافذة</h3>
+            <p id="modalText">نص المعلومات هنا...</p>
         </div>
-
-    </section>
+    </div>
 
     <footer>
-        <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي | المنصة التربوية الرقمية الموحدة</p>
+        <p data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
     </footer>
 
     <script>
-        function toggleNavbar() {
+        let currentLang = 'ar';
+
+        function toggleMenu() {
             document.getElementById('navMenu').classList.toggle('active');
         }
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active'));
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
         });
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+            const htmlRoot = document.getElementById('htmlRoot');
+            
+            if (currentLang === 'fr') {
+                htmlRoot.setAttribute('dir', 'ltr');
+                htmlRoot.setAttribute('lang', 'fr');
+                document.getElementById('langToggleBtn').innerText = 'العربية / FR';
+            } else {
+                htmlRoot.setAttribute('dir', 'rtl');
+                htmlRoot.setAttribute('lang', 'ar');
+                document.getElementById('langToggleBtn').innerText = 'FR / العربية';
+            }
+
+            document.querySelectorAll('[data-ar]').forEach(el => {
+                el.innerText = el.getAttribute(`data-${currentLang}`);
+            });
+        }
+
+        function openModal(title, text) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalText').innerHTML = text;
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById('infoModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
