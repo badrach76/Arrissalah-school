@@ -87,8 +87,8 @@
         function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
         document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
 
-        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-        const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+        const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
         const _supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
         document.getElementById('registrationForm').addEventListener('submit', async (e) => {
