@@ -1,165 +1,791 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#073b6b">
+    <meta name="description" content="فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي">
     <title>فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
-        .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
-        .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        :root{
+            --navy:#073b6b;
+            --navy-2:#0b568f;
+            --blue:#0ea5e9;
+            --gold:#d9a72d;
+            --gold-light:#f5d77a;
+            --green:#0f9d78;
+            --orange:#f59e0b;
+            --purple:#7357d8;
+            --ink:#10243b;
+            --muted:#64748b;
+            --bg:#f6f9fc;
+            --white:#fff;
+            --border:rgba(7,59,107,.10);
+            --shadow:0 18px 55px rgba(7,59,107,.12);
+            --radius:22px;
+        }
 
-        .container { flex: 1; display: flex; justify-content: center; align-items: center; padding: 40px 20px; width: 100%; }
-        
-        #spacesSelectionView { width: 100%; max-width: 900px; text-align: center; }
-        #spacesSelectionView h1 { font-size: 24px; color: #0f172a; margin-bottom: 10px; }
-        #spacesSelectionView p { color: #64748b; font-size: 14px; margin-bottom: 30px; }
-        
-        .spaces-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .space-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; border-top: 4px solid #0284c7; transition: 0.3s; cursor: pointer; }
-        .space-card:hover { transform: translateY(-5px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
-        .space-card h3 { font-size: 16px; margin-bottom: 8px; color: #1e293b; }
-        .space-card p { font-size: 12px; color: #64748b; margin-bottom: 15px; }
-        .space-btn { display: inline-block; background: #0f172a; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; }
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Cairo',sans-serif;
+            color:var(--ink);
+            background:var(--bg);
+            min-height:100vh;
+            overflow-x:hidden;
+        }
+        a{text-decoration:none;color:inherit}
+        button,input,select{font-family:inherit}
 
-        #secureLoginView { display: none; width: 100%; max-width: 420px; }
-        .login-card { background: white; padding: 35px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #0284c7; }
-        .login-card h2 { font-size: 20px; color: #1e293b; margin-bottom: 5px; text-align: center; }
-        .login-card p { font-size: 13px; color: #64748b; margin-bottom: 25px; text-align: center; }
-        
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #334155; }
-        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
-        
-        .login-btn { width: 100%; background: #0284c7; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 5px; }
-        .login-btn:hover { background: #0369a1; }
-        
-        .back-spaces { display: block; text-align: center; margin-top: 20px; color: #64748b; text-decoration: none; font-size: 13px; font-weight: 600; cursor: pointer; }
-        .back-spaces:hover { color: #0284c7; }
+        .page-bg{
+            position:fixed;
+            inset:0;
+            z-index:-3;
+            background:
+                linear-gradient(180deg,rgba(246,249,252,.80),rgba(246,249,252,.94)),
+                url("1000077933.png") center/cover no-repeat;
+            filter:saturate(.88);
+        }
+        .page-bg::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(circle at 10% 15%,rgba(14,165,233,.11),transparent 28%),
+                radial-gradient(circle at 90% 72%,rgba(15,157,120,.09),transparent 28%),
+                radial-gradient(circle at 50% 100%,rgba(217,167,45,.07),transparent 25%);
+        }
 
-        footer { text-align: center; padding: 25px; background: #0f172a; color: #94a3b8; font-size: 13px; margin-top: auto; }
+        /* ===== الهيدر ===== */
+        header{
+            position:sticky;
+            top:0;
+            z-index:1000;
+            background:rgba(255,255,255,.88);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(7,59,107,.08);
+            box-shadow:0 5px 25px rgba(7,59,107,.06);
+        }
+        .header-inner{
+            width:min(1250px,100%);
+            margin:auto;
+            min-height:76px;
+            padding:10px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-width:max-content;
+        }
+        .brand-logo{
+            width:52px;
+            height:52px;
+            object-fit:contain;
+            border-radius:14px;
+            background:#fff;
+            padding:4px;
+            box-shadow:0 7px 18px rgba(7,59,107,.10);
+        }
+        .brand-name{
+            font-weight:900;
+            color:var(--navy);
+            font-size:17px;
+            line-height:1.2;
+        }
+        .brand-sub{
+            color:var(--muted);
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.3px;
+            margin-top:2px;
+        }
+        .header-actions{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .home-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            padding:9px 13px;
+            border-radius:999px;
+            color:var(--navy);
+            background:rgba(255,255,255,.82);
+            border:1px solid rgba(7,59,107,.10);
+            font-size:11px;
+            font-weight:900;
+            box-shadow:0 7px 20px rgba(7,59,107,.06);
+            transition:.25s ease;
+        }
+        .home-btn:hover{
+            color:#fff;
+            background:var(--navy);
+            transform:translateY(-1px);
+        }
+        .home-btn:first-letter{font-size:16px}
+
+        .header-badge{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            color:var(--navy);
+            background:rgba(237,246,252,.78);
+            border:1px solid rgba(7,59,107,.08);
+            padding:9px 14px;
+            border-radius:999px;
+            font-size:12px;
+            font-weight:800;
+        }
+        .header-badge i{
+            width:8px;height:8px;
+            border-radius:50%;
+            background:var(--green);
+            box-shadow:0 0 0 5px rgba(15,157,120,.12);
+        }
+
+        /* ===== المحتوى ===== */
+        .container{
+            width:min(1180px,100%);
+            margin:auto;
+            min-height:calc(100vh - 76px - 78px);
+            padding:55px 24px 65px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .view{width:100%}
+
+        .section-heading{
+            text-align:center;
+            max-width:760px;
+            margin:0 auto 32px;
+        }
+        .eyebrow{
+            display:inline-flex;
+            align-items:center;
+            gap:9px;
+            padding:7px 13px;
+            background:rgba(255,255,255,.78);
+            border:1px solid rgba(7,59,107,.10);
+            border-radius:999px;
+            color:var(--navy);
+            font-size:12px;
+            font-weight:800;
+            box-shadow:0 8px 25px rgba(7,59,107,.06);
+        }
+        .eyebrow i{
+            width:8px;height:8px;
+            border-radius:50%;
+            background:var(--gold);
+            box-shadow:0 0 0 5px rgba(217,167,45,.14);
+        }
+        .section-heading h1{
+            margin-top:17px;
+            color:var(--navy);
+            font-size:clamp(28px,4vw,44px);
+            line-height:1.25;
+            font-weight:900;
+        }
+        .section-heading h1 span{color:var(--gold)}
+        .section-heading p{
+            margin-top:12px;
+            color:var(--muted);
+            font-size:14px;
+            line-height:1.9;
+        }
+
+        .spaces-grid{
+            width:100%;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+        .space-card{
+            position:relative;
+            overflow:hidden;
+            background:rgba(255,255,255,.76);
+            border:1px solid rgba(255,255,255,.78);
+            border-radius:var(--radius);
+            padding:25px 20px 21px;
+            box-shadow:var(--shadow);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            text-align:center;
+            cursor:pointer;
+            transition:.3s ease;
+        }
+        .space-card::before{
+            content:"";
+            position:absolute;
+            inset:0 0 auto;
+            height:4px;
+            background:var(--card-color,var(--blue));
+        }
+        .space-card::after{
+            content:"";
+            position:absolute;
+            width:130px;
+            height:130px;
+            border-radius:50%;
+            background:var(--card-color,var(--blue));
+            opacity:.06;
+            top:-70px;
+            left:-45px;
+        }
+        .space-card:hover{
+            transform:translateY(-7px);
+            box-shadow:0 24px 65px rgba(7,59,107,.16);
+            border-color:rgba(7,59,107,.10);
+        }
+        .space-icon{
+            position:relative;
+            width:64px;
+            height:64px;
+            margin:2px auto 16px;
+            border-radius:18px;
+            display:grid;
+            place-items:center;
+            color:var(--card-color,var(--blue));
+            background:color-mix(in srgb,var(--card-color,var(--blue)) 10%,white);
+            border:1px solid color-mix(in srgb,var(--card-color,var(--blue)) 17%,white);
+            font-size:29px;
+            box-shadow:0 9px 22px rgba(7,59,107,.07);
+        }
+
+        .space-icon::after{
+            content:"";
+            position:absolute;
+            width:18px;
+            height:18px;
+            border:2px solid currentColor;
+            border-radius:5px;
+            opacity:.16;
+            transform:rotate(45deg);
+        }
+
+        .space-card h3{
+            color:var(--navy);
+            font-size:17px;
+            font-weight:900;
+            margin-bottom:7px;
+        }
+        .space-card p{
+            color:var(--muted);
+            font-size:12px;
+            line-height:1.8;
+            min-height:44px;
+            margin-bottom:17px;
+        }
+        .space-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:7px;
+            color:#fff;
+            background:var(--card-color,var(--blue));
+            padding:9px 16px;
+            border-radius:12px;
+            font-size:12px;
+            font-weight:800;
+            box-shadow:0 8px 18px color-mix(in srgb,var(--card-color,var(--blue)) 24%,transparent);
+        }
+
+        /* ===== تسجيل الدخول ===== */
+        #secureLoginView{display:none}
+        .login-layout{
+            width:min(950px,100%);
+            margin:auto;
+            display:grid;
+            grid-template-columns:.85fr 1.15fr;
+            gap:22px;
+            align-items:stretch;
+        }
+        .login-intro,.login-card{
+            border:1px solid rgba(255,255,255,.78);
+            background:rgba(255,255,255,.76);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            box-shadow:var(--shadow);
+            border-radius:var(--radius);
+        }
+        .login-intro{
+            padding:32px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            background:
+                linear-gradient(145deg,rgba(7,59,107,.96),rgba(11,86,143,.90)),
+                url("Arrissalahimg3.png") center/cover;
+            color:#fff;
+            position:relative;
+            overflow:hidden;
+        }
+        .login-intro::after{
+            content:"";
+            position:absolute;
+            width:230px;height:230px;
+            border-radius:50%;
+            background:rgba(217,167,45,.12);
+            left:-100px;bottom:-110px;
+        }
+        .intro-icon{
+            width:70px;height:70px;
+            display:grid;
+            place-items:center;
+            border-radius:20px;
+            background:rgba(255,255,255,.12);
+            border:1px solid rgba(255,255,255,.20);
+            font-size:31px;
+            margin-bottom:22px;
+        }
+        .login-intro h2{font-size:26px;line-height:1.45;font-weight:900}
+        .login-intro h2 span{color:var(--gold-light)}
+        .login-intro p{margin-top:12px;color:rgba(255,255,255,.78);font-size:13px;line-height:2}
+        .security-points{list-style:none;margin-top:22px;display:grid;gap:10px}
+        .security-points li{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(255,255,255,.88)}
+        .security-points i{font-style:normal;color:var(--gold-light);font-size:15px}
+
+        .login-card{
+            padding:34px;
+        }
+        .login-card-head{text-align:center;margin-bottom:24px}
+        .login-card-head .mini-icon{
+            width:58px;height:58px;
+            margin:0 auto 13px;
+            display:grid;
+            place-items:center;
+            border-radius:17px;
+            background:#edf6fc;
+            color:var(--navy);
+            font-size:25px;
+        }
+        .login-card h2{font-size:21px;color:var(--navy);font-weight:900}
+        .login-card-head p{font-size:12px;color:var(--muted);margin-top:5px}
+        .selected-space{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:7px;
+            margin:0 auto 22px;
+            width:max-content;
+            max-width:100%;
+            padding:7px 12px;
+            border-radius:999px;
+            background:#f5f8fb;
+            border:1px solid #e2eaf1;
+            color:var(--navy);
+            font-size:11px;
+            font-weight:800;
+        }
+        .selected-space i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+
+        .form-group{margin-bottom:16px}
+        .form-group label{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#334155;font-size:12px;font-weight:800;margin-bottom:7px}
+        .form-control-wrap{position:relative}
+        .form-group input,.form-group select{
+            width:100%;
+            padding:12px 13px;
+            border:1px solid #d7e1ea;
+            background:rgba(255,255,255,.90);
+            color:var(--ink);
+            border-radius:13px;
+            font-size:13px;
+            outline:none;
+            transition:.25s;
+        }
+        .form-group input:focus,.form-group select:focus{
+            border-color:var(--blue);
+            box-shadow:0 0 0 4px rgba(14,165,233,.10);
+        }
+        .password-toggle{
+            position:absolute;
+            left:9px;
+            top:50%;
+            transform:translateY(-50%);
+            border:0;
+            background:transparent;
+            color:var(--muted);
+            cursor:pointer;
+            font-size:17px;
+            padding:4px;
+        }
+        #password{padding-left:42px}
+
+        .admin-role-box{
+            display:none;
+            margin-bottom:17px;
+            padding:13px;
+            border-radius:15px;
+            background:#f7fafc;
+            border:1px solid #e3ebf2;
+        }
+        .admin-role-box .role-title{display:block;color:var(--navy);font-size:12px;font-weight:900;margin-bottom:8px}
+
+        .login-btn{
+            width:100%;
+            border:0;
+            color:#fff;
+            background:linear-gradient(135deg,var(--navy),var(--navy-2));
+            padding:13px 16px;
+            border-radius:13px;
+            font-size:13px;
+            font-weight:900;
+            cursor:pointer;
+            box-shadow:0 12px 25px rgba(7,59,107,.18);
+            transition:.25s;
+            margin-top:5px;
+        }
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 17px 30px rgba(7,59,107,.23)}
+        .login-btn:active{transform:translateY(0)}
+        .login-btn.loading{opacity:.75;pointer-events:none}
+
+        .back-spaces{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            margin-top:17px;
+            color:var(--muted);
+            font-size:12px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.2s;
+        }
+        .back-spaces:hover{color:var(--blue)}
+        .login-navigation{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            margin-top:17px;
+        }
+        .login-navigation .back-spaces{margin-top:0}
+        .back-home-link{
+            color:var(--navy);
+            font-size:11px;
+            font-weight:900;
+            padding:5px 10px;
+            border-radius:9px;
+            transition:.2s;
+        }
+        .back-home-link:hover{
+            color:var(--gold);
+            background:rgba(217,167,45,.08);
+        }
+
+        .login-note{
+            margin-top:17px;
+            padding:10px 12px;
+            border-radius:12px;
+            background:#fffaf0;
+            border:1px solid rgba(217,167,45,.20);
+            color:#79601e;
+            font-size:10px;
+            line-height:1.8;
+            text-align:center;
+        }
+
+        .toast{
+            position:fixed;
+            left:22px;
+            bottom:22px;
+            z-index:3000;
+            max-width:330px;
+            padding:12px 16px;
+            border-radius:13px;
+            color:#fff;
+            background:rgba(7,59,107,.94);
+            box-shadow:0 15px 35px rgba(7,59,107,.20);
+            font-size:12px;
+            font-weight:700;
+            opacity:0;
+            transform:translateY(12px);
+            pointer-events:none;
+            transition:.25s;
+        }
+        .toast.show{opacity:1;transform:translateY(0)}
+
+        /* ===== الفوتر ===== */
+        footer{
+            background:rgba(7,59,107,.96);
+            color:rgba(255,255,255,.66);
+            text-align:center;
+            padding:21px 20px;
+            font-size:11px;
+            border-top:1px solid rgba(255,255,255,.08);
+        }
+        footer strong{color:rgba(255,255,255,.90)}
+
+        @media(max-width:1000px){
+            .spaces-grid{grid-template-columns:repeat(2,1fr)}
+            .login-layout{grid-template-columns:1fr;max-width:560px}
+            .login-intro{display:none}
+        }
+        @media(max-width:650px){
+            .header-inner{min-height:68px;padding:8px 15px}
+            .brand-logo{width:46px;height:46px;border-radius:12px}
+            .brand-name{font-size:15px}
+            .brand-sub{font-size:9px}
+            .header-actions{gap:6px}
+            .home-btn{padding:8px 10px;font-size:10px}
+            .header-badge{padding:8px 10px;font-size:10px}
+            .container{min-height:calc(100vh - 68px - 66px);padding:36px 14px 45px}
+            .section-heading{margin-bottom:24px}
+            .section-heading h1{font-size:28px}
+            .section-heading p{font-size:12px}
+            .spaces-grid{grid-template-columns:1fr;gap:13px}
+            .space-card{padding:20px 18px;display:grid;grid-template-columns:58px 1fr auto;grid-template-rows:auto auto;align-items:center;text-align:right;column-gap:13px}
+            .space-icon{grid-row:1 / span 2;width:58px;height:58px;margin:0;font-size:25px}
+    
+        .space-icon::after{
+            content:"";
+            position:absolute;
+            width:18px;
+            height:18px;
+            border:2px solid currentColor;
+            border-radius:5px;
+            opacity:.16;
+            transform:rotate(45deg);
+        }
+
+        .space-card h3{margin:0;font-size:15px}
+            .space-card p{min-height:0;margin:3px 0 0;font-size:11px}
+            .space-btn{grid-column:3;grid-row:1 / span 2;white-space:nowrap;padding:8px 11px;font-size:10px}
+            .login-card{padding:24px 18px}
+            .login-card h2{font-size:19px}
+            footer{font-size:10px;padding:18px 12px}
+        }
+        @media(max-width:430px){
+            .header-badge span{display:none}
+            .home-btn span{display:none}
+            .home-btn{width:38px;height:38px;padding:0;font-size:18px}
+            .space-card{grid-template-columns:52px 1fr}
+            .space-icon{width:52px;height:52px}
+            .space-btn{grid-column:2;grid-row:auto;justify-self:start;margin-top:10px}
+        }
     </style>
 </head>
 <body>
+    <div class="page-bg"></div>
 
     <header>
-        <a href="index.html" class="brand-container">
-            <div class="logo">مؤسسة الرسالة</div>
-            <div class="sub-logo">للتعليم الخصوصي</div>
-        </a>
+        <div class="header-inner">
+            <a href="index.html" class="brand" aria-label="العودة إلى الصفحة الرئيسية">
+                <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
+                <div>
+                    <div class="brand-name">مؤسسة الرسالة</div>
+                    <div class="brand-sub">للتعليم الخصوصي</div>
+                </div>
+            </a>
+            <div class="header-actions">
+                <a href="index.html" class="home-btn" aria-label="العودة إلى الصفحة الرئيسية">⌂ <span>الصفحة الرئيسية</span></a>
+                <div class="header-badge"><i></i><span>منصة الدخول الآمن</span> 🔐</div>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <!-- خيارات الفضاءات -->
-        <div id="spacesSelectionView">
-            <h1>فضاءات الدخول المخصصة للمستفيدين</h1>
-            <p>اختر الفضاء المناسب للانتقال إلى لوحة الدخول الآمن:</p>
-            
+    <main class="container">
+        <!-- اختيار الفضاءات -->
+        <section id="spacesSelectionView" class="view">
+            <div class="section-heading">
+                <span class="eyebrow"><i></i> فضاءات المستفيدين</span>
+                <h1>اختر <span>فضاء الدخول</span> المناسب</h1>
+                <p>ولوج مخصص لكل فئة من مستفيدي المؤسسة، مع توجيهك مباشرة إلى الواجهة المناسبة بعد تسجيل الدخول.</p>
+            </div>
+
             <div class="spaces-grid">
-                <div class="space-card" style="border-top-color: #3b82f6;" onclick="openSecureLogin('admin', 'فضاء الإدارة والصلاحيات')">
-                    <h3>فضاء الإدارة</h3>
-                    <p>المدير، المسؤول المالي، والحارس العام</p>
-                    <span class="space-btn" style="background: #3b82f6;">اختيار الفضاء</span>
+                <div class="space-card" style="--card-color:#3b82f6" onclick="openSecureLogin('admin','فضاء الإدارة والصلاحيات','الإدارة')">
+                    <div class="space-icon">🏛️</div>
+                    <div>
+                        <h3>فضاء الإدارة</h3>
+                        <p>المدير، المسؤول المالي، والحارس العام</p>
+                    </div>
+                    <span class="space-btn">دخول آمن ←</span>
                 </div>
-                <div class="space-card" style="border-top-color: #10b981;" onclick="openSecureLogin('teacher', 'فضاء الأساتذة التربوي')">
-                    <h3>فضاء الأساتذة</h3>
-                    <p>الغياب، النقط ومجموعات الفصول</p>
-                    <span class="space-btn" style="background: #10b981;">اختيار الفضاء</span>
+
+                <div class="space-card" style="--card-color:#0f9d78" onclick="openSecureLogin('teacher','فضاء الأساتذة التربوي','الأساتذة')">
+                    <div class="space-icon" aria-hidden="true">📚</div>
+                    <div>
+                        <h3>فضاء الأساتذة</h3>
+                        <p>الغياب، النقط ومجموعات الفصول</p>
+                    </div>
+                    <span class="space-btn">دخول آمن ←</span>
                 </div>
-                <div class="space-card" style="border-top-color: #f59e0b;" onclick="openSecureLogin('parent', 'فضاء أولياء الأمور')">
-                    <h3>فضاء الأولياء</h3>
-                    <p>متابعة مسار الأبناء وكشف النقاط</p>
-                    <span class="space-btn" style="background: #f59e0b;">اختيار الفضاء</span>
+
+                <div class="space-card" style="--card-color:#f59e0b" onclick="openSecureLogin('parent','فضاء أولياء الأمور','الأولياء')">
+                    <div class="space-icon" aria-hidden="true">🏠</div>
+                    <div>
+                        <h3>فضاء الأولياء</h3>
+                        <p>متابعة مسار الأبناء وكشف النقاط</p>
+                    </div>
+                    <span class="space-btn">دخول آمن ←</span>
                 </div>
-                <div class="space-card" style="border-top-color: #8b5cf6;" onclick="openSecureLogin('student', 'فضاء التلميذ')">
-                    <h3>فضاء التلميذ</h3>
-                    <p>كشف النقاط وجداول الحصص والدروس</p>
-                    <span class="space-btn" style="background: #8b5cf6;">اختيار الفضاء</span>
+
+                <div class="space-card" style="--card-color:#7357d8" onclick="openSecureLogin('student','فضاء التلميذ','التلميذ')">
+                    <div class="space-icon">🎓</div>
+                    <div>
+                        <h3>فضاء التلميذ</h3>
+                        <p>كشف النقاط وجداول الحصص والدروس</p>
+                    </div>
+                    <span class="space-btn">دخول آمن ←</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- لوحة الدخول الآمن -->
-        <div id="secureLoginView">
-            <div class="login-card">
-                <h2 id="spaceTitleText">لوحة الدخول الآمن</h2>
-                <p>أدخل بيانات الاعتماد الخاصة بهذا الفضاء</p>
+        <!-- تسجيل الدخول -->
+        <section id="secureLoginView" class="view">
+            <div class="login-layout">
+                <div class="login-intro">
+                    <div class="intro-icon">🔐</div>
+                    <h2>مرحباً بك في <span>منصة الرسالة</span></h2>
+                    <p>أدخل بيانات الاعتماد الخاصة بك للوصول إلى الخدمات والوظائف المخصصة لفضائك.</p>
+                    <ul class="security-points">
+                        <li><i>✓</i> واجهة مخصصة حسب الصفة</li>
+                        <li><i>✓</i> صلاحيات مرتبطة بالدور</li>
+                        <li><i>✓</i> انتقال مباشر إلى اللوحة المناسبة</li>
+                    </ul>
+                </div>
 
-                <form id="secureLoginForm">
-                    <input type="hidden" id="selectedRole">
-                    
-                    <div id="adminRoleSelection" class="form-group" style="display: none;">
-                        <label>حدد الصفة الإدارية:</label>
-                        <select id="adminSubRole" class="form-control">
-                            <option value="admin_general">المدير العام (صلاحيات مطلقة)</option>
-                            <option value="admin_finance_mgmt">المسؤول الإداري والمالي</option>
-                            <option value="admin_supervisor">الحارس العام (الغياب والنقط حصرياً)</option>
-                        </select>
+                <div class="login-card">
+                    <div class="login-card-head">
+                        <div class="mini-icon">🔑</div>
+                        <h2 id="spaceTitleText">لوحة الدخول الآمن</h2>
+                        <p>أدخل بيانات الاعتماد الخاصة بهذا الفضاء</p>
                     </div>
 
-                    <div class="form-group">
-                        <label>اسم المستخدم أو البريد</label>
-                        <input type="text" id="username" required value="user@alrisala.ma">
-                    </div>
-                    <div class="form-group">
-                        <label>كلمة المرور الآمنة</label>
-                        <input type="password" id="password" required value="123456">
-                    </div>
-                    <button type="submit" class="login-btn">دخول آمن إلى الفضاء</button>
-                </form>
-                <a class="back-spaces" onclick="backToSpacesList()">← العودة لاختيار فضاء آخر</a>
+                    <div class="selected-space"><i></i><span id="selectedSpaceLabel">الفضاء المحدد</span></div>
+
+                    <form id="secureLoginForm" autocomplete="on">
+                        <input type="hidden" id="selectedRole">
+
+                        <div id="adminRoleSelection" class="admin-role-box">
+                            <span class="role-title">حدد الصفة الإدارية:</span>
+                            <select id="adminSubRole" class="form-control">
+                                <option value="admin_general">المدير العام — صلاحيات مطلقة</option>
+                                <option value="admin_finance_mgmt">المسؤول الإداري والمالي</option>
+                                <option value="admin_supervisor">الحارس العام — الغياب والنقط حصرياً</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">اسم المستخدم أو البريد</label>
+                            <input type="text" id="username" required value="user@alrisala.ma" autocomplete="username" placeholder="أدخل اسم المستخدم أو البريد">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">كلمة المرور الآمنة</label>
+                            <div class="form-control-wrap">
+                                <input type="password" id="password" required value="123456" autocomplete="current-password" placeholder="أدخل كلمة المرور">
+                                <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="إظهار كلمة المرور" title="إظهار/إخفاء كلمة المرور">👁️</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="login-btn" id="loginButton">دخول آمن إلى الفضاء</button>
+                    </form>
+
+                    <div class="login-note">🔒 يتم توجيهك بعد الدخول إلى الواجهة المرتبطة بالصفة التي اخترتها.</div>
+                    <div class="login-navigation"><a class="back-spaces" onclick="backToSpacesList()">→ العودة لاختيار فضاء آخر</a><a class="back-home-link" href="index.html">⌂ العودة إلى الصفحة الرئيسية</a></div>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
 
     <footer>
-        <p>جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
+        <p>جميع الحقوق محفوظة © 2026 - <strong>مؤسسة الرسالة للتعليم الخصوصي</strong></p>
     </footer>
 
     <script>
-        function openSecureLogin(role, title) {
-            document.getElementById('spacesSelectionView').style.display = 'none';
-            document.getElementById('secureLoginView').style.display = 'block';
-            document.getElementById('spaceTitleText').innerText = title;
-            document.getElementById('selectedRole').value = role;
+        function openSecureLogin(role, title, shortTitle){
+            document.getElementById('spacesSelectionView').style.display='none';
+            document.getElementById('secureLoginView').style.display='block';
+            document.getElementById('spaceTitleText').innerText=title;
+            document.getElementById('selectedSpaceLabel').innerText=shortTitle || title;
+            document.getElementById('selectedRole').value=role;
 
-            if (role === 'admin') {
-                document.getElementById('adminRoleSelection').style.display = 'block';
-            } else {
-                document.getElementById('adminRoleSelection').style.display = 'none';
+            const adminBox=document.getElementById('adminRoleSelection');
+            if(role==='admin'){
+                adminBox.style.display='block';
+            }else{
+                adminBox.style.display='none';
             }
+
+            window.scrollTo({top:0,behavior:'smooth'});
+            setTimeout(()=>document.getElementById('username').focus(),250);
         }
 
-        function backToSpacesList() {
-            document.getElementById('secureLoginView').style.display = 'none';
-            document.getElementById('spacesSelectionView').style.display = 'block';
+        function backToSpacesList(){
+            document.getElementById('secureLoginView').style.display='none';
+            document.getElementById('spacesSelectionView').style.display='block';
+            window.scrollTo({top:0,behavior:'smooth'});
         }
 
-        document.getElementById('secureLoginForm').addEventListener('submit', (e) => {
+        function togglePassword(){
+            const input=document.getElementById('password');
+            input.type=input.type==='password'?'text':'password';
+        }
+
+        function showToast(message){
+            const toast=document.getElementById('toast');
+            toast.textContent=message;
+            toast.classList.add('show');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer=setTimeout(()=>toast.classList.remove('show'),2800);
+        }
+
+        document.getElementById('secureLoginForm').addEventListener('submit',(e)=>{
             e.preventDefault();
-            let role = document.getElementById('selectedRole').value;
+            const role=document.getElementById('selectedRole').value;
+            const button=document.getElementById('loginButton');
 
-            if (role === 'admin') {
-                let subRole = document.getElementById('adminSubRole').value;
-                localStorage.setItem('user_role', subRole);
-            } else {
-                localStorage.setItem('user_role', role);
+            if(!role){
+                showToast('المرجو اختيار فضاء الدخول أولاً.');
+                return;
             }
 
-            if (role === 'admin') {
-                window.location.href = 'admin.html';
-            } else {
-                switch(role) {
-                    case 'teacher': window.location.href = 'teacher.html'; break;
-                    case 'parent': window.location.href = 'parent.html'; break;
-                    case 'student': window.location.href = 'student.html'; break;
-                }
+            if(role==='admin'){
+                const subRole=document.getElementById('adminSubRole').value;
+                localStorage.setItem('user_role',subRole);
+                button.classList.add('loading');
+                button.textContent='جاري فتح فضاء الإدارة…';
+                setTimeout(()=>{window.location.href='admin.html';},350);
+                return;
+            }
+
+            localStorage.setItem('user_role',role);
+            button.classList.add('loading');
+            button.textContent='جاري فتح الفضاء…';
+
+            switch(role){
+                case 'teacher':
+                    setTimeout(()=>window.location.href='teacher.html',350);
+                    break;
+                case 'parent':
+                    setTimeout(()=>window.location.href='parent.html',350);
+                    break;
+                case 'student':
+                    setTimeout(()=>window.location.href='student.html',350);
+                    break;
+                default:
+                    button.classList.remove('loading');
+                    button.textContent='دخول آمن إلى الفضاء';
+                    showToast('تعذر تحديد الفضاء المطلوب.');
             }
         });
     </script>
