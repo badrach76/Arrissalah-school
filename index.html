@@ -3,216 +3,954 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b3b68">
+    <meta name="description" content="مؤسسة الرسالة للتعليم الخصوصي - منصة إلكترونية تربوية متكاملة">
     <title data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        
-        body { 
-            background-color: #f0f4f8; 
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(2, 132, 199, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
-                linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            color: #1e293b; 
-            transition: 0.3s; 
-            min-height: 100vh;
+        :root{
+            --navy:#073b6b;
+            --navy-2:#0b568f;
+            --blue:#0ea5e9;
+            --gold:#d9a72d;
+            --gold-light:#f5d77a;
+            --green:#0f9d78;
+            --purple:#7357d8;
+            --ink:#10243b;
+            --muted:#64748b;
+            --bg:#f6f9fc;
+            --white:#fff;
+            --border:rgba(7,59,107,.10);
+            --shadow:0 18px 55px rgba(7,59,107,.12);
+            --radius:22px;
         }
-        
-        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 20px rgba(2, 132, 199, 0.08); padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        
-        .brand-container { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .brand-logo-img { width: 48px; height: 48px; object-fit: contain; border-radius: 8px; }
-        .brand-texts { display: flex; flex-direction: column; }
-        .logo { font-size: 17px; font-weight: 900; color: #0284c7; letter-spacing: -0.5px; }
-        .sub-logo { font-size: 10.5px; font-weight: 600; color: #64748b; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
-        
-        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; transition: 0.3s; }
-        .nav-menu a:hover { color: #0284c7; }
-        
-        .lang-btn { background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; color: #334155; font-size: 13px; transition: 0.3s; }
-        .lang-btn:hover { background: #e2e8f0; }
-
-        /* الواجهة الترحيبية الاحترافية */
-        .hero { 
-            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); 
-            color: white; 
-            text-align: center; 
-            padding: 70px 20px 50px; 
-            border-bottom: 4px solid #38bdf8; 
-            box-shadow: 0 10px 30px rgba(2, 132, 199, 0.2);
-            position: relative;
-            overflow: hidden;
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Cairo',sans-serif;
+            color:var(--ink);
+            background:var(--bg);
+            overflow-x:hidden;
         }
-        .hero h1 { font-size: 32px; font-weight: 900; margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.15); }
-        .hero p { font-size: 15px; opacity: 0.95; max-width: 650px; margin: 0 auto 25px; line-height: 1.7; }
-        .hero-btns { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 35px; }
-        .hero-btn { background: #ffffff; color: #0284c7; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
-        .hero-btn:hover { background: #f1f5f9; transform: translateY(-3px); }
-        .hero-btn.alt { background: #10b981; color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-        .hero-btn.alt:hover { background: #059669; transform: translateY(-3px); }
+        a{text-decoration:none;color:inherit}
+        button{font-family:inherit}
 
-        /* قسم المعرض الفني لمؤسسة الرسالة (إضافة الصور الاحترافية) */
-        .gallery-banner { max-width: 1050px; margin: -25px auto 30px; padding: 0 20px; position: relative; z-index: 10; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 20px; }
-        .gallery-card { background: white; padding: 8px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; transition: 0.3s; }
-        .gallery-card:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(2,132,199,0.15); border-color: #0284c7; }
-        .gallery-card img { width: 100%; height: 260px; object-fit: cover; border-radius: 8px; }
-        .gallery-caption { text-align: center; padding: 10px; font-size: 13.5px; font-weight: 700; color: #0f172a; }
+        /* ===== الخلفية الرئيسية: الصورة المرفقة بإظهار خفيف ===== */
+        .page-bg{
+            position:fixed;
+            inset:0;
+            z-index:-3;
+            background:
+                linear-gradient(180deg,rgba(246,249,252,.82),rgba(246,249,252,.94)),
+                url("1000077933.png") center/cover no-repeat;
+            filter:saturate(.88);
+        }
+        .page-bg::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(circle at 10% 15%,rgba(14,165,233,.10),transparent 28%),
+                radial-gradient(circle at 90% 70%,rgba(15,157,120,.08),transparent 28%);
+        }
 
-        .container { max-width: 1050px; margin: 20px auto; padding: 0 20px; }
-        
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .card-box { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 35px 30px; border-radius: 14px; box-shadow: 0 10px 25px rgba(0,0,0,0.06); border-top: 5px solid #0284c7; transition: 0.3s; }
-        .card-box:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(2, 132, 199, 0.12); }
-        .card-box h3 { font-size: 18px; color: #0f172a; margin-bottom: 12px; font-weight: 800; }
-        .card-box p { font-size: 14px; color: #64748b; margin-bottom: 25px; line-height: 1.7; }
-        
-        .action-link { display: inline-block; background: #0284c7; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13.5px; font-weight: 700; cursor: pointer; border: none; transition: 0.3s; box-shadow: 0 4px 10px rgba(2,132,199,0.2); }
-        .action-link:hover { background: #0369a1; transform: translateY(-2px); }
+        /* ===== الهيدر ===== */
+        header{
+            position:sticky;
+            top:0;
+            z-index:1000;
+            background:rgba(255,255,255,.88);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(7,59,107,.08);
+            box-shadow:0 5px 25px rgba(7,59,107,.06);
+        }
+        .header-inner{
+            max-width:1250px;
+            margin:auto;
+            min-height:76px;
+            padding:10px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:25px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-width:max-content;
+        }
+        .brand-logo{
+            width:52px;height:52px;
+            object-fit:contain;
+            border-radius:14px;
+            background:#fff;
+            padding:4px;
+            box-shadow:0 7px 18px rgba(7,59,107,.10);
+        }
+        .brand-name{
+            font-weight:900;
+            color:var(--navy);
+            font-size:17px;
+            line-height:1.2;
+        }
+        .brand-sub{
+            color:var(--muted);
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.4px;
+            margin-top:2px;
+        }
 
-        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.5); backdrop-filter: blur(5px); justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: white; padding: 35px; border-radius: 14px; width: 100%; max-width: 550px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; }
-        .close-modal { position: absolute; inset-inline-end: 20px; top: 15px; font-size: 24px; font-weight: bold; cursor: pointer; color: #64748b; transition: 0.3s; }
-        .close-modal:hover { color: #ef4444; }
-        .modal-content h3 { color: #0284c7; margin-bottom: 15px; font-size: 20px; font-weight: 800; }
-        .modal-content p { color: #334155; line-height: 1.8; font-size: 14.5px; }
+        .nav{
+            display:flex;
+            align-items:center;
+            gap:5px;
+            list-style:none;
+        }
+        .nav a{
+            display:flex;
+            align-items:center;
+            gap:7px;
+            padding:10px 13px;
+            color:#40546b;
+            font-size:13px;
+            font-weight:700;
+            border-radius:12px;
+            transition:.25s ease;
+        }
+        .nav a:hover,.nav a.active{
+            color:var(--navy);
+            background:#edf6fc;
+        }
+        .nav a.active{box-shadow:inset 0 -2px var(--gold)}
 
-        footer { text-align: center; padding: 25px; background: #ffffff; color: #64748b; font-size: 13px; margin-top: 50px; border-top: 1px solid #e2e8f0; font-weight: 600; }
+        .lang-btn{
+            border:1px solid #d8e2eb;
+            background:#fff;
+            color:var(--navy);
+            padding:9px 13px;
+            border-radius:12px;
+            font-size:12px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.25s;
+        }
+        .lang-btn:hover{border-color:var(--blue);transform:translateY(-1px)}
 
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 10px 15px rgba(0,0,0,0.08); border-bottom: 1px solid #e2e8f0; }
-            .nav-menu.active { display: flex; }
-            .gallery-grid { grid-template-columns: 1fr; }
+        .menu-toggle{
+            display:none;
+            width:44px;height:44px;
+            border:0;
+            border-radius:12px;
+            background:#edf6fc;
+            color:var(--navy);
+            font-size:22px;
+            cursor:pointer;
+        }
+
+        /* ===== Hero ===== */
+        .hero-wrap{
+            position:relative;
+            min-height:650px;
+            display:flex;
+            align-items:center;
+            padding:70px 24px 55px;
+        }
+        .hero-wrap::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                linear-gradient(90deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.89) 35%,rgba(255,255,255,.36) 72%,rgba(255,255,255,.12) 100%);
+            z-index:-1;
+        }
+        [dir="rtl"] .hero-wrap::before{
+            background:
+                linear-gradient(270deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.89) 35%,rgba(255,255,255,.36) 72%,rgba(255,255,255,.12) 100%);
+        }
+
+        .hero{
+            width:min(1250px,100%);
+            margin:auto;
+            display:grid;
+            grid-template-columns:1.05fr .95fr;
+            align-items:center;
+            gap:45px;
+        }
+        .hero-copy{max-width:650px}
+        .eyebrow{
+            display:inline-flex;
+            align-items:center;
+            gap:9px;
+            padding:7px 13px;
+            background:rgba(255,255,255,.78);
+            border:1px solid rgba(7,59,107,.10);
+            border-radius:999px;
+            color:var(--navy);
+            font-size:12px;
+            font-weight:800;
+            box-shadow:0 8px 25px rgba(7,59,107,.06);
+        }
+        .eyebrow i{
+            width:8px;height:8px;
+            border-radius:50%;
+            background:var(--gold);
+            box-shadow:0 0 0 5px rgba(217,167,45,.14);
+        }
+        .hero h1{
+            margin-top:20px;
+            color:var(--navy);
+            font-size:clamp(36px,5vw,62px);
+            line-height:1.17;
+            font-weight:900;
+            letter-spacing:-1.5px;
+        }
+        .hero h1 span{
+            color:var(--gold);
+            display:block;
+        }
+        .hero-text{
+            margin-top:18px;
+            max-width:650px;
+            color:#52677d;
+            font-size:15px;
+            line-height:2;
+            font-weight:600;
+        }
+        .hero-actions{
+            margin-top:28px;
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+        }
+        .btn{
+            border:0;
+            display:inline-flex;
+            justify-content:center;
+            align-items:center;
+            gap:9px;
+            padding:13px 22px;
+            border-radius:14px;
+            font-size:13px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.25s;
+        }
+        .btn:hover{transform:translateY(-3px)}
+        .btn-primary{
+            color:#fff;
+            background:linear-gradient(135deg,var(--gold),#c68c16);
+            box-shadow:0 12px 28px rgba(217,167,45,.25);
+        }
+        .btn-secondary{
+            color:var(--navy);
+            background:rgba(255,255,255,.86);
+            border:1px solid #d7e3ed;
+            box-shadow:0 10px 25px rgba(7,59,107,.07);
+        }
+
+        .hero-badges{
+            margin-top:30px;
+            display:flex;
+            gap:22px;
+            flex-wrap:wrap;
+        }
+        .mini-badge{
+            display:flex;
+            align-items:center;
+            gap:9px;
+            color:#50657b;
+            font-size:11.5px;
+            font-weight:700;
+        }
+        .mini-icon{
+            width:36px;height:36px;
+            border-radius:12px;
+            display:grid;
+            place-items:center;
+            background:#fff;
+            border:1px solid #e1eaf1;
+            color:var(--navy);
+            box-shadow:0 7px 18px rgba(7,59,107,.06);
+        }
+
+        .hero-visual{
+            min-height:430px;
+            position:relative;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .visual-card{
+            width:min(530px,100%);
+            border-radius:30px;
+            padding:10px;
+            background:rgba(255,255,255,.50);
+            border:1px solid rgba(255,255,255,.85);
+            box-shadow:var(--shadow);
+            backdrop-filter:blur(5px);
+            transform:rotate(1deg);
+        }
+        .visual-card img{
+            display:block;
+            width:100%;
+            height:390px;
+            object-fit:cover;
+            border-radius:24px;
+        }
+        .floating-card{
+            position:absolute;
+            bottom:5px;
+            right:-5px;
+            background:rgba(255,255,255,.93);
+            border:1px solid rgba(7,59,107,.08);
+            border-radius:18px;
+            padding:14px 17px;
+            box-shadow:0 15px 40px rgba(7,59,107,.15);
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+        [dir="ltr"] .floating-card{right:auto;left:-5px}
+        .floating-number{
+            font-size:21px;
+            font-weight:900;
+            color:var(--navy);
+        }
+        .floating-label{
+            color:var(--muted);
+            font-size:10px;
+            font-weight:700;
+        }
+
+        /* ===== إحصائيات ===== */
+        .stats{
+            max-width:1120px;
+            margin:-20px auto 55px;
+            padding:0 20px;
+            position:relative;
+            z-index:5;
+        }
+        .stats-box{
+            background:rgba(255,255,255,.90);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,.9);
+            border-radius:22px;
+            box-shadow:var(--shadow);
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            overflow:hidden;
+        }
+        .stat{
+            padding:22px 15px;
+            text-align:center;
+            position:relative;
+        }
+        .stat:not(:last-child)::after{
+            content:"";
+            position:absolute;
+            top:25%;
+            bottom:25%;
+            inset-inline-end:0;
+            width:1px;
+            background:#e5edf3;
+        }
+        .stat strong{
+            display:block;
+            font-size:25px;
+            color:var(--navy);
+            font-weight:900;
+        }
+        .stat span{
+            display:block;
+            color:var(--muted);
+            font-size:11px;
+            font-weight:700;
+            margin-top:2px;
+        }
+
+        /* ===== الأقسام ===== */
+        .section{
+            max-width:1120px;
+            margin:0 auto 70px;
+            padding:0 20px;
+        }
+        .section-head{
+            text-align:center;
+            margin-bottom:28px;
+        }
+        .section-kicker{
+            color:var(--gold);
+            font-size:11px;
+            font-weight:900;
+            letter-spacing:1px;
+        }
+        .section-title{
+            color:var(--navy);
+            font-size:28px;
+            font-weight:900;
+            margin-top:5px;
+        }
+        .section-desc{
+            color:var(--muted);
+            font-size:13px;
+            max-width:650px;
+            margin:8px auto 0;
+            line-height:1.9;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:17px;
+        }
+        .card{
+            background:rgba(255,255,255,.91);
+            border:1px solid rgba(7,59,107,.08);
+            border-radius:20px;
+            padding:23px 20px;
+            box-shadow:0 12px 32px rgba(7,59,107,.07);
+            transition:.3s;
+            position:relative;
+            overflow:hidden;
+        }
+        .card::before{
+            content:"";
+            position:absolute;
+            inset:0 0 auto 0;
+            height:3px;
+            background:var(--accent,var(--blue));
+        }
+        .card:hover{
+            transform:translateY(-7px);
+            box-shadow:0 20px 45px rgba(7,59,107,.13);
+        }
+        .card-icon{
+            width:48px;height:48px;
+            border-radius:15px;
+            display:grid;
+            place-items:center;
+            font-size:21px;
+            background:var(--soft,#eaf7fe);
+            color:var(--accent,var(--blue));
+            margin-bottom:16px;
+        }
+        .card h3{
+            color:var(--navy);
+            font-size:16px;
+            font-weight:900;
+            margin-bottom:7px;
+        }
+        .card p{
+            color:var(--muted);
+            font-size:12px;
+            line-height:1.9;
+            min-height:68px;
+        }
+        .card-link{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            margin-top:14px;
+            color:var(--accent,var(--blue));
+            font-size:11.5px;
+            font-weight:900;
+        }
+
+        /* ===== شريط الوصول السريع ===== */
+        .quick{
+            max-width:1120px;
+            margin:0 auto 70px;
+            padding:0 20px;
+        }
+        .quick-box{
+            background:linear-gradient(135deg,#073b6b,#0a5b91);
+            border-radius:26px;
+            padding:30px;
+            color:#fff;
+            position:relative;
+            overflow:hidden;
+            box-shadow:0 20px 50px rgba(7,59,107,.20);
+        }
+        .quick-box::before{
+            content:"";
+            position:absolute;
+            width:260px;height:260px;
+            border:1px solid rgba(255,255,255,.10);
+            border-radius:50%;
+            top:-150px;left:-70px;
+        }
+        .quick-head{
+            position:relative;
+            display:flex;
+            justify-content:space-between;
+            gap:20px;
+            align-items:end;
+            margin-bottom:22px;
+        }
+        .quick-head h2{font-size:22px;font-weight:900}
+        .quick-head p{font-size:11px;opacity:.78;margin-top:3px}
+        .quick-grid{
+            position:relative;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:12px;
+        }
+        .quick-item{
+            background:rgba(255,255,255,.10);
+            border:1px solid rgba(255,255,255,.13);
+            border-radius:16px;
+            padding:17px;
+            display:flex;
+            align-items:center;
+            gap:12px;
+            transition:.25s;
+        }
+        .quick-item:hover{background:rgba(255,255,255,.17);transform:translateY(-3px)}
+        .quick-item .qicon{
+            width:39px;height:39px;
+            border-radius:12px;
+            background:rgba(255,255,255,.13);
+            display:grid;
+            place-items:center;
+            font-size:17px;
+        }
+        .quick-item strong{font-size:12px}
+        .quick-item small{display:block;font-size:9.5px;opacity:.72;margin-top:2px}
+
+        /* ===== رسالة المؤسسة ===== */
+        .mission{
+            max-width:1120px;
+            margin:0 auto 70px;
+            padding:0 20px;
+        }
+        .mission-box{
+            background:rgba(255,255,255,.92);
+            border:1px solid rgba(7,59,107,.08);
+            border-radius:25px;
+            box-shadow:var(--shadow);
+            padding:38px;
+            display:grid;
+            grid-template-columns:1fr 1.4fr;
+            gap:35px;
+            align-items:center;
+        }
+        .mission-mark{
+            color:var(--gold);
+            font-size:13px;
+            font-weight:900;
+        }
+        .mission h2{
+            color:var(--navy);
+            font-size:27px;
+            font-weight:900;
+            margin:6px 0 12px;
+        }
+        .mission p{
+            color:var(--muted);
+            font-size:13px;
+            line-height:2;
+        }
+        .pill-list{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            justify-content:flex-start;
+        }
+        .pill{
+            background:#f4f8fb;
+            border:1px solid #e2ebf2;
+            border-radius:999px;
+            padding:9px 13px;
+            color:#405970;
+            font-size:11px;
+            font-weight:800;
+        }
+
+        /* ===== Footer ===== */
+        footer{
+            background:#061f39;
+            color:#fff;
+            margin-top:30px;
+            padding:35px 20px 22px;
+        }
+        .footer-inner{
+            max-width:1120px;
+            margin:auto;
+            display:flex;
+            justify-content:space-between;
+            gap:25px;
+            align-items:center;
+        }
+        .footer-brand strong{font-size:16px}
+        .footer-brand p{
+            color:rgba(255,255,255,.65);
+            font-size:10.5px;
+            margin-top:4px;
+        }
+        .footer-copy{
+            color:rgba(255,255,255,.55);
+            font-size:10px;
+        }
+        .gold-line{
+            width:45px;height:3px;
+            border-radius:5px;
+            background:var(--gold);
+            margin-top:9px;
+        }
+
+        /* ===== Modal ===== */
+        .modal{
+            position:fixed;
+            inset:0;
+            z-index:3000;
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            background:rgba(2,20,38,.58);
+            backdrop-filter:blur(8px);
+        }
+        .modal.show{display:flex}
+        .modal-content{
+            width:min(560px,100%);
+            background:#fff;
+            border-radius:22px;
+            padding:30px;
+            position:relative;
+            box-shadow:0 30px 80px rgba(0,0,0,.22);
+        }
+        .close-modal{
+            position:absolute;
+            top:14px;
+            inset-inline-end:18px;
+            width:35px;height:35px;
+            border:0;
+            border-radius:10px;
+            background:#f1f5f9;
+            color:#64748b;
+            font-size:21px;
+            cursor:pointer;
+        }
+        .modal-content h3{color:var(--navy);font-size:20px;margin-bottom:10px}
+        .modal-content p{color:var(--muted);font-size:13px;line-height:2}
+
+        /* ===== Mobile ===== */
+        @media(max-width:980px){
+            .nav{gap:0}
+            .nav a{padding:9px 8px;font-size:11px}
+            .hero{grid-template-columns:1fr}
+            .hero-copy{text-align:center;margin:auto}
+            .hero-text{margin-inline:auto}
+            .hero-actions,.hero-badges{justify-content:center}
+            .hero-visual{min-height:350px}
+            .cards{grid-template-columns:repeat(2,1fr)}
+            .quick-grid{grid-template-columns:repeat(2,1fr)}
+            .mission-box{grid-template-columns:1fr;text-align:center}
+            .pill-list{justify-content:center}
+        }
+
+        @media(max-width:700px){
+            .header-inner{min-height:68px;padding:8px 15px}
+            .menu-toggle{display:block}
+            .nav{
+                display:none;
+                position:absolute;
+                top:68px;
+                inset-inline:12px;
+                background:rgba(255,255,255,.98);
+                border:1px solid #e2eaf0;
+                border-radius:18px;
+                padding:10px;
+                flex-direction:column;
+                align-items:stretch;
+                box-shadow:0 20px 45px rgba(7,59,107,.14);
+            }
+            .nav.open{display:flex}
+            .nav li{width:100%}
+            .nav a,.lang-btn{width:100%;justify-content:center}
+            .lang-btn{margin-top:4px}
+            .hero-wrap{
+                min-height:auto;
+                padding:55px 16px 35px;
+            }
+            .hero h1{font-size:36px}
+            .hero-text{font-size:13px}
+            .hero-visual{min-height:280px}
+            .visual-card img{height:260px}
+            .floating-card{right:4px}
+            [dir="ltr"] .floating-card{right:auto;left:4px}
+            .stats{margin-top:0}
+            .stats-box{grid-template-columns:repeat(2,1fr)}
+            .stat:nth-child(2)::after{display:none}
+            .stat{padding:18px 10px}
+            .cards{grid-template-columns:1fr}
+            .quick-grid{grid-template-columns:1fr}
+            .mission-box{padding:28px 20px}
+            .footer-inner{flex-direction:column;text-align:center}
+            .gold-line{margin-inline:auto}
         }
     </style>
 </head>
-<body>
 
-    <header>
-        <a href="index.html" class="brand-container">
-            <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo-img">
-            <div class="brand-texts">
-                <div class="logo" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
-                <div class="sub-logo" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
+<body>
+<div class="page-bg" aria-hidden="true"></div>
+
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="brand" aria-label="مؤسسة الرسالة">
+            <img src="1000076356.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
+            <div>
+                <div class="brand-name" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
+                <div class="brand-sub" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
             </div>
         </a>
-        
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html" data-ar="الرئيسية" data-fr="Accueil">الرئيسية</a></li>
-            <li><a href="login.html" data-ar="فضاءات الدخول" data-fr="Espaces">فضاءات الدخول</a></li>
-            <li><a href="register.html" data-ar="التسجيل القبلي" data-fr="Pré-inscription">التسجيل القبلي</a></li>
-            <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
-        </ul>
-    </header>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="القائمة">☰</button>
 
+        <nav>
+            <ul class="nav" id="navMenu">
+                <li><a class="active" href="index.html" data-ar="⌂ الرئيسية" data-fr="⌂ Accueil">⌂ الرئيسية</a></li>
+                <li><a href="login.html" data-ar="♙ فضاءات الدخول" data-fr="♙ Espaces">♙ فضاءات الدخول</a></li>
+                <li><a href="register.html" data-ar="✎ التسجيل القبلي" data-fr="✎ Pré-inscription">✎ التسجيل القبلي</a></li>
+                <li><a href="#programs" data-ar="▣ أقسام المؤسسة" data-fr="▣ Cycles">▣ أقسام المؤسسة</a></li>
+                <li><a href="#announcements" data-ar="⚑ الإعلانات" data-fr="⚑ Annonces">⚑ الإعلانات</a></li>
+                <li><a href="#contact" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a></li>
+                <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
     <section class="hero">
-        <h1 data-ar="صرح تربوي متكامل لجيل المستقبل" data-fr="Un pôle éducatif intégré pour la future génération">صرح تربوي متكامل لجيل المستقبل</h1>
-        <p data-ar="نؤمن بأن التعليم رسالة سامية؛ لذا نجمع بين أصالة القيم التربوية ومهارات العصر الحديث لنبني معاً مساراً ناجحاً لأبنائكم." data-fr="Nous croyons que l'éducation est une noble mission. Nous combinons valeurs authentiques et compétences modernes.">نؤمن بأن التعليم رسالة سامية؛ لذا نجمع بين أصالة القيم التربوية ومهارات العصر الحديث لنبني معاً مساراً ناجحاً لأبنائكم.</p>
-        <div class="hero-btns">
-            <a href="login.html" class="hero-btn" data-ar="فضاءات الدخول" data-fr="Espaces Dédiés">فضاءات الدخول</a>
-            <a href="register.html" class="hero-btn alt" data-ar="طلب تسجيل تلميذ جديد" data-fr="Nouvelle Inscription">طلب تسجيل تلميذ جديد</a>
+        <div class="hero-wrap">
+            <div class="hero">
+                <div class="hero-copy">
+                    <div class="eyebrow"><i></i><span data-ar="منصة مؤسسة الرسالة التعليمية" data-fr="Plateforme éducative Al Risala">منصة مؤسسة الرسالة التعليمية</span></div>
+
+                    <h1 data-ar="صرح تربوي متكامل" data-fr="Un pôle éducatif intégré">
+                        صرح تربوي متكامل
+                        <span data-ar="لجيل المستقبل" data-fr="pour la génération de demain">لجيل المستقبل</span>
+                    </h1>
+
+                    <p class="hero-text"
+                       data-ar="نؤمن بأن التعليم رسالة سامية؛ لذلك نجمع بين أصالة القيم التربوية ومهارات العصر الحديث، في بيئة تعليمية آمنة ومحفزة، لنرافق أبناءكم في بناء مستقبلهم."
+                       data-fr="Nous croyons que l'éducation est une noble mission. Nous associons les valeurs éducatives aux compétences modernes dans un environnement sûr et stimulant.">
+                        نؤمن بأن التعليم رسالة سامية؛ لذلك نجمع بين أصالة القيم التربوية ومهارات العصر الحديث، في بيئة تعليمية آمنة ومحفزة، لنرافق أبناءكم في بناء مستقبلهم.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="register.html" class="btn btn-primary" data-ar="✦ طلب تسجيل تلميذ جديد" data-fr="✦ Nouvelle inscription">✦ طلب تسجيل تلميذ جديد</a>
+                        <a href="login.html" class="btn btn-secondary" data-ar="↪ فضاءات الدخول" data-fr="↪ Espaces dédiés">↪ فضاءات الدخول</a>
+                    </div>
+
+                    <div class="hero-badges">
+                        <div class="mini-badge"><span class="mini-icon">✓</span><span data-ar="تعليم ذو جودة" data-fr="Éducation de qualité">تعليم ذو جودة</span></div>
+                        <div class="mini-badge"><span class="mini-icon">♙</span><span data-ar="طاقم تربوي مؤهل" data-fr="Équipe qualifiée">طاقم تربوي مؤهل</span></div>
+                        <div class="mini-badge"><span class="mini-icon">◆</span><span data-ar="بيئة آمنة ومحفزة" data-fr="Environnement sûr">بيئة آمنة ومحفزة</span></div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="visual-card">
+                        <img src="1000077933.png" alt="واجهة مؤسسة الرسالة للتعليم الخصوصي">
+                    </div>
+                    <div class="floating-card">
+                        <div class="mini-icon">★</div>
+                        <div>
+                            <div class="floating-number">AL-RISALA</div>
+                            <div class="floating-label" data-ar="معًا من أجل مستقبل أفضل" data-fr="Ensemble pour un avenir meilleur">معًا من أجل مستقبل أفضل</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- معرض صور المؤسسة الفني الراقي -->
-    <div class="gallery-banner">
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <img src="arrissalahimg3.png" alt="مؤسسة الرسالة - واجهة المؤسسة">
-                <div class="gallery-caption" data-ar="مؤسسة الرسالة - بيئة تربوية تحفيزية وآمنة" data-fr="Façade d'Al Risala - Environnement stimulant">مؤسسة الرسالة - بيئة تربوية تحفيزية وآمنة</div>
+    <section class="stats" aria-label="مؤشرات المنصة">
+        <div class="stats-box">
+            <div class="stat"><strong>01</strong><span data-ar="منصة موحدة" data-fr="Plateforme unifiée">منصة موحدة</span></div>
+            <div class="stat"><strong>24/7</strong><span data-ar="ولوج رقمي" data-fr="Accès numérique">ولوج رقمي</span></div>
+            <div class="stat"><strong>AR / FR</strong><span data-ar="واجهة ثنائية اللغة" data-fr="Interface bilingue">واجهة ثنائية اللغة</span></div>
+            <div class="stat"><strong>100%</strong><span data-ar="تجربة رقمية حديثة" data-fr="Expérience moderne">تجربة رقمية حديثة</span></div>
+        </div>
+    </section>
+
+    <section class="section" id="programs">
+        <div class="section-head">
+            <div class="section-kicker" data-ar="خدمات المؤسسة" data-fr="SERVICES DE L'ÉTABLISSEMENT">خدمات المؤسسة</div>
+            <h2 class="section-title" data-ar="كل ما يهم الأسرة في مكان واحد" data-fr="Tout ce qui compte, au même endroit">كل ما يهم الأسرة في مكان واحد</h2>
+            <p class="section-desc"
+               data-ar="واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة."
+               data-fr="Une interface simple et organisée pour un accès rapide aux principaux services.">
+                واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة.
+            </p>
+        </div>
+
+        <div class="cards">
+            <article class="card" style="--accent:#0ea5e9;--soft:#eaf7fe;">
+                <div class="card-icon">ℹ</div>
+                <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre vision & mission">رؤيتنا ورسالتنا</h3>
+                <p data-ar="بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم." data-fr="Un environnement stimulant et sécurisé fondé sur l'excellence académique et l'épanouissement de l'élève.">بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم.</p>
+                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'عن مؤسسة الرسالة':'À propos d’Al Risala', currentLang==='ar'?'تسعى مؤسسة الرسالة إلى بناء مسار تربوي متوازن يجمع بين جودة التعلم والقيم والمهارات الحديثة.':'Al Risala construit un parcours équilibré associant qualité pédagogique, valeurs et compétences modernes.')" data-ar="قراءة المزيد ←" data-fr="Lire la suite →">قراءة المزيد ←</a>
+            </article>
+
+            <article class="card" style="--accent:#f0a91f;--soft:#fff7df;">
+                <div class="card-icon">▤</div>
+                <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles éducatifs">أسلاكنا التعليمية</h3>
+                <p data-ar="مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا." data-fr="Un parcours continu et structuré, de la petite enfance au baccalauréat.">مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا.</p>
+                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'الأسلاك التعليمية':'Cycles éducatifs', currentLang==='ar'?'• التعليم الأولي<br>• السلك الابتدائي<br>• السلك الإعدادي<br>• السلك الثانوي':'• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام ←" data-fr="Voir les cycles →">استعراض الأقسام ←</a>
+            </article>
+
+            <article class="card" id="announcements" style="--accent:#10a37f;--soft:#e9faf5;">
+                <div class="card-icon">⚑</div>
+                <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & avis">الإعلانات والبلاغات</h3>
+                <p data-ar="ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة." data-fr="Restez informés des actualités, dates et avis importants de l'établissement.">ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة.</p>
+                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'الإعلانات الرسمية':'Avis officiels', currentLang==='ar'?'سيتم عرض الإعلانات والبلاغات الرسمية للمؤسسة هنا بشكل منظم ومحدث.':'Les annonces officielles de l’établissement seront publiées ici de manière claire et actualisée.')" data-ar="عرض البلاغات ←" data-fr="Voir les avis →">عرض البلاغات ←</a>
+            </article>
+
+            <article class="card" style="--accent:#7656d6;--soft:#f1edff;">
+                <div class="card-icon">♙</div>
+                <h3 data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</h3>
+                <p data-ar="ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية." data-fr="Accès sécurisé aux espaces numériques des élèves, parents et équipes pédagogiques.">ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية.</p>
+                <a href="login.html" class="card-link" data-ar="الدخول الآن ←" data-fr="Se connecter →">الدخول الآن ←</a>
+            </article>
+        </div>
+    </section>
+
+    <section class="quick">
+        <div class="quick-box">
+            <div class="quick-head">
+                <div>
+                    <h2 data-ar="الوصول السريع" data-fr="Accès rapide">الوصول السريع</h2>
+                    <p data-ar="أهم الخدمات الرقمية للمؤسسة في خطوات واضحة." data-fr="Les principaux services numériques en quelques clics.">أهم الخدمات الرقمية للمؤسسة في خطوات واضحة.</p>
+                </div>
+            </div>
+
+            <div class="quick-grid">
+                <a href="login.html" class="quick-item">
+                    <span class="qicon">♙</span>
+                    <span><strong data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</strong><small data-ar="تلميذ • ولي • أستاذ" data-fr="Élève • Parent • Enseignant">تلميذ • ولي • أستاذ</small></span>
+                </a>
+                <a href="register.html" class="quick-item">
+                    <span class="qicon">✎</span>
+                    <span><strong data-ar="التسجيل القبلي" data-fr="Pré-inscription">التسجيل القبلي</strong><small data-ar="طلب تسجيل جديد" data-fr="Nouvelle demande">طلب تسجيل جديد</small></span>
+                </a>
+                <a href="#announcements" class="quick-item">
+                    <span class="qicon">⚑</span>
+                    <span><strong data-ar="الإعلانات" data-fr="Annonces">الإعلانات</strong><small data-ar="آخر المستجدات" data-fr="Actualités">آخر المستجدات</small></span>
+                </a>
+                <a href="#contact" class="quick-item">
+                    <span class="qicon">☎</span>
+                    <span><strong data-ar="تواصل معنا" data-fr="Contact">تواصل معنا</strong><small data-ar="نحن رهن الإشارة" data-fr="À votre écoute">نحن رهن الإشارة</small></span>
+                </a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container">
-        <div class="grid-cards">
-            <div class="card-box" style="border-top-color: #0284c7;">
-                <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre Vision & Mission">رؤيتنا ورسالتنا</h3>
-                <p data-ar="نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية." data-fr="Nous créons un environnement d'apprentissage stimulant et sécurisé.">نخلق بيئة تعليمية محفزة ومفعمة بالأمان، ترتكز على التميز الأكاديمي وصقل الشخصية.</p>
-                <button class="action-link" style="background: #0284c7;" onclick="openModal(currentLang === 'ar' ? 'عن مؤسسة الرسالة' : 'À propos d\'Al Risala', currentLang === 'ar' ? 'تأسست مؤسسة الرسالة للتعليم الخصوصي لتكون منارة علمية وتربوية رائدة تحت إشراف نخبة من الأطر التربوية المتميزة.' : 'Fondé pour être un phare éducatif d\'excellence sous la supervision d\'une équipe pédagogique d\'élite.')" data-ar="قراءة المزيد" data-fr="Lire la suite">قراءة المزيد</button>
+    <section class="mission" id="contact">
+        <div class="mission-box">
+            <div>
+                <div class="mission-mark">✦ AL-RISALA</div>
+                <h2 data-ar="معًا... من أجل مستقبل أفضل" data-fr="Ensemble... pour un avenir meilleur">معًا... من أجل مستقبل أفضل</h2>
+                <p data-ar="نضع المتعلم في صميم العملية التربوية، ونعمل على توفير بيئة تساعده على التعلم والنمو واكتشاف قدراته بثقة."
+                   data-fr="Nous plaçons l'élève au cœur du projet éducatif et créons un environnement propice à l'apprentissage, au développement et à la confiance.">
+                    نضع المتعلم في صميم العملية التربوية، ونعمل على توفير بيئة تساعده على التعلم والنمو واكتشاف قدراته بثقة.
+                </p>
             </div>
-
-            <div class="card-box" style="border-top-color: #0ea5e9;">
-                <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles Éducatifs">أسلاكنا التعليمية</h3>
-                <p data-ar="مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا." data-fr="Un parcours éducatif continu de la petite section jusqu'au baccalauréat.">مسار تعليمي متواصل ومدروس بعناية يواكب طفلكم منذ خطواته الأولى وحتى البكالوريا.</p>
-                <button class="action-link" style="background: #0ea5e9;" onclick="openModal(currentLang === 'ar' ? 'تفاصيل الأسلاك التعليمية' : 'Détails des Cycles', currentLang === 'ar' ? '• <b>التعليم الأولي:</b> فضاء محفز لاكتشاف المهارات.<br>• <b>السلك الابتدائي:</b> تأسيس متين في اللغات والعلوم.<br>• <b>السلك الإعدادي:</b> تطوير الفكر النقدي والمنهجي.<br>• <b>السلك الثانوي:</b> إعداد مكثف للبكالوريا.' : '• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام" data-fr="Voir les cycles">استعراض الأقسام</button>
-            </div>
-
-            <div class="card-box" style="border-top-color: #f59e0b;">
-                <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & Avis">الإعلانات والبلاغات</h3>
-                <p data-ar="ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة." data-fr="Restez informés des dernières actualités et des dates importantes.">ابقوا على اطلاع دائم بآخر المستجدات المدرسية والمواعيد الهامة.</p>
-                <button class="action-link" style="background: #f59e0b;" onclick="openModal(currentLang === 'ar' ? 'الإعلانات الرسمية' : 'Avis Officiels', currentLang === 'ar' ? '📢 <b>أبواب المؤسسة مفتوحة</b> لاستقبال أولياء الأمور وتقديم طلبات التسجيل من الإثنين إلى السبت صباحاً.' : '📢 Nos portes sont ouvertes pour les inscriptions du lundi au samedi matin.')" data-ar="عرض البلاغات" data-fr="Voir les avis">عرض البلاغات</button>
+            <div class="pill-list">
+                <span class="pill" data-ar="تعليم ذو جودة" data-fr="Éducation de qualité">تعليم ذو جودة</span>
+                <span class="pill" data-ar="طاقم تربوي مؤهل" data-fr="Équipe qualifiée">طاقم تربوي مؤهل</span>
+                <span class="pill" data-ar="بيئة آمنة ومحفزة" data-fr="Environnement sûr">بيئة آمنة ومحفزة</span>
+                <span class="pill" data-ar="متابعة شخصية لكل متعلم" data-fr="Suivi personnalisé">متابعة شخصية لكل متعلم</span>
+                <span class="pill" data-ar="تواصل مستمر مع الأسرة" data-fr="Communication avec les familles">تواصل مستمر مع الأسرة</span>
             </div>
         </div>
-    </div>
+    </section>
+</main>
 
-    <div id="infoModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3 id="modalTitle">عنوان النافذة</h3>
-            <p id="modalText">نص المعلومات هنا...</p>
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <strong data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</strong>
+            <div class="gold-line"></div>
+            <p data-ar="من التعلم... نبني المستقبل" data-fr="De l'apprentissage... construisons l'avenir">من التعلم... نبني المستقبل</p>
+        </div>
+        <div class="footer-copy" data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">
+            جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة
         </div>
     </div>
+</footer>
 
-    <footer>
-        <p data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة للتعليم الخصوصي</p>
-    </footer>
+<div class="modal" id="infoModal" onclick="closeOnBackdrop(event)">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()" aria-label="إغلاق">×</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalText"></p>
+    </div>
+</div>
 
-    <script>
-        let currentLang = 'ar';
+<script>
+    let currentLang = 'ar';
 
-        function toggleMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
+    function toggleMenu(){
+        document.getElementById('navMenu').classList.toggle('open');
+    }
 
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navMenu').classList.remove('active');
-            });
+    document.querySelectorAll('.nav a').forEach(link=>{
+        link.addEventListener('click',()=>{
+            document.getElementById('navMenu').classList.remove('open');
         });
+    });
 
-        function toggleLanguage() {
-            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-            const htmlRoot = document.getElementById('htmlRoot');
-            
-            if (currentLang === 'fr') {
-                htmlRoot.setAttribute('dir', 'ltr');
-                htmlRoot.setAttribute('lang', 'fr');
-                document.getElementById('langToggleBtn').innerText = 'العربية / FR';
-            } else {
-                htmlRoot.setAttribute('dir', 'rtl');
-                htmlRoot.setAttribute('lang', 'ar');
-                document.getElementById('langToggleBtn').innerText = 'FR / العربية';
+    function toggleLanguage(){
+        currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+
+        const root = document.getElementById('htmlRoot');
+        root.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        root.lang = currentLang;
+
+        document.getElementById('langToggleBtn').textContent =
+            currentLang === 'ar' ? 'FR / العربية' : 'العربية / FR';
+
+        document.querySelectorAll('[data-ar]').forEach(el=>{
+            const value = el.getAttribute('data-' + currentLang);
+            if(value !== null){
+                if(el.tagName === 'TITLE'){
+                    document.title = value;
+                }else{
+                    el.innerHTML = value;
+                }
             }
+        });
+    }
 
-            document.querySelectorAll('[data-ar]').forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
-        }
+    function openModal(event,title,text){
+        if(event) event.preventDefault();
+        document.getElementById('modalTitle').innerHTML = title;
+        document.getElementById('modalText').innerHTML = text;
+        document.getElementById('infoModal').classList.add('show');
+    }
 
-        function openModal(title, text) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalText').innerHTML = text;
-            document.getElementById('infoModal').style.display = 'flex';
-        }
+    function closeModal(){
+        document.getElementById('infoModal').classList.remove('show');
+    }
 
-        function closeModal() {
-            document.getElementById('infoModal').style.display = 'none';
-        }
+    function closeOnBackdrop(event){
+        if(event.target.id === 'infoModal') closeModal();
+    }
 
-        window.onclick = function(event) {
-            let modal = document.getElementById('infoModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
+    document.addEventListener('keydown',event=>{
+        if(event.key === 'Escape') closeModal();
+    });
+</script>
 </body>
 </html>
