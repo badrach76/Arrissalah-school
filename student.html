@@ -1,142 +1,529 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlRoot">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#0b3b68">
+    <title data-ar="فضاء التلميذ وولي الأمر - مؤسسة الرسالة" data-fr="Espace Élève & Parent - Groupe Scolaire Al Risala">فضاء التلميذ وولي الأمر - مؤسسة الرسالة للتعليم الخصوصي</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-        body { background-color: #f8fafc; color: #1e293b; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .brand-container { display: flex; flex-direction: column; text-decoration: none; }
-        .logo { font-size: 18px; font-weight: 900; color: #0284c7; }
-        .sub-logo { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        :root{
+            --navy:#073b6b;
+            --navy-2:#0b568f;
+            --blue:#0ea5e9;
+            --gold:#d9a72d;
+            --gold-light:#f5d77a;
+            --green:#0f9d78;
+            --purple:#7357d8;
+            --ink:#10243b;
+            --muted:#64748b;
+            --bg:#f6f9fc;
+            --white:#fff;
+            --border:rgba(7,59,107,.10);
+            --shadow:0 18px 55px rgba(7,59,107,.12);
+            --radius:22px;
+        }
 
-        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #0284c7; }
-        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
-        .nav-menu a { text-decoration: none; color: #475569; font-weight: 600; font-size: 14px; cursor: pointer; }
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Cairo',sans-serif;
+            color:var(--ink);
+            background:var(--bg);
+            overflow-x:hidden;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+        a{text-decoration:none;color:inherit}
+        button{font-family:inherit}
 
-        .layout-body { display: flex; flex: 1; }
-        aside { width: 260px; background: #6d28d9; color: white; padding: 20px; flex-shrink: 0; }
-        .aside-menu { list-style: none; }
-        .aside-menu li { margin-bottom: 8px; }
-        .aside-menu a { color: #ede9fe; text-decoration: none; display: block; padding: 10px 15px; border-radius: 6px; font-size: 13.5px; font-weight: 600; }
+        /* ===== الخلفية الرئيسية ===== */
+        .page-bg{
+            position:fixed;
+            inset:0;
+            z-index:-3;
+            background:
+                linear-gradient(180deg,rgba(246,249,252,.85),rgba(246,249,252,.95)),
+                url("arrissalahimg3.png") center/cover no-repeat;
+            filter:saturate(.88);
+        }
+        .page-bg::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(circle at 10% 15%,rgba(14,165,233,.10),transparent 28%),
+                radial-gradient(circle at 90% 70%,rgba(15,157,120,.08),transparent 28%);
+        }
 
-        .main-container { flex: 1; padding: 30px; overflow-y: auto; width: 100%; }
-        .box { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 20px; border-right: 4px solid #8b5cf6; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; text-align: right; min-width: 500px; }
-        th, td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; font-size: 13px; }
-        th { background: #f1f5f9; color: #475569; font-weight: 700; }
-        .btn { background: #8b5cf6; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; }
-        .btn:hover { background: #7c3aed; }
-        .whatsapp-btn { background: #25d366; }
+        /* ===== الهيدر ===== */
+        header{
+            position:sticky;
+            top:0;
+            z-index:1000;
+            background:rgba(255,255,255,.9);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(7,59,107,.08);
+            box-shadow:0 5px 25px rgba(7,59,107,.06);
+        }
+        .header-inner{
+            max-width:1250px;
+            margin:auto;
+            min-height:76px;
+            padding:10px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:25px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-width:max-content;
+        }
+        .brand-logo{
+            width:52px;height:52px;
+            object-fit:contain;
+            border-radius:14px;
+            background:#fff;
+            padding:4px;
+            box-shadow:0 7px 18px rgba(7,59,107,.10);
+        }
+        .brand-name{
+            font-weight:900;
+            color:var(--navy);
+            font-size:17px;
+            line-height:1.2;
+        }
+        .brand-sub{
+            color:var(--muted);
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.4px;
+            margin-top:2px;
+        }
 
-        @media (max-width: 768px) {
-            .layout-body { flex-direction: column; }
-            aside { width: 100%; height: auto; }
-            .menu-toggle { display: block; }
-            .nav-menu { display: none; flex-direction: column; width: 100%; background: white; position: absolute; top: 70px; left: 0; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
-            .nav-menu.active { display: flex; }
+        .nav{
+            display:flex;
+            align-items:center;
+            gap:5px;
+            list-style:none;
+        }
+        .nav a{
+            display:flex;
+            align-items:center;
+            gap:7px;
+            padding:10px 13px;
+            color:#40546b;
+            font-size:13px;
+            font-weight:700;
+            border-radius:12px;
+            transition:.25s ease;
+        }
+        .nav a:hover,.nav a.active{
+            color:var(--navy);
+            background:#edf6fc;
+        }
+        .nav a.active{box-shadow:inset 0 -2px var(--gold)}
+
+        .lang-btn{
+            border:1px solid #d8e2eb;
+            background:#fff;
+            color:var(--navy);
+            padding:9px 13px;
+            border-radius:12px;
+            font-size:12px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.25s;
+        }
+        .lang-btn:hover{border-color:var(--blue);transform:translateY(-1px)}
+
+        .menu-toggle{
+            display:none;
+            width:44px;height:44px;
+            border:0;
+            border-radius:12px;
+            background:#edf6fc;
+            color:var(--navy);
+            font-size:22px;
+            cursor:pointer;
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .main-container{
+            max-width:1120px;
+            width:100%;
+            margin:40px auto;
+            padding:0 20px;
+            flex:1;
+        }
+
+        .welcome-card{
+            background:rgba(255,255,255,.92);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,.9);
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+            padding:30px;
+            margin-bottom:30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:20px;
+        }
+        .welcome-card h1{
+            color:var(--navy);
+            font-size:24px;
+            font-weight:900;
+        }
+        .welcome-card p{
+            color:var(--muted);
+            font-size:13px;
+            margin-top:5px;
+        }
+
+        .section-title{
+            color:var(--navy);
+            font-size:19px;
+            font-weight:900;
+            margin-bottom:15px;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .dashboard-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+            gap:25px;
+            margin-bottom:40px;
+        }
+
+        .card-box{
+            background:rgba(255,255,255,.92);
+            backdrop-filter:blur(15px);
+            border:1px solid rgba(7,59,107,.08);
+            border-radius:var(--radius);
+            padding:25px;
+            box-shadow:var(--shadow);
+        }
+        .card-box h3{
+            color:var(--navy);
+            font-size:16px;
+            font-weight:800;
+            margin-bottom:15px;
+            padding-bottom:10px;
+            border-bottom:1px solid #edf2f7;
+        }
+
+        /* الجداول داخل الفضاء */
+        .table-responsive{
+            width:100%;
+            overflow-x:auto;
+        }
+        table{
+            width:100%;
+            border-collapse:collapse;
+            text-align:inherit;
+            min-width:450px;
+        }
+        th, td{
+            padding:12px;
+            border-bottom:1px solid #edf2f7;
+            font-size:12.5px;
+        }
+        th{
+            background:#f8fafc;
+            color:var(--navy);
+            font-weight:800;
+        }
+        td{color:#40546b;font-weight:600;}
+
+        .btn{
+            border:0;
+            display:inline-flex;
+            justify-content:center;
+            align-items:center;
+            gap:9px;
+            padding:10px 18px;
+            border-radius:12px;
+            font-size:12.5px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.25s;
+        }
+        .btn:hover{transform:translateY(-2px)}
+        .btn-primary{
+            color:#fff;
+            background:linear-gradient(135deg,var(--gold),#c68c16);
+            box-shadow:0 10px 25px rgba(217,167,45,.25);
+        }
+        .btn-danger{
+            color:#fff;
+            background:#ef4444;
+        }
+
+        .form-control{
+            width:100%;
+            padding:11px 14px;
+            border:1px solid #cbd5e1;
+            border-radius:12px;
+            font-size:13px;
+            font-family:'Cairo',sans-serif;
+            background:#fff;
+            color:var(--ink);
+            margin-bottom:15px;
+            outline:none;
+            transition:.2s;
+        }
+        .form-control:focus{
+            border-color:var(--blue);
+            box-shadow:0 0 0 3px rgba(14,165,233,.15);
+        }
+
+        /* Footer */
+        footer{
+            background:#061f39;
+            color:#fff;
+            padding:30px 20px 20px;
+            margin-top:auto;
+            text-align:center;
+            font-size:11px;
+        }
+        .footer-line{
+            width:40px;height:3px;
+            background:var(--gold);
+            margin:8px auto 12px;
+            border-radius:2px;
+        }
+
+        @media(max-width:768px){
+            .menu-toggle{display:block}
+            .nav{
+                display:none;
+                position:absolute;
+                top:76px;
+                inset-inline:15px;
+                background:rgba(255,255,255,.98);
+                border:1px solid #e2eaf0;
+                border-radius:18px;
+                padding:15px;
+                flex-direction:column;
+                align-items:stretch;
+                box-shadow:0 20px 45px rgba(7,59,107,.14);
+            }
+            .nav.open{display:flex}
+            .nav a,.lang-btn{width:100%;justify-content:center}
         }
     </style>
 </head>
-<body>
-    <header>
-        <a href="index.html" class="brand-container">
-            <div class="logo">مؤسسة الرسالة</div>
-            <div class="sub-logo">للتعليم الخصوصي</div>
-        </a>
-        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="login.html">فضاءات الدخول</a></li>
-            <li><a href="#" onclick="localStorage.removeItem('user_role'); window.location.href='login.html';" style="color: #ef4444;">خروج</a></li>
-        </ul>
-    </header>
 
-    <div class="layout-body">
-        <aside>
-            <ul class="aside-menu"><li><a class="active">الدروس وكشف النقاط والغياب</a></li></ul>
-        </aside>
-        <div class="main-container">
-            <!-- مجموعة واتساب الفصل -->
-            <div class="box" style="border-right-color: #25d366;">
-                <h2 style="font-size: 16px; margin-bottom: 10px;">مجموعة واتساب الفصل الدراسي</h2>
-                <a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn">الانضمام لمجموعة الفصل (السادس ابتدائي أ)</a>
+<body onload="initStudentPortal()">
+<div class="page-bg" aria-hidden="true"></div>
+
+<header>
+    <div class="header-inner">
+        <a href="index.html" class="brand">
+            <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
+            <div>
+                <div class="brand-name" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
+                <div class="brand-sub" data-ar="فضاء التلميذ وولي الأمر" data-fr="Espace Élève & Parent">فضاء التلميذ وولي الأمر</div>
             </div>
+        </a>
 
-            <!-- كشف النقاط -->
-            <div class="box" style="border-right-color: #0284c7;">
-                <h2 style="font-size: 16px; margin-bottom: 15px;">كشف النقاط الشخصي</h2>
-                <div style="margin-bottom: 10px;">
-                    <button class="btn" style="background: #0284c7;" onclick="printGradesReport()">طباعة كشف النقاط الرسمي</button>
-                </div>
-                <table id="gradesTable">
-                    <thead><tr><th>المادة الدراسية</th><th>المراقبة المستمرة</th><th>الامتحان المحلي</th><th>المعدل المحصل</th></tr></thead>
-                    <tbody>
-                        <tr><td>اللغة العربية</td><td>17.00</td><td>16.50</td><td>16.75</td></tr>
-                        <tr><td>الرياضيات</td><td>18.00</td><td>17.50</td><td>17.75</td></tr>
-                        <tr><td>النشاط العلمي</td><td>16.50</td><td>17.00</td><td>16.75</td></tr>
+        <button class="menu-toggle" onclick="toggleMenu()" aria-label="القائمة">☰</button>
+
+        <nav>
+            <ul class="nav" id="navMenu">
+                <li><a href="index.html" data-ar="⌂ الرئيسية" data-fr="⌂ Accueil">⌂ الرئيسية</a></li>
+                <li><a href="login.html" data-ar="♙ فضاءات الدخول" data-fr="♙ Espaces">♙ فضاءات الدخول</a></li>
+                <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="main-container">
+    <div class="welcome-card">
+        <div>
+            <h1 id="welcomeTitle" data-ar="مرحباً بك في فضاء متابعة التلميذ" data-fr="Bienvenue dans l'espace de suivi de l'élève">مرحباً بك في فضاء متابعة التلميذ</h1>
+            <p id="studentNameDisplay" data-ar="اطّلع على النقط المحصلة، سجل الغياب، والمستجدات المدرسية الخاصة بك." data-fr="Consultez vos notes, l'historique des absences et les actualités scolaires.">اطّلع على النقط المحصلة، سجل الغياب، والمستجدات المدرسية الخاصة بك.</p>
+        </div>
+        <a href="login.html" class="btn btn-danger" onclick="localStorage.removeItem('student_session')" data-ar="تسجيل خروج" data-fr="Déconnexion">تسجيل خروج</a>
+    </div>
+
+    <!-- لوحة البحث أو إدخال رقم المسار في حال عدم وجود تسجيل مسبق -->
+    <div id="authBox" class="card-box" style="max-width:500px; margin:0 auto 30px; display:none;">
+        <h3 data-ar="ربط حساب التلميذ برقم المسار" data-fr="Lier le compte par numéro de dossier">ربط حساب التلميذ برقم المسار</h3>
+        <p style="color:var(--muted); font-size:12px; margin-bottom:15px;" data-ar="المرجأ إدخال رقم المسار أو المعرف الخاص للتلميذ لعرض بياناته الدراسية." data-fr="Veuillez saisir le numéro de dossier de l'élève pour afficher ses données scolaires.">الرجاء إدخال رقم المسار أو المعرف الخاص للتلميذ لعرض بياناته الدراسية.</p>
+        <input type="text" id="inputRegNumber" class="form-control" placeholder="رقم المسار (مثال: M123456)">
+        <button class="btn btn-primary" style="width:100%;" onclick="bindStudentAccount()" data-ar="عرض البيانات الدراسية" data-fr="Afficher les données">عرض البيانات الدراسية</button>
+    </div>
+
+    <div class="dashboard-grid" id="portalContent">
+        <!-- جدول النقط -->
+        <div class="card-box">
+            <h3 data-ar="📊 النقط المحصلة والتقييمات" data-fr="📊 Notes & Évaluations">📊 النقط المحصلة والتقييمات</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-ar="المادة" data-fr="Matière">المادة</th>
+                            <th data-ar="النقطة" data-fr="Note">النقطة</th>
+                            <th data-ar="الرتبة / التقييم" data-fr="Appréciation">الرتبة / التقييم</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gradesTableBody">
+                        <tr><td colspan="3" style="text-align:center; color:var(--muted);" data-ar="جاري جلب النقط..." data-fr="Chargement des notes...">جاري جلب النقط...</td></tr>
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <!-- سجل الغيابات -->
-            <div class="box">
-                <h2 style="font-size: 16px; margin-bottom: 10px;">سجل الغيابات والتنبيهات</h2>
-                <p style="font-size: 13px; color: #ef4444;">التنبيهات الإدارية: لديك غياب واحد مسجل ومبرر خلال هذا الأسبوع.</p>
-            </div>
-
-            <!-- الجدول الزمني (استعمال الزمن مع أيام الأسبوع) -->
-            <div class="box">
-                <h2 style="font-size: 16px; margin-bottom: 15px;">الجدول الزمني للحصص الدراسية (استعمال الزمن)</h2>
-                <button class="btn" onclick="printScheduleReport()" style="margin-bottom: 10px;">طباعة الجدول الزمني</button>
-                <table id="scheduleTable">
-                    <thead><tr><th>يوم الأسبوع</th><th>التوقيت الزمني</th><th>المادة</th><th>الأستاذ المكلف</th><th>القاعة</th></tr></thead>
-                    <tbody>
-                        <tr><td><strong>الإثنين</strong></td><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
-                        <tr><td><strong>الإثنين</strong></td><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr>
-                        <tr><td><strong>الثلاثاء</strong></td><td>08:30 - 10:30</td><td>النشاط العلمي</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr>
-                        <tr><td><strong>الأربعاء</strong></td><td>09:00 - 11:00</td><td>اللغة الفرنسية</td><td>الأستاذة سناء العلوي</td><td>القسم 02</td></tr>
+        <!-- جدول الغياب -->
+        <div class="card-box">
+            <h3 data-ar="📋 سجل الحضور والغياب" data-fr="📋 Suivi des Absences">📋 سجل الحضور والغياب</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-ar="التاريخ" data-fr="Date">التاريخ</th>
+                            <th data-ar="الحالة" data-fr="Statut">الحالة</th>
+                            <th data-ar="عدد الساعات" data-fr="Heures">عدد الساعات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTableBody">
+                        <tr><td colspan="3" style="text-align:center; color:var(--muted);" data-ar="جاري جلب سجل الغياب..." data-fr="Chargement des absences...">جاري جلب سجل الغياب...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <script>
-        function toggleMenu() { document.getElementById('navMenu').classList.toggle('active'); }
-        document.querySelectorAll('.nav-menu a').forEach(l => l.addEventListener('click', () => document.getElementById('navMenu').classList.remove('active')));
+</main>
 
-        // طباعة كشف النقاط حصرياً
-        function printGradesReport() {
-            let tableHTML = document.getElementById('gradesTable').outerHTML;
-            let win = window.open('', '', 'height=600,width=700');
-            win.document.write(`<html><head><title>كشف النقاط الرسمي</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}h2{text-align:center;color:#0284c7;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #cbd5e1;padding:10px;text-align:right;}th{background:#f1f5f9;}</style></head><body>`);
-            win.document.write(`<h2>مؤسسة الرسالة للتعليم الخصوصي</h2>`);
-            win.document.write(`<p style="text-align:center; color:#64748b;">كشف نقط المراقبة المستمرة والامتحانات</p><hr style="margin:20px 0;">`);
-            win.document.write(tableHTML);
-            win.document.write(`<p style="margin-top:50px; text-align:left;">ختم وإمضاء إدارة المؤسسة</p>`);
-            win.document.write(`</body></html>`);
-            win.document.close();
-            win.print();
+<footer>
+    <div class="footer-inner">
+        <strong data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</strong>
+        <div class="footer-line"></div>
+        <p data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة</p>
+    </div>
+</footer>
+
+<script>
+    const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let currentLang = 'ar';
+
+    function toggleMenu(){
+        document.getElementById('navMenu').classList.toggle('open');
+    }
+
+    function toggleLanguage(){
+        currentLang = currentLang === 'ar' ? 'fr' : 'ar';
+        const root = document.getElementById('htmlRoot');
+        root.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        root.lang = currentLang;
+
+        document.getElementById('langToggleBtn').textContent =
+            currentLang === 'ar' ? 'FR / العربية' : 'العربية / FR';
+
+        document.querySelectorAll('[data-ar]').forEach(el=>{
+            const val = el.getAttribute('data-' + currentLang);
+            if(val !== null){
+                if(el.tagName === 'TITLE'){
+                    document.title = val;
+                } else {
+                    el.innerHTML = val;
+                }
+            }
+        });
+    }
+
+    async function initStudentPortal() {
+        let regNumber = localStorage.getItem('student_session');
+        if (!regNumber) {
+            document.getElementById('authBox').style.display = 'block';
+            document.getElementById('portalContent').style.display = 'none';
+            return;
+        }
+        loadStudentData(regNumber);
+    }
+
+    async function bindStudentAccount() {
+        let reg = document.getElementById('inputRegNumber').value.trim();
+        if(!reg) {
+            alert(currentLang === 'ar' ? 'الرجاء إدخال رقم المسار' : 'Veuillez entrer le numéro de dossier');
+            return;
+        }
+        localStorage.setItem('student_session', reg);
+        document.getElementById('authBox').style.display = 'none';
+        document.getElementById('portalContent').style.display = 'grid';
+        loadStudentData(reg);
+    }
+
+    async function loadStudentData(regNumber) {
+        // جلب بيانات التلميذ من جدول students
+        let { data: students, error } = await _supabase
+            .from('students')
+            .select('*')
+            .eq('reg_number', regNumber)
+            .single();
+
+        if (error || !students) {
+            alert(currentLang === 'ar' ? 'لم يتم العثور على تلميذ بهذا المعرف. تحقق من الرقم.' : 'Élève introuvable. Veuillez vérifier le numéro.');
+            localStorage.removeItem('student_session');
+            document.getElementById('authBox').style.display = 'block';
+            document.getElementById('portalContent').style.display = 'none';
+            return;
         }
 
-        // طباعة الجدول الزمني حصرياً
-        function printScheduleReport() {
-            let tableHTML = document.getElementById('scheduleTable').outerHTML;
-            let win = window.open('', '', 'height=600,width=700');
-            win.document.write(`<html><head><title>الجدول الزمني للحصص</title><style>body{font-family:'Cairo',sans-serif;direction:rtl;padding:30px;}h2{text-align:center;color:#8b5cf6;}table{width:100%;border-collapse:collapse;margin-top:20px;}th,td{border:1px solid #cbd5e1;padding:10px;text-align:right;}th{background:#f1f5f9;}</style></head><body>`);
-            win.document.write(`<h2>مؤسسة الرسالة للتعليم الخصوصي</h2>`);
-            win.document.write(`<p style="text-align:center; color:#64748b;">الجدول الزمني الأسبوعي للحصص الدراسية</p><hr style="margin:20px 0;">`);
-            win.document.write(tableHTML);
-            win.document.write(`<p style="margin-top:50px; text-align:left;">إدارة المؤسسة</p>`);
-            win.document.write(`</body></html>`);
-            win.document.close();
-            win.print();
+        document.getElementById('welcomeTitle').innerHTML = (currentLang === 'ar' ? 'أهلاً بك، ' : 'Bienvenue, ') + students.first_name + ' ' + students.last_name;
+        document.getElementById('studentNameDisplay').innerHTML = (currentLang === 'ar' ? 'المستوى: ' : 'Niveau : ') + students.class_name + ' | ' + (currentLang === 'ar' ? 'رقم المسار: ' : 'Dossier : ') + students.reg_number;
+
+        // جلب النقط
+        let { data: grades } = await _supabase
+            .from('grades')
+            .select('*')
+            .eq('student_id', students.id);
+
+        let gradesBody = document.getElementById('gradesTableBody');
+        gradesBody.innerHTML = '';
+        if(!grades || grades.length === 0) {
+            gradesBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">${currentLang==='ar'?'لا توجد نقط مسجلة حتى الآن':'Aucune note enregistrée'}</td></tr>`;
+        } else {
+            grades.forEach(g => {
+                gradesBody.innerHTML += `<tr><td>${g.subject}</td><td><strong>${g.grade_value} / 20</strong></td><td>${g.grade_value >= 10 ? (currentLang==='ar'?'مقبول / حسن':'Satisfaisant') : (currentLang==='ar'?'يحتاج لدعم':'À améliorer')}</td></tr>`;
+            });
         }
-    </script>
+
+        // جلب الغياب
+        let { data: attendances } = await _supabase
+            .from('attendances')
+            .select('*')
+            .eq('student_id', students.id);
+
+        let attBody = document.getElementById('attendanceTableBody');
+        attBody.innerHTML = '';
+        if(!attendances || attendances.length === 0) {
+            attBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">${currentLang==='ar'?'لا توجد غيابات مسجلة (سجل ممتاز)':'Aucune absence enregistrée'}</td></tr>`;
+        } else {
+            attendances.forEach(a => {
+                attBody.innerHTML += `<tr><td>${a.absence_date}</td><td><span style="color:${a.status==='حاضر'?'var(--green)':'var(--danger)'}">${a.status}</span></td><td>${a.hours} س</td></tr>`;
+            });
+        }
+    }
+</script>
 </body>
 </html>
