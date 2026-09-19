@@ -47,7 +47,7 @@
             z-index:-3;
             background:
                 linear-gradient(180deg,rgba(246,249,252,.82),rgba(246,249,252,.94)),
-                url("arrissalahimg3.png") center/cover no-repeat;
+                url("Arrissalahimg3.png") center/cover no-repeat;
             filter:saturate(.88);
         }
         .page-bg::after{
@@ -302,8 +302,9 @@
             display:block;
             width:100%;
             height:390px;
-            object-fit:cover;
+            object-fit:contain;
             border-radius:24px;
+            background:#fff;
         }
         .floating-card{
             position:absolute;
@@ -328,52 +329,6 @@
             color:var(--muted);
             font-size:10px;
             font-weight:700;
-        }
-
-        /* ===== إحصائيات ===== */
-        .stats{
-            max-width:1120px;
-            margin:-20px auto 55px;
-            padding:0 20px;
-            position:relative;
-            z-index:5;
-        }
-        .stats-box{
-            background:rgba(255,255,255,.90);
-            backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,.9);
-            border-radius:22px;
-            box-shadow:var(--shadow);
-            display:grid;
-            grid-template-columns:repeat(4,1fr);
-            overflow:hidden;
-        }
-        .stat{
-            padding:22px 15px;
-            text-align:center;
-            position:relative;
-        }
-        .stat:not(:last-child)::after{
-            content:"";
-            position:absolute;
-            top:25%;
-            bottom:25%;
-            inset-inline-end:0;
-            width:1px;
-            background:#e5edf3;
-        }
-        .stat strong{
-            display:block;
-            font-size:25px;
-            color:var(--navy);
-            font-weight:900;
-        }
-        .stat span{
-            display:block;
-            color:var(--muted);
-            font-size:11px;
-            font-weight:700;
-            margin-top:2px;
         }
 
         /* ===== الأقسام ===== */
@@ -606,41 +561,18 @@
             margin-top:9px;
         }
 
-        /* ===== Modal ===== */
-        .modal{
-            position:fixed;
-            inset:0;
-            z-index:3000;
-            display:none;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-            background:rgba(2,20,38,.58);
-            backdrop-filter:blur(8px);
-        }
-        .modal.show{display:flex}
-        .modal-content{
-            width:min(560px,100%);
-            background:#fff;
-            border-radius:22px;
-            padding:30px;
-            position:relative;
-            box-shadow:0 30px 80px rgba(0,0,0,.22);
-        }
-        .close-modal{
-            position:absolute;
-            top:14px;
-            inset-inline-end:18px;
-            width:35px;height:35px;
-            border:0;
-            border-radius:10px;
-            background:#f1f5f9;
-            color:#64748b;
-            font-size:21px;
-            cursor:pointer;
-        }
-        .modal-content h3{color:var(--navy);font-size:20px;margin-bottom:10px}
-        .modal-content p{color:var(--muted);font-size:13px;line-height:2}
+        /* ===== Animations / ظهور المحتويات عند الاختيار ===== */
+        .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,.61,.36,1);}
+        .reveal.revealed{opacity:1;transform:none;}
+        .reveal-left{opacity:0;transform:translateX(35px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,.61,.36,1);}
+        .reveal-left.revealed{opacity:1;transform:none;}
+        .reveal-scale{opacity:0;transform:scale(.94);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.61,.36,1);}
+        .reveal-scale.revealed{opacity:1;transform:scale(1);}
+        .card.reveal:nth-child(2){transition-delay:.08s}.card.reveal:nth-child(3){transition-delay:.16s}.card.reveal:nth-child(4){transition-delay:.24s}
+        .quick-item.reveal:nth-child(2){transition-delay:.07s}.quick-item.reveal:nth-child(3){transition-delay:.14s}.quick-item.reveal:nth-child(4){transition-delay:.21s}
+        .page-transition{animation:pageIn .55s ease both;}
+        @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+        @media(prefers-reduced-motion:reduce){.reveal,.reveal-left,.reveal-scale{opacity:1;transform:none;transition:none}.page-transition{animation:none}}
 
         /* ===== Mobile ===== */
         @media(max-width:980px){
@@ -687,10 +619,6 @@
             .visual-card img{height:260px}
             .floating-card{right:4px}
             [dir="ltr"] .floating-card{right:auto;left:4px}
-            .stats{margin-top:0}
-            .stats-box{grid-template-columns:repeat(2,1fr)}
-            .stat:nth-child(2)::after{display:none}
-            .stat{padding:18px 10px}
             .cards{grid-template-columns:1fr}
             .quick-grid{grid-template-columns:1fr}
             .mission-box{padding:28px 20px}
@@ -720,9 +648,9 @@
                 <li><a class="active" href="index.html" data-ar="⌂ الرئيسية" data-fr="⌂ Accueil">⌂ الرئيسية</a></li>
                 <li><a href="login.html" data-ar="♙ فضاءات الدخول" data-fr="♙ Espaces">♙ فضاءات الدخول</a></li>
                 <li><a href="register.html" data-ar="✎ التسجيل القبلي" data-fr="✎ Pré-inscription">✎ التسجيل القبلي</a></li>
-                <li><a href="#programs" data-ar="▣ أقسام المؤسسة" data-fr="▣ Cycles">▣ أقسام المؤسسة</a></li>
-                <li><a href="#announcements" data-ar="⚑ الإعلانات" data-fr="⚑ Annonces">⚑ الإعلانات</a></li>
-                <li><a href="#contact" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a></li>
+                <li><a href="programs.html" data-ar="▣ أقسام المؤسسة" data-fr="▣ Cycles">▣ أقسام المؤسسة</a></li>
+                <li><a href="announcements.html" data-ar="⚑ الإعلانات" data-fr="⚑ Annonces">⚑ الإعلانات</a></li>
+                <li><a href="contact.html" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a></li>
                 <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
             </ul>
         </nav>
@@ -730,7 +658,7 @@
 </header>
 
 <main>
-    <section class="hero">
+    <section class="hero page-transition">
         <div class="hero-wrap">
             <div class="hero">
                 <div class="hero-copy">
@@ -761,7 +689,7 @@
 
                 <div class="hero-visual">
                     <div class="visual-card">
-                        <img src="arrissalahimg3.png" alt="واجهة مؤسسة الرسالة للتعليم الخصوصي">
+                        <img src="1000077933.png" alt="واجهة مؤسسة الرسالة للتعليم الخصوصي">
                     </div>
                     <div class="floating-card">
                         <div class="mini-icon">★</div>
@@ -775,19 +703,10 @@
         </div>
     </section>
 
-    <section class="stats" aria-label="مؤشرات المنصة">
-        <div class="stats-box">
-            <div class="stat"><strong>01</strong><span data-ar="منصة موحدة" data-fr="Plateforme unifiée">منصة موحدة</span></div>
-            <div class="stat"><strong>24/7</strong><span data-ar="ولوج رقمي" data-fr="Accès numérique">ولوج رقمي</span></div>
-            <div class="stat"><strong>AR / FR</strong><span data-ar="واجهة ثنائية اللغة" data-fr="Interface bilingue">واجهة ثنائية اللغة</span></div>
-            <div class="stat"><strong>100%</strong><span data-ar="تجربة رقمية حديثة" data-fr="Expérience moderne">تجربة رقمية حديثة</span></div>
-        </div>
-    </section>
-
-    <section class="section" id="programs">
+    <section class="section reveal" id="programs">
         <div class="section-head">
-            <div class="section-kicker" data-ar="خدمات المؤسسة" data-fr="SERVICES DE L'ÉTABLISSEMENT">خدمات المؤسسة</div>
-            <h2 class="section-title" data-ar="كل ما يهم الأسرة في مكان واحد" data-fr="Tout ce qui compte, au même endroit">كل ما يهم الأسرة في مكان واحد</h2>
+            <div class="section-kicker" data-ar="خدمات المؤسسة" data-fr="SERVICES DE L'ÉTABLISSEMENT">أهم خدمات المؤسسة</div>
+            <h2 class="section-title" data-ar="خدمات تربوية ورقمية واضحة" data-fr="Des services éducatifs clairs">خدمات تربوية ورقمية واضحة</h2>
             <p class="section-desc"
                data-ar="واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة."
                data-fr="Une interface simple et organisée pour un accès rapide aux principaux services.">
@@ -796,28 +715,28 @@
         </div>
 
         <div class="cards">
-            <article class="card" style="--accent:#0ea5e9;--soft:#eaf7fe;">
+            <article class="card reveal" style="--accent:#0ea5e9;--soft:#eaf7fe;">
                 <div class="card-icon">ℹ</div>
                 <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre vision & mission">رؤيتنا ورسالتنا</h3>
                 <p data-ar="بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم." data-fr="Un environnement stimulant et sécurisé fondé sur l'excellence académique et l'épanouissement de l'élève.">بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم.</p>
                 <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'عن مؤسسة الرسالة':'À propos d’Al Risala', currentLang==='ar'?'تسعى مؤسسة الرسالة إلى بناء مسار تربوي متوازن يجمع بين جودة التعلم والقيم والمهارات الحديثة.':'Al Risala construit un parcours équilibré associant qualité pédagogique, valeurs et compétences modernes.')" data-ar="قراءة المزيد ←" data-fr="Lire la suite →">قراءة المزيد ←</a>
             </article>
 
-            <article class="card" style="--accent:#f0a91f;--soft:#fff7df;">
+            <article class="card reveal" style="--accent:#f0a91f;--soft:#fff7df;">
                 <div class="card-icon">▤</div>
                 <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles éducatifs">أسلاكنا التعليمية</h3>
                 <p data-ar="مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا." data-fr="Un parcours continu et structuré, de la petite enfance au baccalauréat.">مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا.</p>
-                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'الأسلاك التعليمية':'Cycles éducatifs', currentLang==='ar'?'• التعليم الأولي<br>• السلك الابتدائي<br>• السلك الإعدادي<br>• السلك الثانوي':'• Préscolaire<br>• Primaire<br>• Collège<br>• Lycée')" data-ar="استعراض الأقسام ←" data-fr="Voir les cycles →">استعراض الأقسام ←</a>
+                <a href="programs.html" class="card-link" data-ar="استعراض الأقسام ←" data-fr="Voir les cycles →">استعراض الأقسام ←</a>
             </article>
 
-            <article class="card" id="announcements" style="--accent:#10a37f;--soft:#e9faf5;">
+            <article class="card reveal" id="announcements" style="--accent:#10a37f;--soft:#e9faf5;">
                 <div class="card-icon">⚑</div>
                 <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & avis">الإعلانات والبلاغات</h3>
                 <p data-ar="ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة." data-fr="Restez informés des actualités, dates et avis importants de l'établissement.">ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة.</p>
-                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'الإعلانات الرسمية':'Avis officiels', currentLang==='ar'?'سيتم عرض الإعلانات والبلاغات الرسمية للمؤسسة هنا بشكل منظم ومحدث.':'Les annonces officielles de l’établissement seront publiées ici de manière claire et actualisée.')" data-ar="عرض البلاغات ←" data-fr="Voir les avis →">عرض البلاغات ←</a>
+                <a href="announcements.html" class="card-link" data-ar="عرض البلاغات ←" data-fr="Voir les avis →">عرض البلاغات ←</a>
             </article>
 
-            <article class="card" style="--accent:#7656d6;--soft:#f1edff;">
+            <article class="card reveal" style="--accent:#7656d6;--soft:#f1edff;">
                 <div class="card-icon">♙</div>
                 <h3 data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</h3>
                 <p data-ar="ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية." data-fr="Accès sécurisé aux espaces numériques des élèves, parents et équipes pédagogiques.">ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية.</p>
@@ -826,7 +745,7 @@
         </div>
     </section>
 
-    <section class="quick">
+    <section class="quick reveal-scale">
         <div class="quick-box">
             <div class="quick-head">
                 <div>
@@ -836,19 +755,19 @@
             </div>
 
             <div class="quick-grid">
-                <a href="login.html" class="quick-item">
+                <a href="login.html" class="quick-item reveal">
                     <span class="qicon">♙</span>
                     <span><strong data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</strong><small data-ar="تلميذ • ولي • أستاذ" data-fr="Élève • Parent • Enseignant">تلميذ • ولي • أستاذ</small></span>
                 </a>
-                <a href="register.html" class="quick-item">
+                <a href="register.html" class="quick-item reveal">
                     <span class="qicon">✎</span>
                     <span><strong data-ar="التسجيل القبلي" data-fr="Pré-inscription">التسجيل القبلي</strong><small data-ar="طلب تسجيل جديد" data-fr="Nouvelle demande">طلب تسجيل جديد</small></span>
                 </a>
-                <a href="#announcements" class="quick-item">
+                <a href="announcements.html" class="quick-item reveal">
                     <span class="qicon">⚑</span>
                     <span><strong data-ar="الإعلانات" data-fr="Annonces">الإعلانات</strong><small data-ar="آخر المستجدات" data-fr="Actualités">آخر المستجدات</small></span>
                 </a>
-                <a href="#contact" class="quick-item">
+                <a href="contact.html" class="quick-item reveal">
                     <span class="qicon">☎</span>
                     <span><strong data-ar="تواصل معنا" data-fr="Contact">تواصل معنا</strong><small data-ar="نحن رهن الإشارة" data-fr="À votre écoute">نحن رهن الإشارة</small></span>
                 </a>
@@ -856,7 +775,7 @@
         </div>
     </section>
 
-    <section class="mission" id="contact">
+    <section class="mission reveal-left">
         <div class="mission-box">
             <div>
                 <div class="mission-mark">✦ AL-RISALA</div>
@@ -872,6 +791,7 @@
                 <span class="pill" data-ar="بيئة آمنة ومحفزة" data-fr="Environnement sûr">بيئة آمنة ومحفزة</span>
                 <span class="pill" data-ar="متابعة شخصية لكل متعلم" data-fr="Suivi personnalisé">متابعة شخصية لكل متعلم</span>
                 <span class="pill" data-ar="تواصل مستمر مع الأسرة" data-fr="Communication avec les familles">تواصل مستمر مع الأسرة</span>
+                <a href="contact.html" class="btn btn-primary" style="margin-top:8px" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a>
             </div>
         </div>
     </section>
@@ -889,14 +809,6 @@
         </div>
     </div>
 </footer>
-
-<div class="modal" id="infoModal" onclick="closeOnBackdrop(event)">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closeModal()" aria-label="إغلاق">×</button>
-        <h3 id="modalTitle"></h3>
-        <p id="modalText"></p>
-    </div>
-</div>
 
 <script>
     let currentLang = 'ar';
@@ -933,23 +845,25 @@
         });
     }
 
-    function openModal(event,title,text){
-        if(event) event.preventDefault();
-        document.getElementById('modalTitle').innerHTML = title;
-        document.getElementById('modalText').innerHTML = text;
-        document.getElementById('infoModal').classList.add('show');
-    }
-
-    function closeModal(){
-        document.getElementById('infoModal').classList.remove('show');
-    }
-
-    function closeOnBackdrop(event){
-        if(event.target.id === 'infoModal') closeModal();
-    }
 
     document.addEventListener('keydown',event=>{
         if(event.key === 'Escape') closeModal();
+    });
+
+    // أنيميشن احترافي عند ظهور الأقسام والمحتويات
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {threshold:0.12, rootMargin:'0px 0px -45px 0px'});
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+    // إغلاق القائمة عند اختيار رابط خارجي
+    document.querySelectorAll('.nav a').forEach(link => {
+        link.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'));
     });
 </script>
 </body>
