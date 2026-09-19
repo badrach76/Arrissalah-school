@@ -49,7 +49,7 @@
             z-index:-3;
             background:
                 linear-gradient(180deg,rgba(246,249,252,.80),rgba(246,249,252,.94)),
-                url("1000077933.png") center/cover no-repeat;
+                url("arrissalahimg3.png") center/cover no-repeat;
             filter:saturate(.88);
         }
         .page-bg::after{
@@ -330,7 +330,7 @@
             justify-content:center;
             background:
                 linear-gradient(145deg,rgba(7,59,107,.96),rgba(11,86,143,.90)),
-                url("Arrissalahimg3.png") center/cover;
+                url("1000077933.png") center/cover;
             color:#fff;
             position:relative;
             overflow:hidden;
@@ -578,7 +578,21 @@
             .space-icon{width:52px;height:52px}
             .space-btn{grid-column:2;grid-row:auto;justify-self:start;margin-top:10px}
         }
-    </style>
+    
+/* === Al-Risala shared premium motion upgrade === */
+body{animation:pageIn .65s ease both}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+.panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card{will-change:transform,opacity}
+.reveal-ready{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.reveal-ready.is-visible{opacity:1;transform:none}
+.space-card,.stat-card,.box,.panel,.register-box,.intro-card,.contact-card,.schedule-card{transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+.space-card:hover,.stat-card:hover,.schedule-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(7,59,107,.12)}
+.btn,.top-btn,.home-btn,.login-btn,.logout,.side-menu a,.aside-menu a{transition:transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease}
+.btn:hover,.top-btn:hover,.home-btn:hover,.login-btn:hover{transform:translateY(-2px)}
+@media(max-width:760px){.reveal-ready{transform:translateY(18px) scale(.99)}.space-card:hover,.stat-card:hover,.schedule-card:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal-ready{opacity:1!important;transform:none!important}}
+
+</style>
 </head>
 <body>
     <div class="page-bg"></div>
@@ -586,7 +600,7 @@
     <header>
         <div class="header-inner">
             <a href="index.html" class="brand" aria-label="العودة إلى الصفحة الرئيسية">
-                <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
+                <img src="1000076356.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
                 <div>
                     <div class="brand-name">مؤسسة الرسالة</div>
                     <div class="brand-sub">للتعليم الخصوصي</div>
@@ -789,5 +803,27 @@
             }
         });
     </script>
+
+<script>/* Al-Risala motion observer */
+(function(){
+  const selectors='.panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card';
+  const prepare=()=>document.querySelectorAll(selectors).forEach((el,i)=>{if(!el.classList.contains('reveal-ready')){el.classList.add('reveal-ready');el.style.transitionDelay=Math.min((i%6)*.06, .30)+'s';}});
+  const reveal=()=>{
+    document.querySelectorAll('.reveal-ready').forEach(el=>{
+      const r=el.getBoundingClientRect();
+      if(r.top < window.innerHeight*.92 && r.bottom > 0) el.classList.add('is-visible');
+    });
+  };
+  const run=()=>{prepare();reveal();};
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
+  window.addEventListener('scroll',reveal,{passive:true});
+  window.addEventListener('resize',reveal);
+  document.addEventListener('click',e=>{
+    const trigger=e.target.closest('.side-menu a,.aside-menu a');
+    if(trigger) setTimeout(reveal,80);
+  });
+})();
+</script>
+
 </body>
 </html>
