@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +16,7 @@ header{position:sticky;top:0;z-index:1000;min-height:76px;padding:12px 28px;disp
 .menu-toggle{display:none;border:0;background:#eef4fb;color:var(--navy);width:42px;height:42px;border-radius:12px;font-size:22px;cursor:pointer}.mobile-nav{display:none}
 .container{min-height:calc(100vh - 76px);display:flex;justify-content:center;align-items:center;padding:42px 20px}
 .register-layout{width:100%;max-width:1050px;display:grid;grid-template-columns:.85fr 1.15fr;gap:22px}
-.intro-card{position:relative;overflow:hidden;min-height:580px;border-radius:28px;padding:38px;color:white;background:linear-gradient(145deg,rgba(15,39,71,.96),rgba(22,59,103,.93)),url('1000077933.png') center/cover;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center}
+.intro-card{position:relative;overflow:hidden;min-height:580px;border-radius:28px;padding:38px;color:white;background:linear-gradient(145deg,rgba(15,39,71,.96),rgba(22,59,103,.93)),url('arrissalahimg3.png') center/cover;box-shadow:var(--shadow);display:flex;flex-direction:column;justify-content:center}
 .intro-card:before{content:"";position:absolute;width:190px;height:190px;left:-75px;bottom:-75px;border:1px solid rgba(246,200,95,.25);border-radius:50%;box-shadow:0 0 0 35px rgba(246,200,95,.035),0 0 0 70px rgba(246,200,95,.025)}
 .intro-icon{width:66px;height:66px;display:flex;align-items:center;justify-content:center;border-radius:20px;background:rgba(246,200,95,.13);border:1px solid rgba(246,200,95,.28);color:#f6c85f;font-size:30px;margin-bottom:22px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.5px;color:#f6c85f;margin-bottom:8px}.intro-card h1{font-size:30px;line-height:1.4;font-weight:900;margin-bottom:12px}.intro-card p{color:#dbeafe;font-size:13px;line-height:2}.intro-points{list-style:none;margin-top:25px;display:grid;gap:10px}.intro-points li{display:flex;align-items:center;gap:9px;color:#e2e8f0;font-size:12px;font-weight:600}.intro-points span{width:23px;height:23px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(16,185,129,.15);color:#6ee7b7}
 .register-box{background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:28px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}.register-box:before{content:"";position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold))}
@@ -29,8 +29,6 @@ header{position:sticky;top:0;z-index:1000;min-height:76px;padding:12px 28px;disp
 @media(max-width:850px){.register-layout{grid-template-columns:1fr;max-width:600px}.intro-card{min-height:auto;padding:30px}.intro-card h1{font-size:25px}.intro-points{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){header{padding:10px 15px;min-height:68px}.brand img{width:42px;height:42px}.brand-title{font-size:14px}.brand-sub{font-size:8px}.header-actions{margin-right:auto}.home-btn,.login-btn{width:40px;height:40px;padding:0}.home-btn span,.login-btn span{display:none}.menu-toggle{display:block}.mobile-nav{position:absolute;top:68px;right:0;left:0;padding:14px;background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);box-shadow:0 10px 25px rgba(15,39,71,.08)}.mobile-nav.active{display:flex;flex-direction:column;gap:5px}.mobile-nav a{padding:11px 12px;color:var(--navy);text-decoration:none;font-size:12px;font-weight:800;border-radius:10px}.container{padding:25px 14px}.register-box{padding:23px;border-radius:21px}.intro-card{border-radius:21px;padding:25px}}
 @media(max-width:500px){.brand-text{display:none}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}.intro-points{grid-template-columns:1fr}.intro-card h1{font-size:22px}.bottom-links{flex-direction:column;align-items:flex-start}}
-
-/* === Al-Risala shared premium motion upgrade === */
 body{animation:pageIn .65s ease both}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
 .panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card{will-change:transform,opacity}
@@ -42,8 +40,8 @@ body{animation:pageIn .65s ease both}
 .btn:hover,.top-btn:hover,.home-btn:hover,.login-btn:hover{transform:translateY(-2px)}
 @media(max-width:760px){.reveal-ready{transform:translateY(18px) scale(.99)}.space-card:hover,.stat-card:hover,.schedule-card:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal-ready{opacity:1!important;transform:none!important}}
-
 </style>
+<script src="alrisala-core.js" defer></script>
 </head>
 <body>
 <header>
@@ -52,7 +50,6 @@ body{animation:pageIn .65s ease both}
 <div class="header-actions"><a href="index.html" class="home-btn"><span>⌂</span><span>الصفحة الرئيسية</span></a><a href="login.html" class="login-btn"><span>⇥</span><span>فضاءات الدخول</span></a></div>
 <nav class="mobile-nav" id="navMenu"><a href="index.html">الرئيسية</a><a href="login.html">فضاءات الدخول</a></nav>
 </header>
-
 <main class="container">
 <div class="register-layout">
 <section class="intro-card">
@@ -60,7 +57,6 @@ body{animation:pageIn .65s ease both}
 <p>نرحب بكم في مؤسسة الرسالة للتعليم الخصوصي. يمكنكم تعبئة الطلب إلكترونيًا، وستتولى الإدارة دراسة الطلب والتواصل معكم.</p>
 <ul class="intro-points"><li><span>✓</span> تقديم طلب الالتحاق إلكترونيًا</li><li><span>✓</span> اختيار المستوى الدراسي</li><li><span>✓</span> معالجة الطلب من طرف الإدارة</li><li><span>✓</span> التواصل مع ولي الأمر</li></ul>
 </section>
-
 <section class="register-box">
 <div class="form-heading"><div class="eyebrow">PRÉ-INSCRIPTION</div><h2>طلب تسجيل تلميذ جديد</h2><p>يرجى تعبئة المعلومات التالية بدقة لإرسال طلب الالتحاق بالمؤسسة.</p></div>
 <form id="registrationForm">
@@ -78,7 +74,6 @@ body{animation:pageIn .65s ease both}
 </section>
 </div>
 </main>
-
 <script>
 function toggleMenu(){document.getElementById('navMenu').classList.toggle('active')}
 document.querySelectorAll('.mobile-nav a').forEach(l=>l.addEventListener('click',()=>document.getElementById('navMenu').classList.remove('active')));
@@ -100,8 +95,7 @@ ok.style.display='block';document.getElementById('registrationForm').reset();
 finally{btn.disabled=false;btn.textContent='إرسال طلب التسجيل'}
 });
 </script>
-
-<script>/* Al-Risala motion observer */
+<script>
 (function(){
   const selectors='.panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card';
   const prepare=()=>document.querySelectorAll(selectors).forEach((el,i)=>{if(!el.classList.contains('reveal-ready')){el.classList.add('reveal-ready');el.style.transitionDelay=Math.min((i%6)*.06, .30)+'s';}});
@@ -121,6 +115,5 @@ finally{btn.disabled=false;btn.textContent='إرسال طلب التسجيل'}
   });
 })();
 </script>
-
 </body>
 </html>
