@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot">
+<html lang="fr" dir="ltr" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0b3b68">
     <meta name="description" content="مؤسسة الرسالة للتعليم الخصوصي - منصة إلكترونية تربوية متكاملة">
     <title data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <style>
         :root{
             --navy:#073b6b;
@@ -28,7 +26,6 @@
             --shadow:0 18px 55px rgba(7,59,107,.12);
             --radius:22px;
         }
-
         *{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth}
         body{
@@ -39,15 +36,13 @@
         }
         a{text-decoration:none;color:inherit}
         button{font-family:inherit}
-
-        /* ===== الخلفية الرئيسية: الصورة المرفقة بإظهار خفيف ===== */
         .page-bg{
             position:fixed;
             inset:0;
             z-index:-3;
             background:
                 linear-gradient(180deg,rgba(246,249,252,.82),rgba(246,249,252,.94)),
-                url("1000077933.png") center/cover no-repeat;
+                url("arrissalahimg3.png") center/cover no-repeat;
             filter:saturate(.88);
         }
         .page-bg::after{
@@ -58,8 +53,6 @@
                 radial-gradient(circle at 10% 15%,rgba(14,165,233,.10),transparent 28%),
                 radial-gradient(circle at 90% 70%,rgba(15,157,120,.08),transparent 28%);
         }
-
-        /* ===== الهيدر ===== */
         header{
             position:sticky;
             top:0;
@@ -107,7 +100,6 @@
             letter-spacing:.4px;
             margin-top:2px;
         }
-
         .nav{
             display:flex;
             align-items:center;
@@ -130,7 +122,6 @@
             background:#edf6fc;
         }
         .nav a.active{box-shadow:inset 0 -2px var(--gold)}
-
         .lang-btn{
             border:1px solid #d8e2eb;
             background:#fff;
@@ -143,7 +134,6 @@
             transition:.25s;
         }
         .lang-btn:hover{border-color:var(--blue);transform:translateY(-1px)}
-
         .menu-toggle{
             display:none;
             width:44px;height:44px;
@@ -154,8 +144,6 @@
             font-size:22px;
             cursor:pointer;
         }
-
-        /* ===== Hero ===== */
         .hero-wrap{
             position:relative;
             min-height:650px;
@@ -175,7 +163,6 @@
             background:
                 linear-gradient(270deg,rgba(255,255,255,.97) 0%,rgba(255,255,255,.89) 35%,rgba(255,255,255,.36) 72%,rgba(255,255,255,.12) 100%);
         }
-
         .hero{
             width:min(1250px,100%);
             margin:auto;
@@ -255,7 +242,6 @@
             border:1px solid #d7e3ed;
             box-shadow:0 10px 25px rgba(7,59,107,.07);
         }
-
         .hero-badges{
             margin-top:30px;
             display:flex;
@@ -280,7 +266,6 @@
             color:var(--navy);
             box-shadow:0 7px 18px rgba(7,59,107,.06);
         }
-
         .hero-visual{
             min-height:430px;
             position:relative;
@@ -330,8 +315,6 @@
             font-size:10px;
             font-weight:700;
         }
-
-        /* ===== الأقسام ===== */
         .section{
             max-width:1120px;
             margin:0 auto 70px;
@@ -360,7 +343,6 @@
             margin:8px auto 0;
             line-height:1.9;
         }
-
         .cards{
             display:grid;
             grid-template-columns:repeat(4,1fr);
@@ -418,8 +400,6 @@
             font-size:11.5px;
             font-weight:900;
         }
-
-        /* ===== شريط الوصول السريع ===== */
         .quick{
             max-width:1120px;
             margin:0 auto 70px;
@@ -479,8 +459,6 @@
         }
         .quick-item strong{font-size:12px}
         .quick-item small{display:block;font-size:9.5px;opacity:.72;margin-top:2px}
-
-        /* ===== رسالة المؤسسة ===== */
         .mission{
             max-width:1120px;
             margin:0 auto 70px;
@@ -528,8 +506,6 @@
             font-size:11px;
             font-weight:800;
         }
-
-        /* ===== Footer ===== */
         footer{
             background:#061f39;
             color:#fff;
@@ -560,8 +536,6 @@
             background:var(--gold);
             margin-top:9px;
         }
-
-        /* ===== Animations / ظهور المحتويات عند الاختيار ===== */
         .reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s cubic-bezier(.22,.61,.36,1);}
         .reveal.revealed{opacity:1;transform:none;}
         .reveal-left{opacity:0;transform:translateX(35px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,.61,.36,1);}
@@ -573,8 +547,6 @@
         .page-transition{animation:pageIn .55s ease both;}
         @keyframes pageIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
         @media(prefers-reduced-motion:reduce){.reveal,.reveal-left,.reveal-scale{opacity:1;transform:none;transition:none}.page-transition{animation:none}}
-
-        /* ===== Mobile ===== */
         @media(max-width:980px){
             .nav{gap:0}
             .nav a{padding:9px 8px;font-size:11px}
@@ -588,7 +560,6 @@
             .mission-box{grid-template-columns:1fr;text-align:center}
             .pill-list{justify-content:center}
         }
-
         @media(max-width:700px){
             .header-inner{min-height:68px;padding:8px 15px}
             .menu-toggle{display:block}
@@ -628,244 +599,18 @@
     </style>
 <script src="alrisala-core.js" defer></script>
 </head>
-
-<body>
+<body lang="fr">
 <div class="page-bg" aria-hidden="true"></div>
-
 <header>
     <div class="header-inner">
         <a href="index.html" class="brand" aria-label="مؤسسة الرسالة">
-            <img src="1000076356.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
+            <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
             <div>
                 <div class="brand-name" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
                 <div class="brand-sub" data-ar="للتعليم الخصوصي" data-fr="Enseignement Privé">للتعليم الخصوصي</div>
             </div>
         </a>
-
         <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="القائمة">☰</button>
-
         <nav>
             <ul class="nav" id="navMenu">
-                <li><a class="active" href="index.html" data-ar="⌂ الرئيسية" data-fr="⌂ Accueil">⌂ الرئيسية</a></li>
-                <li><a href="login.html" data-ar="♙ فضاءات الدخول" data-fr="♙ Espaces">♙ فضاءات الدخول</a></li>
-                <li><a href="register.html" data-ar="✎ التسجيل القبلي" data-fr="✎ Pré-inscription">✎ التسجيل القبلي</a></li>
-                <li><a href="programs.html" data-ar="▣ أقسام المؤسسة" data-fr="▣ Cycles">▣ أقسام المؤسسة</a></li>
-                <li><a href="announcements.html" data-ar="⚑ الإعلانات" data-fr="⚑ Annonces">⚑ الإعلانات</a></li>
-                <li><a href="contact.html" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a></li>
-                <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<main>
-    <section class="hero page-transition">
-        <div class="hero-wrap">
-            <div class="hero">
-                <div class="hero-copy">
-                    <div class="eyebrow"><i></i><span data-ar="منصة مؤسسة الرسالة التعليمية" data-fr="Plateforme éducative Al Risala">منصة مؤسسة الرسالة التعليمية</span></div>
-
-                    <h1 data-ar="صرح تربوي متكامل" data-fr="Un pôle éducatif intégré">
-                        صرح تربوي متكامل
-                        <span data-ar="لجيل المستقبل" data-fr="pour la génération de demain">لجيل المستقبل</span>
-                    </h1>
-
-                    <p class="hero-text"
-                       data-ar="نؤمن بأن التعليم رسالة سامية؛ لذلك نجمع بين أصالة القيم التربوية ومهارات العصر الحديث، في بيئة تعليمية آمنة ومحفزة، لنرافق أبناءكم في بناء مستقبلهم."
-                       data-fr="Nous croyons que l'éducation est une noble mission. Nous associons les valeurs éducatives aux compétences modernes dans un environnement sûr et stimulant.">
-                        نؤمن بأن التعليم رسالة سامية؛ لذلك نجمع بين أصالة القيم التربوية ومهارات العصر الحديث، في بيئة تعليمية آمنة ومحفزة، لنرافق أبناءكم في بناء مستقبلهم.
-                    </p>
-
-                    <div class="hero-actions">
-                        <a href="register.html" class="btn btn-primary" data-ar="✦ طلب تسجيل تلميذ جديد" data-fr="✦ Nouvelle inscription">✦ طلب تسجيل تلميذ جديد</a>
-                        <a href="login.html" class="btn btn-secondary" data-ar="↪ فضاءات الدخول" data-fr="↪ Espaces dédiés">↪ فضاءات الدخول</a>
-                    </div>
-
-                    <div class="hero-badges">
-                        <div class="mini-badge"><span class="mini-icon">✓</span><span data-ar="تعليم ذو جودة" data-fr="Éducation de qualité">تعليم ذو جودة</span></div>
-                        <div class="mini-badge"><span class="mini-icon">♙</span><span data-ar="طاقم تربوي مؤهل" data-fr="Équipe qualifiée">طاقم تربوي مؤهل</span></div>
-                        <div class="mini-badge"><span class="mini-icon">◆</span><span data-ar="بيئة آمنة ومحفزة" data-fr="Environnement sûr">بيئة آمنة ومحفزة</span></div>
-                    </div>
-                </div>
-
-                <div class="hero-visual">
-                    <div class="visual-card">
-                        <img src="1000077933.png" alt="واجهة مؤسسة الرسالة للتعليم الخصوصي">
-                    </div>
-                    <div class="floating-card">
-                        <div class="mini-icon">★</div>
-                        <div>
-                            <div class="floating-number">AL-RISALA</div>
-                            <div class="floating-label" data-ar="معًا من أجل مستقبل أفضل" data-fr="Ensemble pour un avenir meilleur">معًا من أجل مستقبل أفضل</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section reveal" id="programs">
-        <div class="section-head">
-            <div class="section-kicker" data-ar="خدمات المؤسسة" data-fr="SERVICES DE L'ÉTABLISSEMENT">أهم خدمات المؤسسة</div>
-            <h2 class="section-title" data-ar="خدمات تربوية ورقمية واضحة" data-fr="Des services éducatifs clairs">خدمات تربوية ورقمية واضحة</h2>
-            <p class="section-desc"
-               data-ar="واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة."
-               data-fr="Une interface simple et organisée pour un accès rapide aux principaux services.">
-                واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة.
-            </p>
-        </div>
-
-        <div class="cards">
-            <article class="card reveal" style="--accent:#0ea5e9;--soft:#eaf7fe;">
-                <div class="card-icon">ℹ</div>
-                <h3 data-ar="رؤيتنا ورسالتنا" data-fr="Notre vision & mission">رؤيتنا ورسالتنا</h3>
-                <p data-ar="بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم." data-fr="Un environnement stimulant et sécurisé fondé sur l'excellence académique et l'épanouissement de l'élève.">بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم.</p>
-                <a href="#" class="card-link" onclick="openModal(event, currentLang==='ar'?'عن مؤسسة الرسالة':'À propos d’Al Risala', currentLang==='ar'?'تسعى مؤسسة الرسالة إلى بناء مسار تربوي متوازن يجمع بين جودة التعلم والقيم والمهارات الحديثة.':'Al Risala construit un parcours équilibré associant qualité pédagogique, valeurs et compétences modernes.')" data-ar="قراءة المزيد ←" data-fr="Lire la suite →">قراءة المزيد ←</a>
-            </article>
-
-            <article class="card reveal" style="--accent:#f0a91f;--soft:#fff7df;">
-                <div class="card-icon">▤</div>
-                <h3 data-ar="أسلاكنا التعليمية" data-fr="Cycles éducatifs">أسلاكنا التعليمية</h3>
-                <p data-ar="مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا." data-fr="Un parcours continu et structuré, de la petite enfance au baccalauréat.">مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا.</p>
-                <a href="programs.html" class="card-link" data-ar="استعراض الأقسام ←" data-fr="Voir les cycles →">استعراض الأقسام ←</a>
-            </article>
-
-            <article class="card reveal" id="announcements" style="--accent:#10a37f;--soft:#e9faf5;">
-                <div class="card-icon">⚑</div>
-                <h3 data-ar="الإعلانات والبلاغات" data-fr="Annonces & avis">الإعلانات والبلاغات</h3>
-                <p data-ar="ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة." data-fr="Restez informés des actualités, dates et avis importants de l'établissement.">ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة.</p>
-                <a href="announcements.html" class="card-link" data-ar="عرض البلاغات ←" data-fr="Voir les avis →">عرض البلاغات ←</a>
-            </article>
-
-            <article class="card reveal" style="--accent:#7656d6;--soft:#f1edff;">
-                <div class="card-icon">♙</div>
-                <h3 data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</h3>
-                <p data-ar="ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية." data-fr="Accès sécurisé aux espaces numériques des élèves, parents et équipes pédagogiques.">ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية.</p>
-                <a href="login.html" class="card-link" data-ar="الدخول الآن ←" data-fr="Se connecter →">الدخول الآن ←</a>
-            </article>
-        </div>
-    </section>
-
-    <section class="quick reveal-scale">
-        <div class="quick-box">
-            <div class="quick-head">
-                <div>
-                    <h2 data-ar="الوصول السريع" data-fr="Accès rapide">الوصول السريع</h2>
-                    <p data-ar="أهم الخدمات الرقمية للمؤسسة في خطوات واضحة." data-fr="Les principaux services numériques en quelques clics.">أهم الخدمات الرقمية للمؤسسة في خطوات واضحة.</p>
-                </div>
-            </div>
-
-            <div class="quick-grid">
-                <a href="login.html" class="quick-item reveal">
-                    <span class="qicon">♙</span>
-                    <span><strong data-ar="فضاءات الدخول" data-fr="Espaces dédiés">فضاءات الدخول</strong><small data-ar="تلميذ • ولي • أستاذ" data-fr="Élève • Parent • Enseignant">تلميذ • ولي • أستاذ</small></span>
-                </a>
-                <a href="register.html" class="quick-item reveal">
-                    <span class="qicon">✎</span>
-                    <span><strong data-ar="التسجيل القبلي" data-fr="Pré-inscription">التسجيل القبلي</strong><small data-ar="طلب تسجيل جديد" data-fr="Nouvelle demande">طلب تسجيل جديد</small></span>
-                </a>
-                <a href="announcements.html" class="quick-item reveal">
-                    <span class="qicon">⚑</span>
-                    <span><strong data-ar="الإعلانات" data-fr="Annonces">الإعلانات</strong><small data-ar="آخر المستجدات" data-fr="Actualités">آخر المستجدات</small></span>
-                </a>
-                <a href="contact.html" class="quick-item reveal">
-                    <span class="qicon">☎</span>
-                    <span><strong data-ar="تواصل معنا" data-fr="Contact">تواصل معنا</strong><small data-ar="نحن رهن الإشارة" data-fr="À votre écoute">نحن رهن الإشارة</small></span>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="mission reveal-left">
-        <div class="mission-box">
-            <div>
-                <div class="mission-mark">✦ AL-RISALA</div>
-                <h2 data-ar="معًا... من أجل مستقبل أفضل" data-fr="Ensemble... pour un avenir meilleur">معًا... من أجل مستقبل أفضل</h2>
-                <p data-ar="نضع المتعلم في صميم العملية التربوية، ونعمل على توفير بيئة تساعده على التعلم والنمو واكتشاف قدراته بثقة."
-                   data-fr="Nous plaçons l'élève au cœur du projet éducatif et créons un environnement propice à l'apprentissage, au développement et à la confiance.">
-                    نضع المتعلم في صميم العملية التربوية، ونعمل على توفير بيئة تساعده على التعلم والنمو واكتشاف قدراته بثقة.
-                </p>
-            </div>
-            <div class="pill-list">
-                <span class="pill" data-ar="تعليم ذو جودة" data-fr="Éducation de qualité">تعليم ذو جودة</span>
-                <span class="pill" data-ar="طاقم تربوي مؤهل" data-fr="Équipe qualifiée">طاقم تربوي مؤهل</span>
-                <span class="pill" data-ar="بيئة آمنة ومحفزة" data-fr="Environnement sûr">بيئة آمنة ومحفزة</span>
-                <span class="pill" data-ar="متابعة شخصية لكل متعلم" data-fr="Suivi personnalisé">متابعة شخصية لكل متعلم</span>
-                <span class="pill" data-ar="تواصل مستمر مع الأسرة" data-fr="Communication avec les familles">تواصل مستمر مع الأسرة</span>
-                <a href="contact.html" class="btn btn-primary" style="margin-top:8px" data-ar="☎ تواصل معنا" data-fr="☎ Contact">☎ تواصل معنا</a>
-            </div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <div class="footer-inner">
-        <div class="footer-brand">
-            <strong data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</strong>
-            <div class="gold-line"></div>
-            <p data-ar="من التعلم... نبني المستقبل" data-fr="De l'apprentissage... construisons l'avenir">من التعلم... نبني المستقبل</p>
-        </div>
-        <div class="footer-copy" data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">
-            جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة
-        </div>
-    </div>
-</footer>
-
-<script>
-    let currentLang = 'ar';
-
-    function toggleMenu(){
-        document.getElementById('navMenu').classList.toggle('open');
-    }
-
-    document.querySelectorAll('.nav a').forEach(link=>{
-        link.addEventListener('click',()=>{
-            document.getElementById('navMenu').classList.remove('open');
-        });
-    });
-
-    function toggleLanguage(){
-        currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-
-        const root = document.getElementById('htmlRoot');
-        root.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-        root.lang = currentLang;
-
-        document.getElementById('langToggleBtn').textContent =
-            currentLang === 'ar' ? 'FR / العربية' : 'العربية / FR';
-
-        document.querySelectorAll('[data-ar]').forEach(el=>{
-            const value = el.getAttribute('data-' + currentLang);
-            if(value !== null){
-                if(el.tagName === 'TITLE'){
-                    document.title = value;
-                }else{
-                    el.innerHTML = value;
-                }
-            }
-        });
-    }
-
-
-    document.addEventListener('keydown',event=>{
-        if(event.key === 'Escape') closeModal();
-    });
-
-    // أنيميشن احترافي عند ظهور الأقسام والمحتويات
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                entry.target.classList.add('revealed');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {threshold:0.12, rootMargin:'0px 0px -45px 0px'});
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-scale').forEach(el => revealObserver.observe(el));
-
-    // إغلاق القائمة عند اختيار رابط خارجي
-    document.querySelectorAll('.nav a').forEach(link => {
-        link.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open'));
-    });
-</script>
-</body>
-</html>
+                <li><a class="acti
