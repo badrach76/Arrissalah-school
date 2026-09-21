@@ -1,27 +1,555 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot">
+<html lang="fr" dir="ltr" id="htmlRoot">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#073b6b"><meta name="description" content="فضاء الإدارة والأساتذة - مؤسسة الرسالة للتعليم الخصوصي">
-<title>فضاء الإدارة والأساتذة - مؤسسة الرسالة</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{--navy:#073b6b;--navy2:#0b568f;--blue:#0ea5e9;--gold:#d9a72d;--green:#0f9d78;--red:#dc4b4b;--purple:#7357d8;--ink:#10243b;--muted:#64748b;--bg:#f6f9fc;--border:rgba(7,59,107,.1);--shadow:0 18px 55px rgba(7,59,107,.12)}
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Cairo',sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;overflow-x:hidden}button,input,select,textarea{font-family:inherit}a{text-decoration:none;color:inherit}
-.page-bg{position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(246,249,252,.84),rgba(246,249,252,.95)),url("arrissalahimg3.png") center/cover no-repeat;filter:saturate(.88)}.page-bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 8% 15%,rgba(14,165,233,.1),transparent 28%),radial-gradient(circle at 90% 75%,rgba(15,157,120,.08),transparent 30%)}
-header{position:sticky;top:0;z-index:1500;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid rgba(7,59,107,.08);box-shadow:0 5px 25px rgba(7,59,107,.07)}.header-inner{max-width:1450px;min-height:76px;margin:auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;min-width:max-content}.brand-logo{width:52px;height:52px;object-fit:contain;border-radius:14px;background:#fff;padding:4px;box-shadow:0 7px 18px rgba(7,59,107,.1)}.brand-name{font-size:17px;font-weight:900;color:var(--navy);line-height:1.2}.brand-sub{font-size:10px;font-weight:700;color:var(--muted);margin-top:2px}.header-title{flex:1;text-align:center;color:var(--navy);font-size:14px;font-weight:900}.header-actions{display:flex;align-items:center;gap:8px}.role-badge{background:#edf6fc;border:1px solid #d8e9f5;color:var(--navy);padding:8px 12px;border-radius:12px;font-size:11px;font-weight:900}.logout{color:#c43e3e;background:#fff;border:1px solid #f0d5d5;padding:8px 12px;border-radius:12px;font-size:11px;font-weight:800}.menu-toggle{display:none;border:0;width:44px;height:44px;border-radius:12px;background:#edf6fc;color:var(--navy);font-size:21px;cursor:pointer}
-.layout{max-width:1450px;margin:0 auto;min-height:calc(100vh - 76px);display:grid;grid-template-columns:265px minmax(0,1fr);gap:22px;padding:22px 24px 40px}.sidebar{align-self:start;position:sticky;top:98px;background:rgba(7,31,57,.96);border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:18px 14px;color:#fff;box-shadow:0 20px 50px rgba(7,59,107,.16);overflow:hidden}.sidebar:before{content:"";position:absolute;width:220px;height:220px;border:1px solid rgba(255,255,255,.07);border-radius:50%;top:-145px;left:-75px}.sidebar-head{position:relative;padding:8px 10px 18px;border-bottom:1px solid rgba(255,255,255,.09);margin-bottom:12px}.sidebar-head strong{font-size:14px}.sidebar-head small{display:block;color:#9fb3c8;font-size:9.5px;margin-top:3px}.side-menu{list-style:none;position:relative}.side-menu li{margin:5px 0}.side-menu a{display:flex;align-items:center;gap:10px;color:#aebed0;padding:11px 12px;border-radius:13px;font-size:11.5px;font-weight:800;cursor:pointer;transition:.22s}.side-menu a:hover,.side-menu a.active{color:#fff;background:linear-gradient(135deg,#0e79b7,#0a5b91);box-shadow:0 8px 20px rgba(14,165,233,.18)}.side-icon{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.08);display:grid;place-items:center;flex:0 0 30px;font-size:14px}
-.main{min-width:0}.tab-content{display:none}.tab-content.active{display:block}.panel{background:rgba(255,255,255,.92);border:1px solid rgba(7,59,107,.08);border-radius:24px;box-shadow:var(--shadow);padding:25px;margin-bottom:22px;backdrop-filter:blur(10px)}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:20px}.panel-title{display:flex;align-items:center;gap:10px;color:var(--navy);font-size:18px;font-weight:900}.panel-title:before{content:"";width:5px;height:28px;border-radius:5px;background:var(--gold)}.panel-subtitle{color:var(--muted);font-size:11px;line-height:1.8;margin-top:3px}.section-label{color:var(--navy);font-size:13px;font-weight:900;margin-bottom:10px}.soft-box{background:#f7fafc;border:1px solid #e4edf4;border-radius:17px;padding:16px;margin-bottom:18px}.notice{padding:14px 16px;border-radius:15px;background:#f0fdf4;border-right:4px solid var(--green);color:#075b46;font-size:12px;font-weight:800;margin-bottom:18px}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:18px}.stat-card{position:relative;overflow:hidden;background:rgba(255,255,255,.95);border:1px solid var(--border);border-radius:19px;padding:20px;box-shadow:0 10px 28px rgba(7,59,107,.06)}.stat-card:before{content:"";position:absolute;right:0;top:0;bottom:0;width:4px;background:var(--accent,var(--blue))}.stat-card h3{font-size:11px;color:var(--muted);font-weight:800}.stat-card strong{display:block;color:var(--accent,var(--navy));font-size:26px;font-weight:900;margin-top:5px}.stat-icon{position:absolute;left:17px;top:17px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--soft,#eaf7fe);color:var(--accent,var(--blue));font-size:18px}.money-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.money-card{padding:20px;border-radius:18px;background:#f8fafc;border:1px solid #e3ebf2}.money-card span{display:block;color:var(--muted);font-size:11px;font-weight:800}.money-card strong{display:block;font-size:24px;margin-top:4px}
-.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.form-control{width:100%;min-width:0;padding:10px 12px;border:1px solid #cbd8e3;border-radius:10px;font-size:12px;background:#fff;color:var(--ink);outline:none;transition:.2s}.form-control:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(14,165,233,.12)}textarea.form-control{resize:vertical}.btn{border:0;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 15px;border-radius:10px;background:var(--navy);color:#fff;font-size:11.5px;font-weight:800;cursor:pointer;transition:.22s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(7,59,107,.14)}.btn-success{background:var(--green)}.btn-danger{background:var(--red)}.btn-gold{background:linear-gradient(135deg,var(--gold),#c68c16)}.btn-primary{background:linear-gradient(135deg,var(--navy),var(--navy2))}.whatsapp-btn{background:#25d366}.btn-small{padding:6px 9px;font-size:10px}
-.table-responsive{width:100%;overflow-x:auto;border:1px solid #e4ebf1;border-radius:15px}table{width:100%;border-collapse:collapse;min-width:720px;background:#fff}th,td{padding:11px 12px;border-bottom:1px solid #e8eef3;font-size:11.5px;text-align:right;white-space:nowrap}th{background:#f3f7fa;color:#40566d;font-weight:900}tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfdff}.empty{padding:25px!important;text-align:center!important;color:#8493a3!important}.actions{display:flex;gap:5px;flex-wrap:wrap}.badge{display:inline-block;padding:5px 8px;border-radius:8px;font-size:9.5px;font-weight:800;background:#edf6fc;color:var(--navy)}.badge-green{background:#eaf9f3;color:#087457}.badge-red{background:#fff0f0;color:#b53b3b}.filter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}.filter-row .field{flex:1;min-width:170px}.field label{display:block;font-size:10px;color:#52677d;font-weight:800;margin-bottom:5px}.subpanel{background:#fff;border:1px solid #e3ebf2;border-radius:18px;padding:16px;margin-top:15px}.subpanel h3{font-size:13px;color:var(--navy);font-weight:900;margin-bottom:12px}
-.modal{display:none;position:fixed;inset:0;z-index:3000;background:rgba(2,20,38,.58);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-content{width:min(560px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:23px;padding:28px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.22)}.close-modal{position:absolute;top:12px;left:15px;width:34px;height:34px;border:0;border-radius:10px;background:#f1f5f9;color:#64748b;font-size:21px;cursor:pointer}.modal-title{color:var(--navy);font-size:16px;font-weight:900;margin-bottom:17px}.toast{position:fixed;bottom:22px;left:22px;z-index:4000;max-width:360px;background:#082b4d;color:#fff;padding:13px 17px;border-radius:13px;box-shadow:0 15px 40px rgba(0,0,0,.2);font-size:11px;font-weight:800;display:none}.toast.show{display:block;animation:toastIn .25s ease}@keyframes toastIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
-footer{max-width:1450px;margin:0 auto;padding:0 24px 25px;color:#718397;font-size:9.5px;text-align:center}
-@media(max-width:1000px){.layout{grid-template-columns:225px 1fr}.stat-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:repeat(2,1fr)}.header-title{display:none}}@media(max-width:760px){.header-inner{padding:8px 15px;min-height:68px}.brand-logo{width:46px;height:46px}.brand-name{font-size:15px}.menu-toggle{display:block}.header-actions .role-badge{display:none}.layout{display:block;padding:14px 15px 30px}.sidebar{position:fixed;top:68px;right:15px;left:15px;z-index:1400;display:none;max-height:calc(100vh - 85px);overflow:auto}.sidebar.open{display:block}.panel{padding:17px;border-radius:19px}.panel-title{font-size:15px}.stat-grid,.money-grid,.form-grid{grid-template-columns:1fr}.filter-row .field{min-width:100%}footer{padding:0 15px 20px}}
-
-/* === Al-Risala shared premium motion upgrade === */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#073b6b">
+    <meta name="description" content="فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي">
+    <title>فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root{
+            --navy:#073b6b;
+            --navy-2:#0b568f;
+            --blue:#0ea5e9;
+            --gold:#d9a72d;
+            --gold-light:#f5d77a;
+            --green:#0f9d78;
+            --orange:#f59e0b;
+            --purple:#7357d8;
+            --ink:#10243b;
+            --muted:#64748b;
+            --bg:#f6f9fc;
+            --white:#fff;
+            --border:rgba(7,59,107,.10);
+            --shadow:0 18px 55px rgba(7,59,107,.12);
+            --radius:22px;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Cairo',sans-serif;
+            color:var(--ink);
+            background:var(--bg);
+            min-height:100vh;
+            overflow-x:hidden;
+        }
+        a{text-decoration:none;color:inherit}
+        button,input,select{font-family:inherit}
+        .page-bg{
+            position:fixed;
+            inset:0;
+            z-index:-3;
+            background:
+                linear-gradient(180deg,rgba(246,249,252,.80),rgba(246,249,252,.94)),
+                url("arrissalahimg3.png") center/cover no-repeat;
+            filter:saturate(.88);
+        }
+        .page-bg::after{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:
+                radial-gradient(circle at 10% 15%,rgba(14,165,233,.11),transparent 28%),
+                radial-gradient(circle at 90% 72%,rgba(15,157,120,.09),transparent 28%),
+                radial-gradient(circle at 50% 100%,rgba(217,167,45,.07),transparent 25%);
+        }
+        header{
+            position:sticky;
+            top:0;
+            z-index:1000;
+            background:rgba(255,255,255,.88);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            border-bottom:1px solid rgba(7,59,107,.08);
+            box-shadow:0 5px 25px rgba(7,59,107,.06);
+        }
+        .header-inner{
+            width:min(1250px,100%);
+            margin:auto;
+            min-height:76px;
+            padding:10px 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            min-width:max-content;
+        }
+        .brand-logo{
+            width:52px;
+            height:52px;
+            object-fit:contain;
+            border-radius:14px;
+            background:#fff;
+            padding:4px;
+            box-shadow:0 7px 18px rgba(7,59,107,.10);
+        }
+        .brand-name{
+            font-weight:900;
+            color:var(--navy);
+            font-size:17px;
+            line-height:1.2;
+        }
+        .brand-sub{
+            color:var(--muted);
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:.3px;
+            margin-top:2px;
+        }
+        .header-actions{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .home-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            padding:9px 13px;
+            border-radius:999px;
+            color:var(--navy);
+            background:rgba(255,255,255,.82);
+            border:1px solid rgba(7,59,107,.10);
+            font-size:11px;
+            font-weight:900;
+            box-shadow:0 7px 20px rgba(7,59,107,.06);
+            transition:.25s ease;
+        }
+        .home-btn:hover{
+            color:#fff;
+            background:var(--navy);
+            transform:translateY(-1px);
+        }
+        .home-btn:first-letter{font-size:16px}
+        .header-badge{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            color:var(--navy);
+            background:rgba(237,246,252,.78);
+            border:1px solid rgba(7,59,107,.08);
+            padding:9px 14px;
+            border-radius:999px;
+            font-size:12px;
+            font-weight:800;
+        }
+        .header-badge i{
+            width:8px;height:8px;
+            border-radius:50%;
+            background:var(--green);
+            box-shadow:0 0 0 5px rgba(15,157,120,.12);
+        }
+        .container{
+            width:min(1180px,100%);
+            margin:auto;
+            min-height:calc(100vh - 76px - 78px);
+            padding:55px 24px 65px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .view{width:100%}
+        .section-heading{
+            text-align:center;
+            max-width:760px;
+            margin:0 auto 32px;
+        }
+        .eyebrow{
+            display:inline-flex;
+            align-items:center;
+            gap:9px;
+            padding:7px 13px;
+            background:rgba(255,255,255,.78);
+            border:1px solid rgba(7,59,107,.10);
+            border-radius:999px;
+            color:var(--navy);
+            font-size:12px;
+            font-weight:800;
+            box-shadow:0 8px 25px rgba(7,59,107,.06);
+        }
+        .eyebrow i{
+            width:8px;height:8px;
+            border-radius:50%;
+            background:var(--gold);
+            box-shadow:0 0 0 5px rgba(217,167,45,.14);
+        }
+        .section-heading h1{
+            margin-top:17px;
+            color:var(--navy);
+            font-size:clamp(28px,4vw,44px);
+            line-height:1.25;
+            font-weight:900;
+        }
+        .section-heading h1 span{color:var(--gold)}
+        .section-heading p{
+            margin-top:12px;
+            color:var(--muted);
+            font-size:14px;
+            line-height:1.9;
+        }
+        .spaces-grid{
+            width:100%;
+            display:grid;
+            grid-template-columns:repeat(4,1fr);
+            gap:18px;
+        }
+        .space-card{
+            position:relative;
+            overflow:hidden;
+            background:rgba(255,255,255,.76);
+            border:1px solid rgba(255,255,255,.78);
+            border-radius:var(--radius);
+            padding:25px 20px 21px;
+            box-shadow:var(--shadow);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            text-align:center;
+            cursor:pointer;
+            transition:.3s ease;
+        }
+        .space-card::before{
+            content:"";
+            position:absolute;
+            inset:0 0 auto;
+            height:4px;
+            background:var(--card-color,var(--blue));
+        }
+        .space-card::after{
+            content:"";
+            position:absolute;
+            width:130px;
+            height:130px;
+            border-radius:50%;
+            background:var(--card-color,var(--blue));
+            opacity:.06;
+            top:-70px;
+            left:-45px;
+        }
+        .space-card:hover{
+            transform:translateY(-7px);
+            box-shadow:0 24px 65px rgba(7,59,107,.16);
+            border-color:rgba(7,59,107,.10);
+        }
+        .space-icon{
+            position:relative;
+            width:64px;
+            height:64px;
+            margin:2px auto 16px;
+            border-radius:18px;
+            display:grid;
+            place-items:center;
+            color:var(--card-color,var(--blue));
+            background:color-mix(in srgb,var(--card-color,var(--blue)) 10%,white);
+            border:1px solid color-mix(in srgb,var(--card-color,var(--blue)) 17%,white);
+            font-size:29px;
+            box-shadow:0 9px 22px rgba(7,59,107,.07);
+        }
+        .space-icon::after{
+            content:"";
+            position:absolute;
+            width:18px;
+            height:18px;
+            border:2px solid currentColor;
+            border-radius:5px;
+            opacity:.16;
+            transform:rotate(45deg);
+        }
+        .space-card h3{
+            color:var(--navy);
+            font-size:17px;
+            font-weight:900;
+            margin-bottom:7px;
+        }
+        .space-card p{
+            color:var(--muted);
+            font-size:12px;
+            line-height:1.8;
+            min-height:44px;
+            margin-bottom:17px;
+        }
+        .space-btn{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:7px;
+            color:#fff;
+            background:var(--card-color,var(--blue));
+            padding:9px 16px;
+            border-radius:12px;
+            font-size:12px;
+            font-weight:800;
+            box-shadow:0 8px 18px color-mix(in srgb,var(--card-color,var(--blue)) 24%,transparent);
+        }
+        #secureLoginView{display:none}
+        .login-layout{
+            width:min(950px,100%);
+            margin:auto;
+            display:grid;
+            grid-template-columns:.85fr 1.15fr;
+            gap:22px;
+            align-items:stretch;
+        }
+        .login-intro,.login-card{
+            border:1px solid rgba(255,255,255,.78);
+            background:rgba(255,255,255,.76);
+            backdrop-filter:blur(18px);
+            -webkit-backdrop-filter:blur(18px);
+            box-shadow:var(--shadow);
+            border-radius:var(--radius);
+        }
+        .login-intro{
+            padding:32px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            background:
+                linear-gradient(145deg,rgba(7,59,107,.96),rgba(11,86,143,.90)),
+                url("arrissalahimg3.png") center/cover;
+            color:#fff;
+            position:relative;
+            overflow:hidden;
+        }
+        .login-intro::after{
+            content:"";
+            position:absolute;
+            width:230px;height:230px;
+            border-radius:50%;
+            background:rgba(217,167,45,.12);
+            left:-100px;bottom:-110px;
+        }
+        .intro-icon{
+            width:70px;height:70px;
+            display:grid;
+            place-items:center;
+            border-radius:20px;
+            background:rgba(255,255,255,.12);
+            border:1px solid rgba(255,255,255,.20);
+            font-size:31px;
+            margin-bottom:22px;
+        }
+        .login-intro h2{font-size:26px;line-height:1.45;font-weight:900}
+        .login-intro h2 span{color:var(--gold-light)}
+        .login-intro p{margin-top:12px;color:rgba(255,255,255,.78);font-size:13px;line-height:2}
+        .security-points{list-style:none;margin-top:22px;display:grid;gap:10px}
+        .security-points li{display:flex;align-items:center;gap:9px;font-size:12px;color:rgba(255,255,255,.88)}
+        .security-points i{font-style:normal;color:var(--gold-light);font-size:15px}
+        .login-card{
+            padding:34px;
+        }
+        .login-card-head{text-align:center;margin-bottom:24px}
+        .login-card-head .mini-icon{
+            width:58px;height:58px;
+            margin:0 auto 13px;
+            display:grid;
+            place-items:center;
+            border-radius:17px;
+            background:#edf6fc;
+            color:var(--navy);
+            font-size:25px;
+        }
+        .login-card h2{font-size:21px;color:var(--navy);font-weight:900}
+        .login-card-head p{font-size:12px;color:var(--muted);margin-top:5px}
+        .selected-space{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:7px;
+            margin:0 auto 22px;
+            width:max-content;
+            max-width:100%;
+            padding:7px 12px;
+            border-radius:999px;
+            background:#f5f8fb;
+            border:1px solid #e2eaf1;
+            color:var(--navy);
+            font-size:11px;
+            font-weight:800;
+        }
+        .selected-space i{width:7px;height:7px;border-radius:50%;background:var(--green)}
+        .form-group{margin-bottom:16px}
+        .form-group label{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#334155;font-size:12px;font-weight:800;margin-bottom:7px}
+        .form-control-wrap{position:relative}
+        .form-group input,.form-group select{
+            width:100%;
+            padding:12px 13px;
+            border:1px solid #d7e1ea;
+            background:rgba(255,255,255,.90);
+            color:var(--ink);
+            border-radius:13px;
+            font-size:13px;
+            outline:none;
+            transition:.25s;
+        }
+        .form-group input:focus,.form-group select:focus{
+            border-color:var(--blue);
+            box-shadow:0 0 0 4px rgba(14,165,233,.10);
+        }
+        .password-toggle{
+            position:absolute;
+            left:9px;
+            top:50%;
+            transform:translateY(-50%);
+            border:0;
+            background:transparent;
+            color:var(--muted);
+            cursor:pointer;
+            font-size:17px;
+            padding:4px;
+        }
+        #password{padding-left:42px}
+        .admin-role-box{
+            display:none;
+            margin-bottom:17px;
+            padding:13px;
+            border-radius:15px;
+            background:#f7fafc;
+            border:1px solid #e3ebf2;
+        }
+        .admin-role-box .role-title{display:block;color:var(--navy);font-size:12px;font-weight:900;margin-bottom:8px}
+        .login-btn{
+            width:100%;
+            border:0;
+            color:#fff;
+            background:linear-gradient(135deg,var(--navy),var(--navy-2));
+            padding:13px 16px;
+            border-radius:13px;
+            font-size:13px;
+            font-weight:900;
+            cursor:pointer;
+            box-shadow:0 12px 25px rgba(7,59,107,.18);
+            transition:.25s;
+            margin-top:5px;
+        }
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 17px 30px rgba(7,59,107,.23)}
+        .login-btn:active{transform:translateY(0)}
+        .login-btn.loading{opacity:.75;pointer-events:none}
+        .back-spaces{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:6px;
+            margin-top:17px;
+            color:var(--muted);
+            font-size:12px;
+            font-weight:800;
+            cursor:pointer;
+            transition:.2s;
+        }
+        .back-spaces:hover{color:var(--blue)}
+        .login-navigation{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:8px;
+            margin-top:17px;
+        }
+        .login-navigation .back-spaces{margin-top:0}
+        .back-home-link{
+            color:var(--navy);
+            font-size:11px;
+            font-weight:900;
+            padding:5px 10px;
+            border-radius:9px;
+            transition:.2s;
+        }
+        .back-home-link:hover{
+            color:var(--gold);
+            background:rgba(217,167,45,.08);
+        }
+        .login-note{
+            margin-top:17px;
+            padding:10px 12px;
+            border-radius:12px;
+            background:#fffaf0;
+            border:1px solid rgba(217,167,45,.20);
+            color:#79601e;
+            font-size:10px;
+            line-height:1.8;
+            text-align:center;
+        }
+        .toast{
+            position:fixed;
+            left:22px;
+            bottom:22px;
+            z-index:3000;
+            max-width:330px;
+            padding:12px 16px;
+            border-radius:13px;
+            color:#fff;
+            background:rgba(7,59,107,.94);
+            box-shadow:0 15px 35px rgba(7,59,107,.20);
+            font-size:12px;
+            font-weight:700;
+            opacity:0;
+            transform:translateY(12px);
+            pointer-events:none;
+            transition:.25s;
+        }
+        .toast.show{opacity:1;transform:translateY(0)}
+        footer{
+            background:rgba(7,59,107,.96);
+            color:rgba(255,255,255,.66);
+            text-align:center;
+            padding:21px 20px;
+            font-size:11px;
+            border-top:1px solid rgba(255,255,255,.08);
+        }
+        footer strong{color:rgba(255,255,255,.90)}
+        @media(max-width:1000px){
+            .spaces-grid{grid-template-columns:repeat(2,1fr)}
+            .login-layout{grid-template-columns:1fr;max-width:560px}
+            .login-intro{display:none}
+        }
+        @media(max-width:650px){
+            .header-inner{min-height:68px;padding:8px 15px}
+            .brand-logo{width:46px;height:46px;border-radius:12px}
+            .brand-name{font-size:15px}
+            .brand-sub{font-size:9px}
+            .header-actions{gap:6px}
+            .home-btn{padding:8px 10px;font-size:10px}
+            .header-badge{padding:8px 10px;font-size:10px}
+            .container{min-height:calc(100vh - 68px - 66px);padding:36px 14px 45px}
+            .section-heading{margin-bottom:24px}
+            .section-heading h1{font-size:28px}
+            .section-heading p{font-size:12px}
+            .spaces-grid{grid-template-columns:1fr;gap:13px}
+            .space-card{padding:20px 18px;display:grid;grid-template-columns:58px 1fr auto;grid-template-rows:auto auto;align-items:center;text-align:right;column-gap:13px}
+            .space-icon{grid-row:1 / span 2;width:58px;height:58px;margin:0;font-size:25px}
+            .space-icon::after{
+                content:"";
+                position:absolute;
+                width:18px;
+                height:18px;
+                border:2px solid currentColor;
+                border-radius:5px;
+                opacity:.16;
+                transform:rotate(45deg);
+            }
+            .space-card h3{margin:0;font-size:15px}
+            .space-card p{min-height:0;margin:3px 0 0;font-size:11px}
+            .space-btn{grid-column:3;grid-row:1 / span 2;white-space:nowrap;padding:8px 11px;font-size:10px}
+            .login-card{padding:24px 18px}
+            .login-card h2{font-size:19px}
+            footer{font-size:10px;padding:18px 12px}
+        }
+        @media(max-width:430px){
+            .header-badge span{display:none}
+            .home-btn span{display:none}
+            .home-btn{width:38px;height:38px;padding:0;font-size:18px}
+            .space-card{grid-template-columns:52px 1fr}
+            .space-icon{width:52px;height:52px}
+            .space-btn{grid-column:2;grid-row:auto;justify-self:start;margin-top:10px}
+        }
 body{animation:pageIn .65s ease both}
 @keyframes pageIn{from{opacity:0}to{opacity:1}}
 .panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card{will-change:transform,opacity}
@@ -31,102 +559,4 @@ body{animation:pageIn .65s ease both}
 .space-card:hover,.stat-card:hover,.schedule-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(7,59,107,.12)}
 .btn,.top-btn,.home-btn,.login-btn,.logout,.side-menu a,.aside-menu a{transition:transform .22s ease,box-shadow .22s ease,background .22s ease,color .22s ease}
 .btn:hover,.top-btn:hover,.home-btn:hover,.login-btn:hover{transform:translateY(-2px)}
-@media(max-width:760px){.reveal-ready{transform:translateY(18px) scale(.99)}.space-card:hover,.stat-card:hover,.schedule-card:hover{transform:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal-ready{opacity:1!important;transform:none!important}}
-
-</style>
-</head>
-<body onload="initAdminPanel()">
-<div class="page-bg" aria-hidden="true"></div>
-<header><div class="header-inner">
-<a href="index.html" class="brand"><img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo"><div><div class="brand-name">مؤسسة الرسالة</div><div class="brand-sub">للتعليم الخصوصي</div></div></a>
-<div class="header-title">فضاء الإدارة والأساتذة — المنصة الرقمية للمؤسسة</div>
-<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-<div class="header-actions"><span id="userRoleBadge" class="role-badge">الإدارة</span><a href="login.html" class="logout" onclick="localStorage.removeItem('user_role')">تسجيل خروج</a></div>
-</div></header>
-<div class="layout"><aside class="sidebar" id="appAside"><div class="sidebar-head"><strong>لوحة التحكم</strong><small>مؤسسة الرسالة للتعليم الخصوصي</small></div><ul class="side-menu" id="sideMenuContainer"></ul></aside>
-<main class="main">
-<section id="tab-dash" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">لوحة المؤشرات الإحصائية والمالية</div><div class="panel-subtitle">نظرة مركزية على أهم معطيات المؤسسة.</div></div></div><div class="notice"><span id="welcomeMsg">مرحباً بك في فضاء الإدارة المركزي.</span></div><div class="stat-grid">
-<div class="stat-card" style="--accent:#0ea5e9;--soft:#eaf7fe"><div class="stat-icon">♙</div><h3>عدد التلاميذ والأطفال</h3><strong id="statTotalStudents">0</strong></div>
-<div class="stat-card" style="--accent:#0f9d78;--soft:#e9faf5"><div class="stat-icon">★</div><h3>عدد الأساتذة والمربيات</h3><strong id="statTotalTeachers">1</strong></div>
-<div class="stat-card" style="--accent:#7357d8;--soft:#f1edff"><div class="stat-icon">▣</div><h3>عدد الموظفين</h3><strong id="statTotalStaff">2</strong></div></div>
-<div class="money-grid"><div class="money-card"><span>إجمالي المداخيل</span><strong id="dashTotalIncome" style="color:#0f9d78">125,500 درهم</strong></div><div class="money-card"><span>إجمالي المصاريف</span><strong id="dashTotalExpenses" style="color:#dc4b4b">45,000 درهم</strong></div></div></div></section>
-
-<section id="tab-students" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">إدارة التلاميذ والأطفال والأداءات</div><div class="panel-subtitle">التسجيل، المعطيات الدراسية وتحصيل الرسوم.</div></div><button class="btn btn-success" onclick="openAddStudentModal()">＋ إضافة تلميذ / طفل</button></div><div class="table-responsive"><table><thead><tr><th>رقم المسار / المعرف</th><th>الاسم الشخصي</th><th>الاسم العائلي</th><th>الفصل والمستوى</th><th>موسم الالتحاق</th><th>الشهر</th><th>العمليات</th></tr></thead><tbody id="studentsTableBody"></tbody></table></div></div></section>
-
-<section id="tab-attendance-grades" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">فضاء الأساتذة: الغياب والنقط</div><div class="panel-subtitle">اختيار الفصل ثم تسجيل الحضور والغياب والنقط بشكل مستقل.</div></div></div>
-<div class="soft-box"><div class="section-label">اختيار الفصل الدراسي</div><div class="filter-row"><div class="field"><label>السلك التعليمي</label><select id="selCycle" class="form-control" onchange="updateLevelsDropdown()"><option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option><option value="التعليم الابتدائي">التعليم الابتدائي</option><option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option><option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option></select></div><div class="field"><label>المستوى الدراسي</label><select id="selLevel" class="form-control" onchange="filterClassStudents()"></select></div><div class="field"><label>القسم</label><select id="selClass" class="form-control" onchange="filterClassStudents()"><option value="القسم أ">القسم (أ)</option><option value="القسم ب">القسم (ب)</option><option value="القسم ج">القسم (ج)</option></select></div><button class="btn btn-primary" onclick="filterClassStudents()">عرض التلاميذ</button></div></div>
-<div class="subpanel"><div class="panel-head" style="margin-bottom:12px"><h3>① لائحة الغياب اليومية</h3><input type="date" id="attendanceDate" class="form-control" style="width:180px"></div><div class="table-responsive"><table><thead><tr><th>رقم المسار</th><th>الاسم الكامل</th><th>الحالة</th><th>الحفظ</th></tr></thead><tbody id="classStudentsTableBody"><tr><td colspan="4" class="empty">اختر الفصل ثم اضغط عرض التلاميذ.</td></tr></tbody></table></div></div>
-<div class="subpanel"><div class="panel-head" style="margin-bottom:12px"><h3>② لائحة إدخال النقط المستقلة</h3><select id="gradeSubject" class="form-control" style="max-width:330px"><option value="اللغة العربية / التعبير">اللغة العربية / التعبير</option><option value="الفرنسية">الفرنسية</option><option value="الرياضيات / الحساب">الرياضيات / الحساب</option><option value="الأنشطة الحركية / التربية الفنية">الأنشطة الحركية / التربية الفنية</option></select></div><div class="table-responsive"><table><thead><tr><th>رقم المسار</th><th>الاسم الكامل</th><th>النقطة /20</th><th>الإجراء</th></tr></thead><tbody id="classGradesTableBody"><tr><td colspan="4" class="empty">اختر الفصل أولاً.</td></tr></tbody></table></div><div style="margin-top:14px;text-align:left"><button class="btn btn-success" onclick="saveAllClassGrades()">حفظ نقط الفصل بالكامل</button></div></div></div></section>
-
-<section id="tab-timetable" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">جداول استعمال الزمن</div><div class="panel-subtitle">اختيار السلك والمستوى ونوع الجدول ثم التنزيل.</div></div></div><div class="soft-box"><div class="filter-row"><div class="field"><label>السلك التعليمي</label><select id="ttCycle" class="form-control" onchange="updateTTLevels()"><option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option><option value="التعليم الابتدائي">التعليم الابتدائي</option><option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option><option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option></select></div><div class="field"><label>المستوى</label><select id="ttLevel" class="form-control"></select></div><div class="field"><label>نوع الجدول</label><select id="ttType" class="form-control"><option value="تلاميذ">استعمال زمن التلاميذ</option><option value="أساتذة">استعمال زمن الأساتذة</option></select></div><button class="btn btn-gold" onclick="downloadTimetable()">📥 تحميل الجدول</button></div></div></div></section>
-
-<section id="tab-teachers" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">رواتب الأساتذة والمربيات وواتساب الفصول</div><div class="panel-subtitle">تتبع الأداء الشهري وربط الفصول بوسائل التواصل.</div></div></div><div class="table-responsive"><table><thead><tr><th>اسم الأستاذ / المربية</th><th>تاريخ الالتحاق</th><th>ساعات العمل</th><th>واتساب الفصول</th><th>الراتب</th><th>الشهر</th><th>الإجراء</th></tr></thead><tbody><tr><td>أ. فاطمة الزهراء</td><td>2023/09/01</td><td>24 ساعة</td><td><a href="https://whatsapp.com" target="_blank" class="btn whatsapp-btn btn-small">روض أ</a></td><td>4000 درهم</td><td><select id="sal_m_1" class="form-control"><option>شتمبر 2026</option><option>أكتوبر 2026</option><option>نونبر 2026</option><option>دجنبر 2026</option></select></td><td><button class="btn btn-success btn-small" onclick="payMonthlySalary('أ. فاطمة الزهراء',4000,'sal_m_1')">صرف الراتب</button></td></tr></tbody></table></div></div></section>
-
-<section id="tab-staff" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">الموظفون الإداريون ورواتبهم</div><div class="panel-subtitle">متابعة الموظفين والأجور الشهرية.</div></div></div><div class="table-responsive"><table><thead><tr><th>الاسم</th><th>الوظيفة</th><th>تاريخ الالتحاق</th><th>الراتب</th><th>الشهر</th><th>الإجراء</th></tr></thead><tbody><tr><td>أحمد الداودي</td><td>حارس عام</td><td>2023/09/01</td><td>5000 درهم</td><td><select id="sal_m_2" class="form-control"><option>شتمبر 2026</option><option>أكتوبر 2026</option><option>نونبر 2026</option><option>دجنبر 2026</option></select></td><td><button class="btn btn-success btn-small" onclick="payMonthlySalary('أحمد الداودي',5000,'sal_m_2')">صرف الراتب</button></td></tr></tbody></table></div></div></section>
-
-<section id="tab-transport" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">النقل المدرسي وطاقمه ومصاريف الحافلات</div><div class="panel-subtitle">تتبع أجور الطاقم ومصاريف تشغيل وصيانة النقل.</div></div></div><div class="subpanel"><h3>أجور طاقم النقل</h3><div class="table-responsive"><table><thead><tr><th>الاسم</th><th>المهنة</th><th>الأجر</th><th>الشهر</th><th>صرف الأجر</th></tr></thead><tbody><tr><td>سعيد بوطاهر</td><td>سائق الحافلة</td><td>4000 درهم</td><td><select id="sal_m_3" class="form-control"><option>شتمبر 2026</option><option>أكتوبر 2026</option><option>نونبر 2026</option><option>دجنبر 2026</option></select></td><td><button class="btn btn-success btn-small" onclick="payMonthlySalary('سعيد بوطاهر (سائق)',4000,'sal_m_3')">صرف الراتب</button></td></tr></tbody></table></div></div>
-<div class="subpanel"><div class="panel-head"><h3>مصاريف سيارات وحافلات النقل المدرسي</h3><span class="badge badge-green">إجمالي: <strong id="transportTotalDisplay">1,200 درهم</strong></span></div><div class="form-grid" style="margin-bottom:14px"><input type="date" id="transDate" class="form-control" value="2026-09-09"><select id="transCategory" class="form-control"><option value="بنزين / الوقود">بنزين / الوقود</option><option value="تأمين سيارات النقل">تأمين سيارات النقل (Assurance)</option><option value="الفحص التقني">الفحص التقني (Visite Technique)</option><option value="الضريبة السنوية">الضريبة السنوية (La Vignette)</option><option value="الصيانة وإصلاح الأعطال">الصيانة وإصلاح الأعطال الميكانيكية</option><option value="مصاريف أخرى للنقل">مصاريف أخرى مرتبطة بالنقل</option></select><input type="number" id="transAmount" class="form-control" placeholder="المبلغ بالدرهم" min="1"><input type="text" id="transNote" class="form-control" placeholder="ملاحظة أو رقم الحافلة"></div><button class="btn btn-success" onclick="addTransportExpense()">＋ إضافة مصروف نقل</button><div class="table-responsive" style="margin-top:14px"><table><thead><tr><th>التاريخ</th><th>نوع المصروف</th><th>المبلغ</th><th>الملاحظات / الحافلة</th><th>العمليات</th></tr></thead><tbody id="transportTableBody"><tr><td>2026-09-05</td><td>بنزين / الوقود</td><td>1,200 درهم</td><td>ملء خزان الحافلة رقم 1</td><td><div class="actions"><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteTransportRow(this,1200)">حذف</button></div></td></tr></tbody></table></div></div></div></section>
-
-<section id="tab-finance" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">الخزينة العامة ومصاريف المؤسسة</div><div class="panel-subtitle">سجل موحد للمداخيل والمصاريف التشغيلية.</div></div></div><div class="money-grid" style="margin-bottom:18px"><div class="money-card"><span>إجمالي المداخيل</span><strong id="finTotalIncome" style="color:#0f9d78">125,500 درهم</strong></div><div class="money-card"><span>إجمالي المصاريف</span><strong id="finTotalExpenses" style="color:#dc4b4b">45,000 درهم</strong></div></div><div class="soft-box"><div class="section-label">إضافة مصروف عام</div><div class="form-grid"><input type="text" id="otherDesc" class="form-control" placeholder="بيان المصروف (كهرباء، ماء، صيانة عامة...)"><input type="number" id="otherAmount" class="form-control" placeholder="المبلغ"><div></div><button class="btn btn-success" onclick="addOtherExpense()">＋ إضافة للخزينة</button></div></div><div class="section-label" style="color:#b53b3b">سجل المصاريف العامة والتشغيلية</div><div class="table-responsive"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>المبلغ</th><th>البيان</th><th>العمليات</th></tr></thead><tbody id="financialLogBody"><tr><td>2026/09/01</td><td><span class="badge badge-red">خروج</span></td><td>2,500 درهم</td><td>كهرباء وماء المؤسسة</td><td><div class="actions"><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></div></td></tr></tbody></table></div></div></section>
-
-<section id="tab-activities" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">الأنشطة التربوية والموازية</div><div class="panel-subtitle">إضافة وتنظيم الأنشطة التربوية للمؤسسة.</div></div></div><div class="soft-box"><div class="form-grid"><input type="text" id="actName" class="form-control" placeholder="عنوان النشاط التربوي"><input type="date" id="actDate" class="form-control"><div></div><button class="btn btn-success" onclick="addActivity()">＋ إضافة ونشر النشاط</button></div></div><div class="table-responsive"><table><thead><tr><th>عنوان النشاط</th><th>تاريخ التنظيم</th><th>العمليات</th></tr></thead><tbody id="activitiesTableBody"><tr><td>حفل استقبال أطفال الروض والتلامذة الجدد</td><td>2026-09-07</td><td><div class="actions"><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></div></td></tr></tbody></table></div></div></section>
-
-<section id="tab-comms" class="tab-content"><div class="panel"><div class="panel-head"><div><div class="panel-title">الرسائل والتواصل</div><div class="panel-subtitle">رسائل وتوجيهات للأساتذة وأولياء الأمور.</div></div></div><div class="soft-box"><div class="field" style="margin-bottom:14px"><label>وجهة الرسالة</label><select id="msgTargetAudience" class="form-control" onchange="toggleAudienceFields()"><option value="teachers">رسائل وتوجيهات موجهة للأساتذة</option><option value="parents">رسائل وتواصل موجه لأولياء الأمور</option></select></div><div id="teachersMsgSection"><div class="field" style="margin-bottom:14px"><label>نطاق إرسال الرسالة للأساتذة</label><select id="teacherMsgScope" class="form-control"><option value="all_teachers">رسالة جماعية لكافة الأساتذة (جميع الأسلاك)</option><option value="cycle_teachers">رسالة حسب السلك التعليمي</option><option value="level_teachers">رسالة حسب المستوى الدراسي</option><option value="private_teacher">رسالة خاصة لأستاذ معين (حسب المادة والسلك)</option></select></div></div><div id="parentsMsgSection" style="display:none"><div class="field" style="margin-bottom:14px"><label>نوع رسالة الأولياء</label><select id="msgType" class="form-control" onchange="toggleMsgFields()"><option value="private">رسالة خاصة لولي أمر (على رقمه الخاص)</option><option value="public">رسالة عامة (عبر مجموعة واتساب الأولياء)</option></select></div><div id="privateFields" class="field" style="margin-bottom:14px"><label>رقم واتساب ولي الأمر</label><input type="text" id="parentPhone" class="form-control" placeholder="+212600000000"></div></div><div class="field" style="margin-bottom:14px"><label>محتوى الرسالة / التوجيه</label><textarea id="msgContent" class="form-control" rows="5" placeholder="اكتب نص الرسالة هنا..."></textarea></div><button class="btn whatsapp-btn" style="padding:12px 20px" onclick="sendWhatsAppMessage()">إرسال عبر واتساب أو النظام الآن</button></div></div></section>
-</main></div><footer>مؤسسة الرسالة للتعليم الخصوصي © 2026 — منصة الإدارة والأساتذة</footer>
-
-<div id="addStudentModal" class="modal" onclick="closeOnBackdrop(event)"><div class="modal-content"><button class="close-modal" onclick="closeAddStudentModal()">×</button><div class="modal-title">إضافة تلميذ أو طفل جديد</div><form onsubmit="saveNewStudent(event)"><input type="text" id="newReg" class="form-control" placeholder="رقم المسار أو المعرف" required><input type="text" id="newFirstName" class="form-control" placeholder="الاسم الشخصي" required><input type="text" id="newLastName" class="form-control" placeholder="الاسم العائلي" required><label style="display:block;font-size:10px;font-weight:800;color:#52677d;margin:4px 0 5px">السلك التعليمي</label><select id="modalCycle" class="form-control" onchange="updateModalLevels()"><option value="التعليم الأولي (الروض)">التعليم الأولي (الروض)</option><option value="التعليم الابتدائي">التعليم الابتدائي</option><option value="التعليم الثانوي الإعدادي">التعليم الثانوي الإعدادي</option><option value="التعليم الثانوي التأهيلي">التعليم الثانوي التأهيلي</option></select><label style="display:block;font-size:10px;font-weight:800;color:#52677d;margin:4px 0 5px">المستوى الدراسي</label><select id="modalLevel" class="form-control"></select><input type="text" id="newClass" class="form-control" placeholder="القسم (مثال: القسم أ)" required><input type="text" id="newSeason" class="form-control" placeholder="موسم الالتحاق (مثال: 2026/2027)" required><button type="submit" class="btn btn-success" style="width:100%;padding:12px">حفظ التلميذ</button></form></div></div><div class="toast" id="toast"></div>
-
-<script>
-const SUPABASE_URL='https://ginohutluqeprmkrodbb.supabase.co';const SUPABASE_ANON_KEY='sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';const _supabase=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-let totalIncome=125500,totalExpenses=45000,totalTransportExpenses=1200,globalStudentsList=[];
-const cycleLevels={"التعليم الأولي (الروض)":["المستوى الأول (تمهيدي 3 سنوات)","المستوى الثاني (تمهيدي 4 سنوات)","المستوى الثالث (تحضيري للروض 5 سنوات)"],"التعليم الابتدائي":["المستوى الأول ابتدائي","المستوى الثاني ابتدائي","المستوى الثالث ابتدائي","المستوى الرابع ابتدائي","المستوى الخامس ابتدائي","المستوى السادس ابتدائي"],"التعليم الثانوي الإعدادي":["الأولى إعدادي","الثانية إعدادي","الثالثة إعدادي"],"التعليم الثانوي التأهيلي":["الجذع المشترك","الأولى باكالوريا","الثانية باكالوريا"]};
-function toast(m){const e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>e.classList.remove('show'),3000)}
-function initAdminPanel(){const role=localStorage.getItem('user_role')||'admin_general',menu=document.getElementById('sideMenuContainer'),badge=document.getElementById('userRoleBadge'),welcome=document.getElementById('welcomeMsg');document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));menu.innerHTML='';document.getElementById('attendanceDate').value=new Date().toISOString().split('T')[0];const general=role==='admin_general'||role==='admin';badge.textContent=general?'صلاحية: المدير العام':'صلاحية: الحارس العام / الأستاذ';welcome.textContent=general?'مرحباً بالمدير العام. تملك الصلاحية المطلقة للإشراف على كافة أقسام المؤسسة.':'مرحباً بك في فضاء الأطر التربوية.';document.getElementById(general?'tab-dash':'tab-attendance-grades').classList.add('active');menu.innerHTML=general?`<li><a class="active" onclick="switchTab('tab-dash',event,this)"><span class="side-icon">⌂</span>لوحة القيادة</a></li><li><a onclick="switchTab('tab-students',event,this)"><span class="side-icon">♙</span>التلاميذ والأداءات</a></li><li><a onclick="switchTab('tab-attendance-grades',event,this)"><span class="side-icon">✓</span>فضاء الأساتذة</a></li><li><a onclick="switchTab('tab-timetable',event,this)"><span class="side-icon">▦</span>استعمال الزمن</a></li><li><a onclick="switchTab('tab-teachers',event,this)"><span class="side-icon">★</span>رواتب الأساتذة</a></li><li><a onclick="switchTab('tab-staff',event,this)"><span class="side-icon">▣</span>الموظفون الإداريون</a></li><li><a onclick="switchTab('tab-transport',event,this)"><span class="side-icon">▰</span>النقل المدرسي</a></li><li><a onclick="switchTab('tab-finance',event,this)"><span class="side-icon">د</span>الخزينة والمصاريف</a></li><li><a onclick="switchTab('tab-activities',event,this)"><span class="side-icon">✦</span>الأنشطة التربوية</a></li><li><a onclick="switchTab('tab-comms',event,this)"><span class="side-icon">✉</span>الرسائل والتواصل</a></li>`:`<li><a class="active" onclick="switchTab('tab-attendance-grades',event,this)"><span class="side-icon">✓</span>فضاء الأساتذة</a></li><li><a onclick="switchTab('tab-timetable',event,this)"><span class="side-icon">▦</span>استعمال الزمن</a></li><li><a onclick="switchTab('tab-activities',event,this)"><span class="side-icon">✦</span>الأنشطة التربوية</a></li>`;updateLevelsDropdown();updateTTLevels();loadStudentsFromSupabase()}
-function toggleSidebar(){document.getElementById('appAside').classList.toggle('open')}
-function switchTab(id,e,el){if(e)e.preventDefault();document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.side-menu a').forEach(x=>x.classList.remove('active'));document.getElementById(id)?.classList.add('active');el?.classList.add('active');document.getElementById('appAside').classList.remove('open');scrollTo({top:0,behavior:'smooth'})}
-function fill(id,items){const s=document.getElementById(id);s.innerHTML='';items.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;s.appendChild(o)})}
-function updateLevelsDropdown(){const c=document.getElementById('selCycle').value;fill('selLevel',cycleLevels[c]);filterClassStudents()}function updateModalLevels(){fill('modalLevel',cycleLevels[document.getElementById('modalCycle').value])}function updateTTLevels(){fill('ttLevel',cycleLevels[document.getElementById('ttCycle').value])}
-function openAddStudentModal(){updateModalLevels();document.getElementById('addStudentModal').classList.add('show')}function closeAddStudentModal(){document.getElementById('addStudentModal').classList.remove('show')}function closeOnBackdrop(e){if(e.target.id==='addStudentModal')closeAddStudentModal()}
-async function saveNewStudent(e){e.preventDefault();const p={reg_number:newReg.value.trim(),first_name:newFirstName.value.trim(),last_name:newLastName.value.trim(),class_name:`${modalCycle.value} - ${modalLevel.value} (${newClass.value.trim()})`,season:newSeason.value.trim()};const{error}=await _supabase.from('students').insert([p]);if(error){alert('خطأ في الحفظ بقاعدة البيانات: '+error.message);return}closeAddStudentModal();e.target.reset();toast('تم حفظ التلميذ أو طفل الروض بنجاح في Supabase.');loadStudentsFromSupabase()}
-function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-async function loadStudentsFromSupabase(){const{data:students,error}=await _supabase.from('students').select('*');if(error){console.warn(error.message);return}globalStudentsList=students||[];const tbody=document.getElementById('studentsTableBody');tbody.innerHTML='';statTotalStudents.textContent=globalStudentsList.length;if(!globalStudentsList.length){tbody.innerHTML='<tr><td colspan="7" class="empty">لا يوجد تلاميذ مسجلون حالياً.</td></tr>';filterClassStudents();return}globalStudentsList.forEach(st=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(st.reg_number||'-')}</td><td>${esc(st.first_name||'-')}</td><td>${esc(st.last_name||'-')}</td><td>${esc(st.class_name||'-')}</td><td>${esc(st.season||'-')}</td><td><select id="m_${esc(st.id)}" class="form-control"><option>شتمبر 2026</option><option>أكتوبر 2026</option><option>نونبر 2026</option><option>دجنبر 2026</option></select></td><td><div class="actions"><button class="btn btn-success btn-small" onclick="processStudentPayment('${esc(st.reg_number)}','${esc(st.first_name)}','${esc(st.class_name)}',500,'m_${esc(st.id)}')">تحصيل</button><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></div></td>`;tbody.appendChild(tr)});filterClassStudents()}
-function filterClassStudents(){const c=selCycle.value,l=selLevel.value,k=selClass.value,a=classStudentsTableBody,g=classGradesTableBody;a.innerHTML='';g.innerHTML='';const f=globalStudentsList.filter(s=>(s.class_name||'').includes(c)&&(s.class_name||'').includes(l)&&(s.class_name||'').includes(k));if(!f.length){a.innerHTML='<tr><td colspan="4" class="empty">لا يوجد تلاميذ مسجلون في هذا الفصل حالياً.</td></tr>';g.innerHTML='<tr><td colspan="4" class="empty">لا يوجد تلاميذ مسجلون في هذا الفصل حالياً.</td></tr>';return}f.forEach(s=>{const n=`${s.first_name||''} ${s.last_name||''}`.trim(),tr=document.createElement('tr');tr.innerHTML=`<td>${esc(s.reg_number||'-')}</td><td>${esc(n)}</td><td><select id="att_status_${esc(s.id)}" class="form-control"><option value="حاضر">حاضر / حاضرة</option><option value="غياب مبرر">غياب مبرر</option><option value="غياب غير مبرر">غياب غير مبرر</option><option value="تأخر">تأخر</option></select></td><td><button class="btn btn-success btn-small" onclick="saveStudentAttendance('${esc(s.id)}','${esc(n)}')">تسجيل الحالة</button></td>`;a.appendChild(tr);const gr=document.createElement('tr');gr.innerHTML=`<td>${esc(s.reg_number||'-')}</td><td>${esc(n)}</td><td><input type="number" step="0.25" min="0" max="20" id="grade_input_${esc(s.id)}" data-id="${esc(s.id)}" class="form-control grade-input-field" placeholder="النقطة /20"></td><td><button class="btn btn-primary btn-small" onclick="saveSingleGrade('${esc(s.id)}','${esc(n)}')">حفظ فردي</button></td>`;g.appendChild(gr)})}
-async function saveStudentAttendance(id,name){const d=attendanceDate.value,s=document.getElementById(`att_status_${id}`).value;if(!d){alert('الرجاء اختيار التاريخ أولاً');return}const{error}=await _supabase.from('attendances').insert([{student_id:id,absence_date:d,status:s,hours:s.includes('غياب')?2:0}]);if(error){alert('خطأ في حفظ الحالة: '+error.message);return}toast(`تم تسجيل حالة (${s}) للتلميذ: ${name}`)}
-async function saveSingleGrade(id,name){const subject=gradeSubject.value,v=document.getElementById(`grade_input_${id}`).value;if(v===''||+v<0||+v>20){alert('الرجاء إدخال نقطة صحيحة بين 0 و20');return}const{error}=await _supabase.from('grades').insert([{student_id:id,subject,grade_value:+v}]);if(error){alert('خطأ في حفظ النقطة: '+error.message);return}toast(`تم حفظ نقطة ${subject} للتلميذ ${name}.`)}
-async function saveAllClassGrades(){const subject=gradeSubject.value,r=[];document.querySelectorAll('.grade-input-field').forEach(i=>{if(i.value!==''&&+i.value>=0&&+i.value<=20)r.push({student_id:i.dataset.id,subject,grade_value:+i.value})});if(!r.length){alert('الرجاء إدخال نقطة واحدة على الأقل');return}const{error}=await _supabase.from('grades').insert(r);if(error){alert('خطأ أثناء حفظ نقط الفصل: '+error.message);return}toast(`تم تخزين نقط مادة (${subject}) للقسم.`)}
-function updateMoney(){finTotalIncome.textContent=dashTotalIncome.textContent=totalIncome.toLocaleString()+' درهم';finTotalExpenses.textContent=dashTotalExpenses.textContent=totalExpenses.toLocaleString()+' درهم'}
-function addTransportExpense(){const d=transDate.value,c=transCategory.value,a=parseFloat(transAmount.value),n=transNote.value||'-';if(!d||!a||a<=0){alert('الرجاء إدخال تاريخ ومبلغ صحيحين');return}totalTransportExpenses+=a;totalExpenses+=a;transportTotalDisplay.textContent=totalTransportExpenses.toLocaleString()+' درهم';updateMoney();const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(d)}</td><td>${esc(c)}</td><td>${a.toLocaleString()} درهم</td><td>${esc(n)}</td><td><div class="actions"><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteTransportRow(this,${a})">حذف</button></div></td>`;transportTableBody.appendChild(tr);transAmount.value='';transNote.value='';toast('تم تسجيل مصروف النقل بنجاح.')}
-function deleteTransportRow(btn,a){if(!confirm('هل أنت متأكد من حذف هذا المصروف؟'))return;totalTransportExpenses-=a;totalExpenses-=a;transportTotalDisplay.textContent=totalTransportExpenses.toLocaleString()+' درهم';updateMoney();btn.closest('tr').remove();toast('تم حذف مصروف النقل.')}
-function downloadTimetable(){toast(`جاري تجهيز جدول استعمال الزمن: ${ttType.value} — ${ttCycle.value} — ${ttLevel.value}`)}
-function editRow(btn){const r=btn.closest('tr'),c=r.cells[0];const v=prompt('تعديل البيانات:',c.innerText.trim());if(v!==null&&v.trim()){c.innerText=v.trim();toast('تم التعديل بنجاح.')}}function deleteRow(btn){if(!confirm('هل أنت متأكد من حذف هذا السطر؟'))return;btn.closest('tr').remove();toast('تم الحذف بنجاح.')}
-function processStudentPayment(reg,name,level,a,id){const m=document.getElementById(id).value;totalIncome+=a;updateMoney();const tr=document.createElement('tr');tr.innerHTML=`<td>${new Date().toLocaleDateString('en-CA')}</td><td><span class="badge badge-green">دخل</span></td><td>${a.toLocaleString()} درهم</td><td>${esc(name)} (${esc(m)})</td><td><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></td>`;financialLogBody.appendChild(tr);toast(`تم تحصيل ${a} درهم عن ${m} للتلميذ ${name}.`)}
-function payMonthlySalary(name,a,id){const m=document.getElementById(id).value;totalExpenses+=a;updateMoney();const tr=document.createElement('tr');tr.innerHTML=`<td>${new Date().toLocaleDateString('en-CA')}</td><td><span class="badge badge-red">خروج (راتب)</span></td><td>${a.toLocaleString()} درهم</td><td>صرف راتب شهر ${esc(m)}: ${esc(name)}</td><td><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></td>`;financialLogBody.appendChild(tr);toast(`تم صرف راتب شهر (${m}) لـ ${name}.`)}
-function addOtherExpense(){const d=otherDesc.value.trim(),a=parseFloat(otherAmount.value);if(!d||!a||a<=0){alert('أدخل البيان والمبلغ بشكل صحيح');return}totalExpenses+=a;updateMoney();const tr=document.createElement('tr');tr.innerHTML=`<td>${new Date().toLocaleDateString('en-CA')}</td><td><span class="badge badge-red">خروج (مصروف عام)</span></td><td>${a.toLocaleString()} درهم</td><td>${esc(d)}</td><td><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></td>`;financialLogBody.appendChild(tr);otherDesc.value='';otherAmount.value='';toast('تم تسجيل المصروف بنجاح.')}
-function addActivity(){const n=actName.value.trim(),d=actDate.value||'غير محدد';if(!n){alert('أدخل عنوان النشاط');return}const tr=document.createElement('tr');tr.innerHTML=`<td>${esc(n)}</td><td>${esc(d)}</td><td><div class="actions"><button class="btn btn-small" onclick="editRow(this)">تعديل</button><button class="btn btn-danger btn-small" onclick="deleteRow(this)">حذف</button></div></td>`;activitiesTableBody.appendChild(tr);actName.value='';toast('تم إضافة النشاط التربوي بنجاح.')}
-function toggleAudienceFields(){const a=msgTargetAudience.value;teachersMsgSection.style.display=a==='teachers'?'block':'none';parentsMsgSection.style.display=a==='parents'?'block':'none'}function toggleMsgFields(){privateFields.style.display=msgType.value==='private'?'block':'none'}
-function sendWhatsAppMessage(){const msg=msgContent.value.trim();if(!msg){alert('الرجاء كتابة محتوى الرسالة أولاً');return}const enc=encodeURIComponent(msg);if(msgTargetAudience.value==='teachers'){toast('تم تجهيز التوجيه التربوي للأساتذة. الإرسال الجماعي يحتاج ربطاً فعلياً بخدمة المراسلة.');return}if(msgType.value==='private'){const p=parentPhone.value.replace(/[^\d]/g,'');if(!p){alert('الرجاء إدخال رقم واتساب ولي الأمر');return}open(`https://wa.me/${p}?text=${enc}`,'_blank')}else toast('تم تجهيز الرسالة العامة. يلزم وضع رابط مجموعة واتساب الحقيقي.')}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAddStudentModal()});
-</script>
-<script>/* Al-Risala motion observer */
-(function(){
-  const selectors='.panel,.box,.stat-card,.space-card,.register-box,.intro-card,.contact-card,.schedule-card,.report-box,.soft-box,.money-card';
-  const prepare=()=>document.querySelectorAll(selectors).forEach((el,i)=>{if(!el.classList.contains('reveal-ready')){el.classList.add('reveal-ready');el.style.transitionDelay=Math.min((i%6)*.06, .30)+'s';}});
-  const reveal=()=>{
-    document.querySelectorAll('.reveal-ready').forEach(el=>{
-      const r=el.getBoundingClientRect();
-      if(r.top < window.innerHeight*.92 && r.bottom > 0) el.classList.add('is-visible');
-    });
-  };
-  const run=()=>{prepare();reveal();};
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run); else run();
-  window.addEventListener('scroll',reveal,{passive:true});
-  window.addEventListener('resize',reveal);
-  document.addEventListener('click',e=>{
-    const trigger=e.target.closest('.side-menu a,.aside-menu a');
-    if(trigger) setTimeout(reveal,80);
-  });
-})();
-</script>
-
-</body></html>
+@media(max-width:760px){.reveal-ready{transform:translateY(18px) scale(.99
