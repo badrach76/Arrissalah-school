@@ -1,529 +1,76 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b3b68">
-    <title data-ar="فضاء التلميذ وولي الأمر - مؤسسة الرسالة" data-fr="Espace Élève & Parent - Groupe Scolaire Al Risala">فضاء التلميذ وولي الأمر - مؤسسة الرسالة للتعليم الخصوصي</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        :root{
-            --navy:#073b6b;
-            --navy-2:#0b568f;
-            --blue:#0ea5e9;
-            --gold:#d9a72d;
-            --gold-light:#f5d77a;
-            --green:#0f9d78;
-            --purple:#7357d8;
-            --ink:#10243b;
-            --muted:#64748b;
-            --bg:#f6f9fc;
-            --white:#fff;
-            --border:rgba(7,59,107,.10);
-            --shadow:0 18px 55px rgba(7,59,107,.12);
-            --radius:22px;
-        }
-
-        *{box-sizing:border-box;margin:0;padding:0}
-        html{scroll-behavior:smooth}
-        body{
-            font-family:'Cairo',sans-serif;
-            color:var(--ink);
-            background:var(--bg);
-            overflow-x:hidden;
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-        }
-        a{text-decoration:none;color:inherit}
-        button{font-family:inherit}
-
-        /* ===== الخلفية الرئيسية ===== */
-        .page-bg{
-            position:fixed;
-            inset:0;
-            z-index:-3;
-            background:
-                linear-gradient(180deg,rgba(246,249,252,.85),rgba(246,249,252,.95)),
-                url("arrissalahimg3.png") center/cover no-repeat;
-            filter:saturate(.88);
-        }
-        .page-bg::after{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:
-                radial-gradient(circle at 10% 15%,rgba(14,165,233,.10),transparent 28%),
-                radial-gradient(circle at 90% 70%,rgba(15,157,120,.08),transparent 28%);
-        }
-
-        /* ===== الهيدر ===== */
-        header{
-            position:sticky;
-            top:0;
-            z-index:1000;
-            background:rgba(255,255,255,.9);
-            backdrop-filter:blur(18px);
-            -webkit-backdrop-filter:blur(18px);
-            border-bottom:1px solid rgba(7,59,107,.08);
-            box-shadow:0 5px 25px rgba(7,59,107,.06);
-        }
-        .header-inner{
-            max-width:1250px;
-            margin:auto;
-            min-height:76px;
-            padding:10px 24px;
-            display:flex;
-            align-items:center;
-            justify-content:space-between;
-            gap:25px;
-        }
-        .brand{
-            display:flex;
-            align-items:center;
-            gap:12px;
-            min-width:max-content;
-        }
-        .brand-logo{
-            width:52px;height:52px;
-            object-fit:contain;
-            border-radius:14px;
-            background:#fff;
-            padding:4px;
-            box-shadow:0 7px 18px rgba(7,59,107,.10);
-        }
-        .brand-name{
-            font-weight:900;
-            color:var(--navy);
-            font-size:17px;
-            line-height:1.2;
-        }
-        .brand-sub{
-            color:var(--muted);
-            font-size:10px;
-            font-weight:700;
-            letter-spacing:.4px;
-            margin-top:2px;
-        }
-
-        .nav{
-            display:flex;
-            align-items:center;
-            gap:5px;
-            list-style:none;
-        }
-        .nav a{
-            display:flex;
-            align-items:center;
-            gap:7px;
-            padding:10px 13px;
-            color:#40546b;
-            font-size:13px;
-            font-weight:700;
-            border-radius:12px;
-            transition:.25s ease;
-        }
-        .nav a:hover,.nav a.active{
-            color:var(--navy);
-            background:#edf6fc;
-        }
-        .nav a.active{box-shadow:inset 0 -2px var(--gold)}
-
-        .lang-btn{
-            border:1px solid #d8e2eb;
-            background:#fff;
-            color:var(--navy);
-            padding:9px 13px;
-            border-radius:12px;
-            font-size:12px;
-            font-weight:800;
-            cursor:pointer;
-            transition:.25s;
-        }
-        .lang-btn:hover{border-color:var(--blue);transform:translateY(-1px)}
-
-        .menu-toggle{
-            display:none;
-            width:44px;height:44px;
-            border:0;
-            border-radius:12px;
-            background:#edf6fc;
-            color:var(--navy);
-            font-size:22px;
-            cursor:pointer;
-        }
-
-        /* ===== المحتوى الرئيسي ===== */
-        .main-container{
-            max-width:1120px;
-            width:100%;
-            margin:40px auto;
-            padding:0 20px;
-            flex:1;
-        }
-
-        .welcome-card{
-            background:rgba(255,255,255,.92);
-            backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,.9);
-            border-radius:var(--radius);
-            box-shadow:var(--shadow);
-            padding:30px;
-            margin-bottom:30px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            flex-wrap:wrap;
-            gap:20px;
-        }
-        .welcome-card h1{
-            color:var(--navy);
-            font-size:24px;
-            font-weight:900;
-        }
-        .welcome-card p{
-            color:var(--muted);
-            font-size:13px;
-            margin-top:5px;
-        }
-
-        .section-title{
-            color:var(--navy);
-            font-size:19px;
-            font-weight:900;
-            margin-bottom:15px;
-            display:flex;
-            align-items:center;
-            gap:8px;
-        }
-
-        .dashboard-grid{
-            display:grid;
-            grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
-            gap:25px;
-            margin-bottom:40px;
-        }
-
-        .card-box{
-            background:rgba(255,255,255,.92);
-            backdrop-filter:blur(15px);
-            border:1px solid rgba(7,59,107,.08);
-            border-radius:var(--radius);
-            padding:25px;
-            box-shadow:var(--shadow);
-        }
-        .card-box h3{
-            color:var(--navy);
-            font-size:16px;
-            font-weight:800;
-            margin-bottom:15px;
-            padding-bottom:10px;
-            border-bottom:1px solid #edf2f7;
-        }
-
-        /* الجداول داخل الفضاء */
-        .table-responsive{
-            width:100%;
-            overflow-x:auto;
-        }
-        table{
-            width:100%;
-            border-collapse:collapse;
-            text-align:inherit;
-            min-width:450px;
-        }
-        th, td{
-            padding:12px;
-            border-bottom:1px solid #edf2f7;
-            font-size:12.5px;
-        }
-        th{
-            background:#f8fafc;
-            color:var(--navy);
-            font-weight:800;
-        }
-        td{color:#40546b;font-weight:600;}
-
-        .btn{
-            border:0;
-            display:inline-flex;
-            justify-content:center;
-            align-items:center;
-            gap:9px;
-            padding:10px 18px;
-            border-radius:12px;
-            font-size:12.5px;
-            font-weight:800;
-            cursor:pointer;
-            transition:.25s;
-        }
-        .btn:hover{transform:translateY(-2px)}
-        .btn-primary{
-            color:#fff;
-            background:linear-gradient(135deg,var(--gold),#c68c16);
-            box-shadow:0 10px 25px rgba(217,167,45,.25);
-        }
-        .btn-danger{
-            color:#fff;
-            background:#ef4444;
-        }
-
-        .form-control{
-            width:100%;
-            padding:11px 14px;
-            border:1px solid #cbd5e1;
-            border-radius:12px;
-            font-size:13px;
-            font-family:'Cairo',sans-serif;
-            background:#fff;
-            color:var(--ink);
-            margin-bottom:15px;
-            outline:none;
-            transition:.2s;
-        }
-        .form-control:focus{
-            border-color:var(--blue);
-            box-shadow:0 0 0 3px rgba(14,165,233,.15);
-        }
-
-        /* Footer */
-        footer{
-            background:#061f39;
-            color:#fff;
-            padding:30px 20px 20px;
-            margin-top:auto;
-            text-align:center;
-            font-size:11px;
-        }
-        .footer-line{
-            width:40px;height:3px;
-            background:var(--gold);
-            margin:8px auto 12px;
-            border-radius:2px;
-        }
-
-        @media(max-width:768px){
-            .menu-toggle{display:block}
-            .nav{
-                display:none;
-                position:absolute;
-                top:76px;
-                inset-inline:15px;
-                background:rgba(255,255,255,.98);
-                border:1px solid #e2eaf0;
-                border-radius:18px;
-                padding:15px;
-                flex-direction:column;
-                align-items:stretch;
-                box-shadow:0 20px 45px rgba(7,59,107,.14);
-            }
-            .nav.open{display:flex}
-            .nav a,.lang-btn{width:100%;justify-content:center}
-        }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#073b6b;--blue:#0ea5e9;--purple:#7357d8;--gold:#d9a72d;--green:#16a34a;--red:#dc4b4b;--ink:#10243b;--muted:#64748b;--bg:#f6f9fc;--shadow:0 18px 55px rgba(7,59,107,.12)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Cairo,sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}.page-bg{position:fixed;inset:0;z-index:-2;background:linear-gradient(rgba(246,249,252,.86),rgba(246,249,252,.95)),url('1000077933.png') center/cover no-repeat}.page-bg:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 8% 15%,rgba(14,165,233,.1),transparent 28%),radial-gradient(circle at 90% 75%,rgba(115,87,216,.08),transparent 30%)}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border-bottom:1px solid rgba(7,59,107,.08);box-shadow:0 5px 25px rgba(7,59,107,.07)}.head{max-width:1450px;margin:auto;min-height:76px;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none}.brand img{width:50px;height:50px;object-fit:contain;border-radius:14px;background:#fff;padding:4px;box-shadow:0 7px 18px rgba(7,59,107,.1)}.brand b{display:block;color:var(--navy);font-size:17px;font-weight:900}.brand small{color:var(--muted);font-size:9px;font-weight:700}.nav{display:flex;gap:7px;align-items:center}.nav a{padding:9px 12px;border-radius:10px;color:#40566d;text-decoration:none;font-size:11px;font-weight:800;transition:.22s}.nav a:hover,.nav a.active{background:#edf6fc;color:var(--navy)}.menu{display:none;border:0;width:42px;height:42px;border-radius:11px;background:#edf6fc;color:var(--navy);font-size:21px}
+.layout{max-width:1450px;margin:auto;display:grid;grid-template-columns:250px 1fr;gap:22px;padding:22px 24px 35px}.side{align-self:start;position:sticky;top:98px;background:linear-gradient(180deg,#071f39,#101b45);border-radius:23px;padding:17px 13px;color:white;box-shadow:0 20px 50px rgba(7,59,107,.15)}.side-title{padding:8px 10px 16px;border-bottom:1px solid #ffffff18;margin-bottom:10px}.side-title strong{display:block;font-size:14px}.side-title small{color:#aebed0;font-size:9px}.side ul{list-style:none}.side li{margin:5px 0}.side a{display:flex;gap:9px;align-items:center;color:#b9c8d7;text-decoration:none;padding:11px 12px;border-radius:12px;font-size:11px;font-weight:800;transition:.22s}.side a:hover,.side a.active{background:linear-gradient(135deg,#0e79b7,#0a5b91);color:white}.main{min-width:0}.hero{padding:27px;border-radius:24px;color:white;background:linear-gradient(125deg,rgba(7,59,107,.98),rgba(14,165,233,.9)),url('1000077933.png') center/cover;box-shadow:var(--shadow);margin-bottom:18px}.hero .eyebrow{color:#f5d77a;font-size:10px;font-weight:900}.hero h1{font-size:28px;font-weight:900;margin:5px 0}.hero p{color:#dbeafe;font-size:12px}.badge{display:inline-block;margin-top:12px;padding:7px 11px;border-radius:999px;background:#ffffff18;border:1px solid #ffffff22;font-size:10px;font-weight:800}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:18px}.stat{background:#ffffffeb;border:1px solid #dfe8f0;border-radius:17px;padding:17px;box-shadow:0 10px 28px rgba(7,59,107,.06);border-right:4px solid var(--blue)}.stat:nth-child(2){border-right-color:var(--green)}.stat:nth-child(3){border-right-color:var(--purple)}.stat:nth-child(4){border-right-color:var(--gold)}.stat span{color:var(--muted);font-size:10px;font-weight:800}.stat strong{display:block;color:var(--navy);font-size:22px;font-weight:900;margin-top:4px}.box{background:#ffffffed;border:1px solid #dfe8f0;border-radius:21px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);border-right:4px solid var(--purple)}.box.blue{border-right-color:var(--blue)}.box.green{border-right-color:#25d366}.box.red{border-right-color:var(--red)}.box-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}.title{font-size:16px;font-weight:900;color:var(--navy);display:flex;gap:9px;align-items:center}.icon{width:34px;height:34px;border-radius:10px;background:#edf6fc;display:grid;place-items:center}.btn{border:0;padding:9px 14px;border-radius:10px;color:white;background:linear-gradient(135deg,var(--purple),#8b5cf6);font-family:inherit;font-size:10.5px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;transition:.22s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(7,59,107,.14)}.btn.blue{background:linear-gradient(135deg,var(--blue),#0369a1)}.btn.green{background:#25d366}.table-wrap{overflow:auto;border:1px solid #e2e8f0;border-radius:13px}table{width:100%;min-width:620px;border-collapse:collapse;background:white}th,td{padding:11px 12px;border-bottom:1px solid #e8eef3;text-align:right;font-size:11px}th{background:#f3f7fa;color:#40566d;font-weight:900}td{color:#334155}tr:last-child td{border-bottom:0}.score{display:inline-block;min-width:52px;text-align:center;padding:4px 7px;border-radius:7px;background:#edf6fc;color:#075985;font-weight:800}.absence{display:flex;align-items:center;gap:12px;background:#fff7ed;border:1px solid #fed7aa;border-radius:13px;padding:13px}.absence .warn{width:36px;height:36px;border-radius:10px;background:#ffedd5;color:#ea580c;display:grid;place-items:center;font-weight:900}.absence strong{display:block;color:#9a3412;font-size:11.5px}.absence span{font-size:10px;color:#c2410c}footer{text-align:center;color:#7a8a9b;font-size:9px;padding:0 0 20px}
+.reveal-ready{opacity:0;transform:translateY(24px) scale(.985);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}.reveal-ready.is-visible{opacity:1;transform:none}.box,.stat{transition:transform .3s,box-shadow .3s}.box:hover,.stat:hover{transform:translateY(-3px);box-shadow:0 20px 45px rgba(7,59,107,.1)}body{animation:pageIn .65s ease both}@keyframes pageIn{from{opacity:0}to{opacity:1}}@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal-ready{opacity:1!important;transform:none!important}}
+@media(max-width:950px){.layout{grid-template-columns:210px 1fr}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.head{padding:9px 14px;min-height:68px}.brand img{width:43px;height:43px}.brand b{font-size:14px}.nav{display:none}.menu{display:block}.layout{display:block;padding:14px}.side{position:fixed;top:68px;right:14px;left:14px;z-index:900;display:none;max-height:calc(100vh - 85px);overflow:auto}.side.open{display:block}.hero{padding:21px 18px;border-radius:18px}.hero h1{font-size:22px}.box{padding:17px;border-radius:17px}.stats{gap:9px}.stat{padding:14px}.stat strong{font-size:18px}.box-head{align-items:flex-start}.btn{width:100%}}
+@media(max-width:430px){.brand div{display:none}.stats{grid-template-columns:1fr 1fr}.title{font-size:14px}}
+</style>
+<script src="alrisala-core.js" defer></script>
 </head>
-
-<body onload="initStudentPortal()">
-<div class="page-bg" aria-hidden="true"></div>
-
-<header>
-    <div class="header-inner">
-        <a href="index.html" class="brand">
-            <img src="logoarrissalah.jpg" alt="شعار مؤسسة الرسالة" class="brand-logo">
-            <div>
-                <div class="brand-name" data-ar="مؤسسة الرسالة" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة</div>
-                <div class="brand-sub" data-ar="فضاء التلميذ وولي الأمر" data-fr="Espace Élève & Parent">فضاء التلميذ وولي الأمر</div>
-            </div>
-        </a>
-
-        <button class="menu-toggle" onclick="toggleMenu()" aria-label="القائمة">☰</button>
-
-        <nav>
-            <ul class="nav" id="navMenu">
-                <li><a href="index.html" data-ar="⌂ الرئيسية" data-fr="⌂ Accueil">⌂ الرئيسية</a></li>
-                <li><a href="login.html" data-ar="♙ فضاءات الدخول" data-fr="♙ Espaces">♙ فضاءات الدخول</a></li>
-                <li><button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">FR / العربية</button></li>
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<main class="main-container">
-    <div class="welcome-card">
-        <div>
-            <h1 id="welcomeTitle" data-ar="مرحباً بك في فضاء متابعة التلميذ" data-fr="Bienvenue dans l'espace de suivi de l'élève">مرحباً بك في فضاء متابعة التلميذ</h1>
-            <p id="studentNameDisplay" data-ar="اطّلع على النقط المحصلة، سجل الغياب، والمستجدات المدرسية الخاصة بك." data-fr="Consultez vos notes, l'historique des absences et les actualités scolaires.">اطّلع على النقط المحصلة، سجل الغياب، والمستجدات المدرسية الخاصة بك.</p>
-        </div>
-        <a href="login.html" class="btn btn-danger" onclick="localStorage.removeItem('student_session')" data-ar="تسجيل خروج" data-fr="Déconnexion">تسجيل خروج</a>
-    </div>
-
-    <!-- لوحة البحث أو إدخال رقم المسار في حال عدم وجود تسجيل مسبق -->
-    <div id="authBox" class="card-box" style="max-width:500px; margin:0 auto 30px; display:none;">
-        <h3 data-ar="ربط حساب التلميذ برقم المسار" data-fr="Lier le compte par numéro de dossier">ربط حساب التلميذ برقم المسار</h3>
-        <p style="color:var(--muted); font-size:12px; margin-bottom:15px;" data-ar="المرجأ إدخال رقم المسار أو المعرف الخاص للتلميذ لعرض بياناته الدراسية." data-fr="Veuillez saisir le numéro de dossier de l'élève pour afficher ses données scolaires.">الرجاء إدخال رقم المسار أو المعرف الخاص للتلميذ لعرض بياناته الدراسية.</p>
-        <input type="text" id="inputRegNumber" class="form-control" placeholder="رقم المسار (مثال: M123456)">
-        <button class="btn btn-primary" style="width:100%;" onclick="bindStudentAccount()" data-ar="عرض البيانات الدراسية" data-fr="Afficher les données">عرض البيانات الدراسية</button>
-    </div>
-
-    <div class="dashboard-grid" id="portalContent">
-        <!-- جدول النقط -->
-        <div class="card-box">
-            <h3 data-ar="📊 النقط المحصلة والتقييمات" data-fr="📊 Notes & Évaluations">📊 النقط المحصلة والتقييمات</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th data-ar="المادة" data-fr="Matière">المادة</th>
-                            <th data-ar="النقطة" data-fr="Note">النقطة</th>
-                            <th data-ar="الرتبة / التقييم" data-fr="Appréciation">الرتبة / التقييم</th>
-                        </tr>
-                    </thead>
-                    <tbody id="gradesTableBody">
-                        <tr><td colspan="3" style="text-align:center; color:var(--muted);" data-ar="جاري جلب النقط..." data-fr="Chargement des notes...">جاري جلب النقط...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- جدول الغياب -->
-        <div class="card-box">
-            <h3 data-ar="📋 سجل الحضور والغياب" data-fr="📋 Suivi des Absences">📋 سجل الحضور والغياب</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th data-ar="التاريخ" data-fr="Date">التاريخ</th>
-                            <th data-ar="الحالة" data-fr="Statut">الحالة</th>
-                            <th data-ar="عدد الساعات" data-fr="Heures">عدد الساعات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="attendanceTableBody">
-                        <tr><td colspan="3" style="text-align:center; color:var(--muted);" data-ar="جاري جلب سجل الغياب..." data-fr="Chargement des absences...">جاري جلب سجل الغياب...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer>
-    <div class="footer-inner">
-        <strong data-ar="مؤسسة الرسالة للتعليم الخصوصي" data-fr="Groupe Scolaire Al Risala">مؤسسة الرسالة للتعليم الخصوصي</strong>
-        <div class="footer-line"></div>
-        <p data-ar="جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة" data-fr="Tous droits réservés © 2026 - Groupe Scolaire Al Risala">جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة</p>
-    </div>
-</footer>
-
+<body><div class="page-bg"></div>
+<header><div class="head"><a href="index.html" class="brand"><img src="1000076356.jpg" alt="شعار مؤسسة الرسالة"><div><b>مؤسسة الرسالة</b><small>للتعليم الخصوصي</small></div></a><nav class="nav"><a href="index.html">⌂ الرئيسية</a><a href="login.html">فضاءات الدخول</a><a href="programs.html">أقسام المؤسسة</a><a href="announcements.html">الإعلانات</a><a href="contact.html">تواصل معنا</a></nav><button class="menu" onclick="toggleSide()">☰</button></div></header>
+<div class="layout"><aside class="side" id="side"><div class="side-title"><strong>فضاء التلميذ</strong><small>الدروس وكشف النقاط والغياب</small></div><ul><li><a href="#whatsapp" class="active">💬 مجموعة الفصل</a></li><li><a href="#grades">📊 كشف النقاط</a></li><li><a href="#attendance">📝 الغيابات</a></li><li><a href="#schedule">🗓️ استعمال الزمن</a></li></ul></aside>
+<main class="main"><section class="hero reveal-ready"><div class="eyebrow">AL-RISALA STUDENT SPACE</div><h1>مرحباً بك في فضاء التلميذ</h1><p>تابع نقطك وغياباتك واستعمال الزمن الدراسي في واجهة واحدة.</p><span class="badge">🎓 السادس ابتدائي — القسم أ</span></section>
+<section class="stats"><div class="stat reveal-ready"><span>المعدل الحالي</span><strong>17.08</strong></div><div class="stat reveal-ready"><span>الغيابات</span><strong>01</strong></div><div class="stat reveal-ready"><span>المستوى</span><strong>السادس</strong></div><div class="stat reveal-ready"><span>القسم</span><strong>أ</strong></div></section>
+<section class="box green reveal-ready" id="whatsapp"><div class="box-head"><div class="title"><span class="icon">💬</span>مجموعة واتساب الفصل الدراسي</div><a href="https://whatsapp.com" target="_blank" rel="noopener" class="btn green">الانضمام لمجموعة الفصل</a></div><p style="font-size:11px;color:#64748b">السادس ابتدائي أ — للتواصل والمتابعة الخاصة بالفصل الدراسي.</p></section>
+<section class="box blue reveal-ready" id="grades"><div class="box-head"><div class="title"><span class="icon">📊</span>كشف النقاط الشخصي</div><button class="btn blue" onclick="printGradesReport()">🖨️ طباعة كشف النقاط</button></div><div class="table-wrap"><table id="gradesTable"><thead><tr><th>المادة الدراسية</th><th>المراقبة المستمرة</th><th>الامتحان المحلي</th><th>المعدل المحصل</th></tr></thead><tbody><tr><td>اللغة العربية</td><td><span class="score">17.00</span></td><td><span class="score">16.50</span></td><td><strong>16.75</strong></td></tr><tr><td>الرياضيات</td><td><span class="score">18.00</span></td><td><span class="score">17.50</span></td><td><strong>17.75</strong></td></tr><tr><td>النشاط العلمي</td><td><span class="score">16.50</span></td><td><span class="score">17.00</span></td><td><strong>16.75</strong></td></tr></tbody></table></div></section>
+<section class="box red reveal-ready" id="attendance"><div class="box-head"><div class="title"><span class="icon">📝</span>سجل الغيابات والتنبيهات</div></div><div class="absence"><div class="warn">!</div><div><strong>لديك غياب واحد مسجل ومبرر</strong><span>تم تسجيل الغياب خلال هذا الأسبوع.</span></div></div></section>
+<section class="box reveal-ready" id="schedule"><div class="box-head"><div class="title"><span class="icon">🗓️</span>الجدول الزمني للحصص الدراسية</div><button class="btn" onclick="printScheduleReport()">🖨️ طباعة الجدول</button></div><div class="table-wrap"><table id="scheduleTable"><thead><tr><th>يوم الأسبوع</th><th>التوقيت</th><th>المادة</th><th>الأستاذ المكلف</th><th>القاعة</th></tr></thead><tbody><tr><td><strong>الإثنين</strong></td><td>08:30 - 10:30</td><td>اللغة العربية</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr><tr><td><strong>الإثنين</strong></td><td>10:45 - 12:30</td><td>الرياضيات</td><td>الأستاذة فاطمة الزهراء</td><td>القسم 04</td></tr><tr><td><strong>الثلاثاء</strong></td><td>08:30 - 10:30</td><td>النشاط العلمي</td><td>الأستاذ محمد العمراني</td><td>القسم 04</td></tr><tr><td><strong>الأربعاء</strong></td><td>09:00 - 11:00</td><td>اللغة الفرنسية</td><td>الأستاذة سناء العلوي</td><td>القسم 02</td></tr></tbody></table></div></section><footer>© مؤسسة الرسالة للتعليم الخصوصي — فضاء التلميذ</footer></main></div>
 <script>
-    const SUPABASE_URL = 'https://ginohutluqeprmkrodbb.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_HnxeYpiIqU7BXYJ5EfCTtQ_Xtom-SXC';
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+function toggleSide(){document.getElementById('side').classList.toggle('open')}document.querySelectorAll('.side a').forEach(a=>a.addEventListener('click',()=>document.getElementById('side').classList.remove('open')));
+function printTable(title,subtitle,id){const t=document.getElementById(id);const w=window.open('','', 'height=700,width=850');if(!w){alert('يرجى السماح بالنوافذ المنبثقة للطباعة.');return}w.document.write(`<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>${title}</title><style>body{font-family:Cairo,Arial,sans-serif;direction:rtl;padding:35px;color:#172033}h2{text-align:center;color:#073b6b}p{text-align:center;color:#64748b}table{width:100%;border-collapse:collapse;margin-top:20px}th,td{border:1px solid #cbd5e1;padding:10px;text-align:right}th{background:#f1f5f9}</style></head><body><h2>مؤسسة الرسالة للتعليم الخصوصي</h2><p>${subtitle}</p>${t.outerHTML}<p style="margin-top:50px;text-align:left">إدارة المؤسسة</p>
 
-    let currentLang = 'ar';
 
-    function toggleMenu(){
-        document.getElementById('navMenu').classList.toggle('open');
-    }
-
-    function toggleLanguage(){
-        currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-        const root = document.getElementById('htmlRoot');
-        root.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-        root.lang = currentLang;
-
-        document.getElementById('langToggleBtn').textContent =
-            currentLang === 'ar' ? 'FR / العربية' : 'العربية / FR';
-
-        document.querySelectorAll('[data-ar]').forEach(el=>{
-            const val = el.getAttribute('data-' + currentLang);
-            if(val !== null){
-                if(el.tagName === 'TITLE'){
-                    document.title = val;
-                } else {
-                    el.innerHTML = val;
-                }
-            }
-        });
-    }
-
-    async function initStudentPortal() {
-        let regNumber = localStorage.getItem('student_session');
-        if (!regNumber) {
-            document.getElementById('authBox').style.display = 'block';
-            document.getElementById('portalContent').style.display = 'none';
-            return;
-        }
-        loadStudentData(regNumber);
-    }
-
-    async function bindStudentAccount() {
-        let reg = document.getElementById('inputRegNumber').value.trim();
-        if(!reg) {
-            alert(currentLang === 'ar' ? 'الرجاء إدخال رقم المسار' : 'Veuillez entrer le numéro de dossier');
-            return;
-        }
-        localStorage.setItem('student_session', reg);
-        document.getElementById('authBox').style.display = 'none';
-        document.getElementById('portalContent').style.display = 'grid';
-        loadStudentData(reg);
-    }
-
-    async function loadStudentData(regNumber) {
-        // جلب بيانات التلميذ من جدول students
-        let { data: students, error } = await _supabase
-            .from('students')
-            .select('*')
-            .eq('reg_number', regNumber)
-            .single();
-
-        if (error || !students) {
-            alert(currentLang === 'ar' ? 'لم يتم العثور على تلميذ بهذا المعرف. تحقق من الرقم.' : 'Élève introuvable. Veuillez vérifier le numéro.');
-            localStorage.removeItem('student_session');
-            document.getElementById('authBox').style.display = 'block';
-            document.getElementById('portalContent').style.display = 'none';
-            return;
-        }
-
-        document.getElementById('welcomeTitle').innerHTML = (currentLang === 'ar' ? 'أهلاً بك، ' : 'Bienvenue, ') + students.first_name + ' ' + students.last_name;
-        document.getElementById('studentNameDisplay').innerHTML = (currentLang === 'ar' ? 'المستوى: ' : 'Niveau : ') + students.class_name + ' | ' + (currentLang === 'ar' ? 'رقم المسار: ' : 'Dossier : ') + students.reg_number;
-
-        // جلب النقط
-        let { data: grades } = await _supabase
-            .from('grades')
-            .select('*')
-            .eq('student_id', students.id);
-
-        let gradesBody = document.getElementById('gradesTableBody');
-        gradesBody.innerHTML = '';
-        if(!grades || grades.length === 0) {
-            gradesBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">${currentLang==='ar'?'لا توجد نقط مسجلة حتى الآن':'Aucune note enregistrée'}</td></tr>`;
-        } else {
-            grades.forEach(g => {
-                gradesBody.innerHTML += `<tr><td>${g.subject}</td><td><strong>${g.grade_value} / 20</strong></td><td>${g.grade_value >= 10 ? (currentLang==='ar'?'مقبول / حسن':'Satisfaisant') : (currentLang==='ar'?'يحتاج لدعم':'À améliorer')}</td></tr>`;
-            });
-        }
-
-        // جلب الغياب
-        let { data: attendances } = await _supabase
-            .from('attendances')
-            .select('*')
-            .eq('student_id', students.id);
-
-        let attBody = document.getElementById('attendanceTableBody');
-        attBody.innerHTML = '';
-        if(!attendances || attendances.length === 0) {
-            attBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:var(--muted);">${currentLang==='ar'?'لا توجد غيابات مسجلة (سجل ممتاز)':'Aucune absence enregistrée'}</td></tr>`;
-        } else {
-            attendances.forEach(a => {
-                attBody.innerHTML += `<tr><td>${a.absence_date}</td><td><span style="color:${a.status==='حاضر'?'var(--green)':'var(--danger)'}">${a.status}</span></td><td>${a.hours} س</td></tr>`;
-            });
-        }
-    }
+</body></html>`);w.document.close();w.focus();setTimeout(()=>w.print(),200)}
+function printGradesReport(){printTable('كشف النقاط الرسمي','كشف نقط المراقبة المستمرة والامتحانات','gradesTable')}function printScheduleReport(){printTable('الجدول الزمني للحصص','الجدول الزمني الأسبوعي للحصص الدراسية','scheduleTable')}
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('is-visible')}),{threshold:.12});document.querySelectorAll('.reveal-ready').forEach((e,i)=>{e.style.transitionDelay=Math.min((i%6)*.07,.35)+'s';observer.observe(e)});
 </script>
-</body>
-</html>
+<style id="alRisalaI18nStyle">
+.i18n-lang-btn{border:1px solid #d8e2eb;background:#fff;color:#073b6b;padding:9px 13px;border-radius:12px;font:800 12px Cairo,sans-serif;cursor:pointer;transition:.25s;box-shadow:0 5px 16px rgba(7,59,107,.06)}.i18n-lang-btn:hover{transform:translateY(-1px);border-color:#0ea5e9}
+html[lang="fr"] body{direction:ltr}
+html[lang="fr"] .rtl-force{direction:rtl}
+</style>
+<script id="alRisalaI18n">
+(function(){
+ const T={'مؤسسة الرسالة للتعليم الخصوصي':'Groupe Scolaire Al Risala','مؤسسة الرسالة':'Groupe Scolaire Al Risala','للتعليم الخصوصي':'Enseignement Privé','⌂ الرئيسية':'⌂ Accueil','الصفحة الرئيسية':'Page d’accueil','الرئيسية':'Accueil','فضاءات الدخول':'Espaces de connexion','♙ فضاءات الدخول':'♙ Espaces','✎ التسجيل القبلي':'✎ Pré-inscription','▣ أقسام المؤسسة':'▣ Cycles scolaires','▣ الأقسام':'▣ Cycles','⚑ الإعلانات':'⚑ Annonces','☎ تواصل معنا':'☎ Contact','تواصل معنا':'Contact','خروج':'Sortie','تسجيل خروج':'Déconnexion','منصة مؤسسة الرسالة التعليمية':'Plateforme éducative Al Risala','صرح تربوي متكامل':'Un pôle éducatif intégré','لجيل المستقبل':'pour la génération de demain','✦ طلب تسجيل تلميذ جديد':'✦ Nouvelle pré-inscription','↪ فضاءات الدخول':'↪ Espaces de connexion','تعليم ذو جودة':'Éducation de qualité','طاقم تربوي مؤهل':'Équipe pédagogique qualifiée','بيئة آمنة ومحفزة':'Environnement sûr et stimulant','معًا من أجل مستقبل أفضل':'Ensemble pour un avenir meilleur','أهم خدمات المؤسسة':'Principaux services de l’établissement','خدمات تربوية ورقمية واضحة':'Des services éducatifs et numériques clairs','واجهة بسيطة ومنظمة تمنح التلميذ وولي الأمر وصولًا سريعًا إلى أهم خدمات المؤسسة.':'Une interface simple et organisée offrant à l’élève et au parent un accès rapide aux principaux services.','رؤيتنا ورسالتنا':'Notre vision et notre mission','بيئة تعليمية محفزة وآمنة ترتكز على التميز الأكاديمي وصقل شخصية المتعلم.':'Un environnement éducatif stimulant et sûr, fondé sur l’excellence académique et l’épanouissement de l’apprenant.','قراءة المزيد ←':'En savoir plus →','أسلاكنا التعليمية':'Nos cycles scolaires','مسار تعليمي متواصل ومدروس يواكب المتعلم منذ خطواته الأولى وصولًا إلى البكالوريا.':'Un parcours éducatif continu et structuré, de la petite enfance au baccalauréat.','استعراض الأقسام ←':'Voir les cycles →','الإعلانات والبلاغات':'Annonces et communiqués','ابقوا على اطلاع بآخر المستجدات المدرسية والمواعيد والبلاغات المهمة.':'Restez informés des actualités scolaires, des dates et des avis importants.','عرض البلاغات ←':'Voir les annonces →','ولوج آمن وسهل إلى الفضاءات الرقمية الخاصة بالتلميذ وولي الأمر والأطر التربوية.':'Accès sécurisé et simple aux espaces numériques des élèves, parents et équipes pédagogiques.','الدخول الآن ←':'Se connecter →','الوصول السريع':'Accès rapide','أهم الخدمات الرقمية للمؤسسة في خطوات واضحة.':'Les principaux services numériques en quelques étapes.','تلميذ • ولي • أستاذ':'Élève • Parent • Enseignant','طلب تسجيل جديد':'Nouvelle demande d’inscription','آخر المستجدات':'Dernières actualités','نحن رهن الإشارة':'Nous sommes à votre écoute','معًا... من أجل مستقبل أفضل':'Ensemble… pour un avenir meilleur','متابعة شخصية لكل متعلم':'Suivi personnalisé de chaque apprenant','تواصل مستمر مع الأسرة':'Communication continue avec les familles','من التعلم... نبني المستقبل':'De l’apprentissage… construisons l’avenir','جميع الحقوق محفوظة © 2026 - مؤسسة الرسالة':'Tous droits réservés © 2026 - Groupe Scolaire Al Risala','فضاء التلميذ - مؤسسة الرسالة للتعليم الخصوصي':'Espace élève - Groupe Scolaire Al Risala','فضاء التلميذ':'Espace élève','الدروس وكشف النقاط والغياب':'Cours, notes et absences','💬 مجموعة الفصل':'💬 Groupe de classe','📊 كشف النقاط':'📊 Relevé de notes','📝 الغيابات':'📝 Absences','🗓️ استعمال الزمن':'🗓️ Emploi du temps','أقسام المؤسسة':'Cycles scolaires','الإعلانات':'Annonces','مرحباً بك في فضاء التلميذ':'Bienvenue dans votre espace élève','تابع نقطك وغياباتك واستعمال الزمن الدراسي في واجهة واحدة.':'Suivez vos notes, absences et emploi du temps dans une seule interface.','🎓 السادس ابتدائي — القسم أ':'🎓 6e année primaire — classe A','المعدل الحالي':'Moyenne actuelle','الغيابات':'Absences','المستوى':'Niveau','السادس':'6e année','القسم':'Classe','مجموعة واتساب الفصل الدراسي':'Groupe WhatsApp de la classe','الانضمام لمجموعة الفصل':'Rejoindre le groupe de classe','السادس ابتدائي أ — للتواصل والمتابعة الخاصة بالفصل الدراسي.':'6e année primaire A — pour la communication et le suivi de la classe.','كشف النقاط الشخصي':'Relevé de notes personnel','🖨️ طباعة كشف النقاط':'🖨️ Imprimer le relevé','المادة الدراسية':'Matière','المراقبة المستمرة':'Contrôle continu','الامتحان المحلي':'Examen local','المعدل المحصل':'Moyenne obtenue','اللغة العربية':'Arabe','الرياضيات':'Mathématiques','النشاط العلمي':'Activités scientifiques','سجل الغيابات والتنبيهات':'Registre des absences et alertes','لديك غياب واحد مسجل ومبرر':'Une absence justifiée est enregistrée','تم تسجيل الغياب خلال هذا الأسبوع.':'L’absence a été enregistrée cette semaine.','الجدول الزمني للحصص الدراسية':'Emploi du temps des cours','🖨️ طباعة الجدول':'🖨️ Imprimer l’emploi du temps','يوم الأسبوع':'Jour','التوقيت':'Horaire','المادة':'Matière','الأستاذ المكلف':'Enseignant','القاعة':'Salle','الإثنين':'Lundi','الثلاثاء':'Mardi','الأربعاء':'Mercredi','الأستاذ محمد العمراني':'M. Mohamed El Amrani','الأستاذة فاطمة الزهراء':'Mme Fatima Zahra','الأستاذة سناء العلوي':'Mme Sanae Alaoui','القسم 04':'Salle 04','القسم 02':'Salle 02','© مؤسسة الرسالة للتعليم الخصوصي — فضاء التلميذ':'© Groupe Scolaire Al Risala — Espace élève','فضاءات الدخول - مؤسسة الرسالة للتعليم الخصوصي':'Espaces de connexion - Groupe Scolaire Al Risala','منصة الدخول الآمن':'Plateforme de connexion sécurisée','فضاءات المستفيدين':'Espaces des bénéficiaires','اختر':'Choisissez','فضاء الدخول':'Espace de connexion','المناسب':'approprié','ولوج مخصص لكل فئة من مستفيدي المؤسسة، مع توجيهك مباشرة إلى الواجهة المناسبة بعد تسجيل الدخول.':'Un accès dédié à chaque catégorie de bénéficiaires, avec redirection vers l’interface appropriée après connexion.','🏛️':'🏛️','فضاء الإدارة':'Espace administration','المدير، المسؤول المالي، والحارس العام':'Direction, responsable financier et surveillant général','دخول آمن ←':'Connexion sécurisée ←','فضاء الأساتذة':'Espace enseignants','الغياب، النقط ومجموعات الفصول':'Absences, notes et groupes de classes','فضاء الأولياء':'Espace parents','متابعة مسار الأبناء وكشف النقاط':'Suivi du parcours des enfants et relevés de notes','كشف النقاط وجداول الحصص والدروس':'Relevés de notes, emplois du temps et cours','مرحباً بك في':'Bienvenue sur','منصة الرسالة':'la plateforme Al Risala','أدخل بيانات الاعتماد الخاصة بك للوصول إلى الخدمات والوظائف المخصصة لفضائك.':'Saisissez vos identifiants pour accéder aux services de votre espace.','واجهة مخصصة حسب الصفة':'Interface selon votre profil','صلاحيات مرتبطة بالدور':'Droits liés au rôle','انتقال مباشر إلى اللوحة المناسبة':'Accès direct au tableau de bord approprié','لوحة الدخول الآمن':'Connexion sécurisée','أدخل بيانات الاعتماد الخاصة بهذا الفضاء':'Saisissez les identifiants de cet espace','الفضاء المحدد':'Espace sélectionné','حدد الصفة الإدارية:':'Sélectionnez le profil administratif :','المدير العام — صلاحيات مطلقة':'Directeur général — accès complet','المسؤول الإداري والمالي':'Responsable administratif et financier','الحارس العام — الغياب والنقط حصرياً':'Surveillant général — absences et notes uniquement','اسم المستخدم أو البريد':'Nom d’utilisateur ou e-mail','كلمة المرور الآمنة':'Mot de passe','👁️':'👁️','دخول آمن إلى الفضاء':'Accéder à l’espace','🔒 يتم توجيهك بعد الدخول إلى الواجهة المرتبطة بالصفة التي اخترتها.':'🔒 Après connexion, vous serez redirigé vers l’interface correspondant à votre profil.','→ العودة لاختيار فضاء آخر':'→ Choisir un autre espace','⌂ العودة إلى الصفحة الرئيسية':'⌂ Retour à l’accueil','التسجيل القبلي - مؤسسة الرسالة للتعليم الخصوصي':'Pré-inscription - Groupe Scolaire Al Risala','GROUPE SCOLAIRE AL-RISALA':'GROUPE SCOLAIRE AL-RISALA','التسجيل القبلي':'Pré-inscription','تقديم طلب الالتحاق إلكترونيًا':'Soumettre une demande d’admission en ligne','اختيار المستوى الدراسي':'Choisir le niveau scolaire','معالجة الطلب من طرف الإدارة':'Traitement de la demande par l’administration','التواصل مع ولي الأمر':'Communication avec le parent','PRÉ-INSCRIPTION':'PRÉ-INSCRIPTION','طلب تسجيل تلميذ جديد':'Demande d’inscription d’un nouvel élève','يرجى تعبئة المعلومات التالية بدقة لإرسال طلب الالتحاق بالمؤسسة.':'Veuillez remplir soigneusement les informations suivantes pour envoyer la demande d’admission.','الاسم الكامل للتلميذ':'Nom complet de l’élève','المستوى الدراسي المطلوب':'Niveau scolaire demandé','التعليم الأولي':'Préscolaire','السادس ابتدائي':'6e année primaire','الأولى إعدادي':'1re année collège','الأولى باكالوريا':'1re année baccalauréat','رقم هاتف ولي الأمر':'Téléphone du parent','🔒 سيتم استعمال المعلومات المقدمة لمعالجة طلب التسجيل والتواصل مع ولي الأمر بخصوص الطلب.':'🔒 Les informations fournies seront utilisées pour traiter la demande et contacter le parent.','إرسال طلب التسجيل':'Envoyer la demande','✓ تم إرسال طلب التسجيل بنجاح!':'✓ Demande envoyée avec succès !','ستتواصل معكم الإدارة قريبًا.':'L’administration vous contactera prochainement.','فضاء أولياء الأمور - مؤسسة الرسالة للتعليم الخصوصي':'Espace parents - Groupe Scolaire Al Risala','فضاء أولياء الأمور':'Espace parents','متابعة الأبناء والحياة المدرسية':'Suivi des enfants et vie scolaire','📋 متابعة الأبناء':'📋 Suivi des enfants','⌂ الصفحة الرئيسية':'⌂ Accueil','عدد الأبناء':'Nombre d’enfants','مسجل بالمؤسسة':'Inscrit dans l’établissement','الغياب المسجل':'Absence enregistrée','آخر تسجيل: 15/09/2026':'Dernière mise à jour : 15/09/2026','المعدل السنوي':'Moyenne annuelle','حسب البيانات المعروضة':'Selon les données affichées','التعليم الابتدائي':'Enseignement primaire','متابعة الأبناء والمسار الدراسي':'Suivi des enfants et du parcours scolaire','الغياب، التواصل مع الفصل، وكشف النقاط.':'Absences, communication avec la classe et relevés de notes.','التاريخ':'Date','الاسم الكامل':'Nom complet','المستوى والقسم':'Niveau et classe','حالة الغياب':'Statut de l’absence','التواصل':'Communication','كشف النقاط':'Relevé de notes','2026/09/15':'15/09/2026','يوسف البدري':'Youssef El Badri','السادس ابتدائي (أ)':'6e année primaire (A)','● غياب مسجل يوم أمس':'● Absence enregistrée hier','واتساب الفصل':'WhatsApp de la classe','👁 إظهار الكشف':'👁 Afficher le relevé','كشف النقاط المدرسي — يوسف البدري':'Relevé scolaire — Youssef El Badri','المعدل العام: 17.08 / 20':'Moyenne générale : 17,08 / 20','الدورة الأولى (/20)':'1er trimestre (/20)','الدورة الثانية (/20)':'2e trimestre (/20)','🖨 طباعة كشف النقاط':'🖨 Imprimer le relevé','إغلاق الكشف':'Fermer le relevé','استعمال الزمن':'Emploi du temps','الجدول الزمني للحصص الدراسية للأبناء.':'Emploi du temps des cours des enfants.','الأستاذ محمد العمراني · القسم 04':'M. Mohamed El Amrani · Salle 04','الأستاذة فاطمة الزهراء · القسم 04':'Mme Fatima Zahra · Salle 04','الأستاذة سناء العلوي · القسم 02':'Mme Sanae Alaoui · Salle 02','مؤسسة الرسالة للتعليم الخصوصي · فضاء أولياء الأمور':'Groupe Scolaire Al Risala · Espace parents','أقسام المؤسسة - مؤسسة الرسالة':'Cycles scolaires - Groupe Scolaire Al Risala','AL-RISALA EDUCATION':'AL-RISALA EDUCATION','استعراض مستقل وواضح للأسلاك التعليمية، مع عرض مختصر لطبيعة المسار التربوي في كل قسم.':'Présentation claire et indépendante des cycles scolaires, avec un aperçu du parcours pédagogique de chaque niveau.','مرحلة تأسيسية':'Cycle préparatoire','مرحلة تأسيسية تهتم ببناء المهارات الأولى للطفل، وتنمية الاستقلالية والتواصل والاستعداد للتعلم المدرسي.':'Une étape fondatrice pour développer les premières compétences, l’autonomie, la communication et la préparation scolaire.','السلك الابتدائي':'Enseignement primaire','بناء المعارف والمهارات الأساسية، مع الاهتمام بالقراءة والكتابة والرياضيات والقيم والسلوك التربوي.':'Construction des connaissances et compétences fondamentales, avec attention à la lecture, l’écriture, les mathématiques et les valeurs.','التعلم الأساسي':'Apprentissages fondamentaux','السلك الإعدادي':'Enseignement collégial','تطوير المعارف والمنهجيات والقدرات الشخصية، ومواكبة المتعلم في مرحلة انتقالية مهمة من مساره الدراسي.':'Développement des connaissances, méthodes et capacités personnelles durant une étape importante du parcours scolaire.','تطوير المهارات':'Développement des compétences','السلك الثانوي':'Enseignement secondaire','تهيئة المتعلم لمواصلة التعليم العالي وبناء مشروعه الدراسي، مع التركيز على الاستقلالية والمسؤولية.':'Préparation à l’enseignement supérieur et construction du projet scolaire, avec un accent sur l’autonomie et la responsabilité.','الاستعداد للمستقبل':'Préparation à l’avenir','© 2026 مؤسسة الرسالة للتعليم الخصوصي':'© 2026 Groupe Scolaire Al Risala','تواصل معنا - مؤسسة الرسالة':'Contact - Groupe Scolaire Al Risala','AL-RISALA CONTACT':'AL-RISALA CONTACT','نحن رهن الإشارة للاستفسارات المتعلقة بالتسجيل والمسار الدراسي وخدمات المؤسسة.':'Nous sommes à votre écoute pour toute question concernant l’inscription, le parcours scolaire et les services de l’établissement.','الهاتف':'Téléphone','يمكن إضافة رقم المؤسسة الرسمي هنا عند اعتماده.':'Le numéro officiel de l’établissement pourra être ajouté ici.','البريد الإلكتروني':'E-mail','يمكن إضافة البريد الإلكتروني الرسمي للمؤسسة هنا.':'L’adresse e-mail officielle pourra être ajoutée ici.','العنوان':'Adresse','العطاوية - المغرب':'El Attaouia - Maroc','سيتم تحديث بيانات التواصل الرسمية عند إدخالها، مع الحفاظ على نفس التصميم المتجاوب.':'Les coordonnées officielles seront mises à jour ultérieurement, tout en conservant le même design responsive.','الإعلانات - مؤسسة الرسالة':'Annonces - Groupe Scolaire Al Risala','AL-RISALA NEWS':'AL-RISALA NEWS','صفحة مستقلة للمستجدات والمواعيد والتنبيهات الرسمية الخاصة بالمؤسسة.':'Une page dédiée aux actualités, dates et avis officiels de l’établissement.','إعلان المؤسسة':'Annonce de l’établissement','مرحبًا بكم في فضاء الإعلانات':'Bienvenue dans l’espace des annonces','هذه الصفحة جاهزة لإضافة الإعلانات الفعلية مستقبلًا دون الحاجة إلى تعديل تصميم الصفحة الرئيسية.':'Cette page est prête à accueillir les annonces futures sans modifier le design de la page d’accueil.','فضاء الإدارة والأساتذة - مؤسسة الرسالة':'Espace administration et enseignants - Groupe Scolaire Al Risala','فضاء الإدارة والأساتذة — المنصة الرقمية للمؤسسة':'Espace administration et enseignants — plateforme numérique de l’établissement','الإدارة':'Administration','لوحة التحكم':'Tableau de bord','لوحة المؤشرات الإحصائية والمالية':'Tableau de bord statistique et financier','نظرة مركزية على أهم معطيات المؤسسة.':'Vue centralisée des principales données de l’établissement.','مرحباً بك في فضاء الإدارة المركزي.':'Bienvenue dans l’espace central de l’administration.','عدد التلاميذ والأطفال':'Nombre d’élèves et d’enfants','عدد الأساتذة والمربيات':'Nombre d’enseignants et éducatrices','عدد الموظفين':'Nombre d’employés','إجمالي المداخيل':'Total des recettes','إجمالي المصاريف':'Total des dépenses','إدارة التلاميذ والأطفال والأداءات':'Gestion des élèves, enfants et paiements','التسجيل، المعطيات الدراسية وتحصيل الرسوم.':'Inscriptions, données scolaires et encaissement des frais.','＋ إضافة تلميذ / طفل':'＋ Ajouter un élève / enfant','رقم المسار / المعرف':'N° de dossier / identifiant','الاسم الشخصي':'Prénom','الاسم العائلي':'Nom de famille','الفصل والمستوى':'Classe et niveau','موسم الالتحاق':'Année d’inscription','الشهر':'Mois','العمليات':'Actions','فضاء الأساتذة: الغياب والنقط':'Espace enseignants : absences et notes','اختيار الفصل ثم تسجيل الحضور والغياب والنقط بشكل مستقل.':'Sélectionnez la classe puis saisissez séparément présences, absences et notes.','اختيار الفصل الدراسي':'Sélectionner la classe','السلك التعليمي':'Cycle scolaire','التعليم الأولي (الروض)':'Préscolaire (maternelle)','التعليم الثانوي الإعدادي':'Enseignement collégial','التعليم الثانوي التأهيلي':'Enseignement secondaire qualifiant','المستوى الدراسي':'Niveau scolaire','عرض التلاميذ':'Afficher les élèves','① لائحة الغياب اليومية':'① Liste quotidienne des absences','رقم المسار':'N° de dossier','الحالة':'Statut','الحفظ':'Enregistrer','اختر الفصل ثم اضغط عرض التلاميذ.':'Sélectionnez la classe puis cliquez sur Afficher les élèves.','② لائحة إدخال النقط المستقلة':'② Saisie indépendante des notes','اللغة العربية / التعبير':'Arabe / expression','الفرنسية':'Français','الرياضيات / الحساب':'Mathématiques / calcul','الأنشطة الحركية / التربية الفنية':'Activités motrices / arts plastiques','النقطة /20':'Note /20','الإجراء':'Action','اختر الفصل أولاً.':'Sélectionnez d’abord la classe.','حفظ نقط الفصل بالكامل':'Enregistrer toutes les notes de la classe','جداول استعمال الزمن':'Emplois du temps','اختيار السلك والمستوى ونوع الجدول ثم التنزيل.':'Choisissez le cycle, le niveau et le type de tableau puis téléchargez.','نوع الجدول':'Type d’emploi du temps','استعمال زمن التلاميذ':'Emploi du temps des élèves','استعمال زمن الأساتذة':'Emploi du temps des enseignants','📥 تحميل الجدول':'📥 Télécharger l’emploi du temps','رواتب الأساتذة والمربيات وواتساب الفصول':'Salaires des enseignants, éducatrices et WhatsApp des classes','تتبع الأداء الشهري وربط الفصول بوسائل التواصل.':'Suivi des paiements mensuels et liaison des classes avec les moyens de communication.','اسم الأستاذ / المربية':'Nom de l’enseignant / éducatrice','تاريخ الالتحاق':'Date d’embauche','ساعات العمل':'Heures de travail','واتساب الفصول':'WhatsApp des classes','الراتب':'Salaire','صرف الراتب':'Payer le salaire','الموظفون الإداريون ورواتبهم':'Personnel administratif et salaires','متابعة الموظفين والأجور الشهرية.':'Suivi du personnel et des salaires mensuels.','الاسم':'Nom','الوظيفة':'Fonction','حارس عام':'Surveillant général','النقل المدرسي وطاقمه ومصاريف الحافلات':'Transport scolaire, équipe et dépenses des bus','تتبع أجور الطاقم ومصاريف تشغيل وصيانة النقل.':'Suivi des salaires de l’équipe et des coûts d’exploitation et de maintenance.','أجور طاقم النقل':'Salaires de l’équipe de transport','المهنة':'Métier','الأجر':'Rémunération','صرف الأجر':'Payer la rémunération','سائق الحافلة':'Chauffeur de bus','مصاريف سيارات وحافلات النقل المدرسي':'Dépenses des véhicules et bus scolaires','إجمالي:':'Total :','بنزين / الوقود':'Essence / carburant','تأمين سيارات النقل (Assurance)':'Assurance des véhicules de transport','الفحص التقني (Visite Technique)':'Contrôle technique','الضريبة السنوية (La Vignette)':'Taxe annuelle (vignette)','الصيانة وإصلاح الأعطال الميكانيكية':'Maintenance et réparations mécaniques','مصاريف أخرى مرتبطة بالنقل':'Autres dépenses liées au transport','＋ إضافة مصروف نقل':'＋ Ajouter une dépense de transport','نوع المصروف':'Type de dépense','المبلغ':'Montant','الملاحظات / الحافلة':'Notes / bus','تعديل':'Modifier','حذف':'Supprimer','الخزينة العامة ومصاريف المؤسسة':'Trésorerie générale et dépenses','سجل موحد للمداخيل والمصاريف التشغيلية.':'Registre unifié des recettes et dépenses de fonctionnement.','إضافة مصروف عام':'Ajouter une dépense générale','＋ إضافة للخزينة':'＋ Ajouter à la trésorerie','سجل المصاريف العامة والتشغيلية':'Registre des dépenses générales et de fonctionnement','النوع':'Type','البيان':'Libellé','كهرباء وماء المؤسسة':'Électricité et eau de l’établissement','الأنشطة التربوية والموازية':'Activités pédagogiques et parascolaires','إضافة وتنظيم الأنشطة التربوية للمؤسسة.':'Ajouter et organiser les activités pédagogiques.','＋ إضافة ونشر النشاط':'＋ Ajouter et publier une activité','عنوان النشاط':'Titre de l’activité','تاريخ التنظيم':'Date de l’activité','الرسائل والتواصل':'Messages et communication','رسائل وتوجيهات للأساتذة وأولياء الأمور.':'Messages et orientations pour les enseignants et les parents.','وجهة الرسالة':'Destinataire du message','رسائل وتوجيهات موجهة للأساتذة':'Messages et orientations pour les enseignants','رسائل وتواصل موجه لأولياء الأمور':'Messages et communication pour les parents','نطاق إرسال الرسالة للأساتذة':'Cible d’envoi aux enseignants','رسالة جماعية لكافة الأساتذة (جميع الأسلاك)':'Message collectif à tous les enseignants (tous les cycles)','رسالة حسب السلك التعليمي':'Message par cycle scolaire','رسالة حسب المستوى الدراسي':'Message par niveau scolaire','رسالة خاصة لأستاذ معين (حسب المادة والسلك)':'Message privé à un enseignant (par matière et cycle)','نوع رسالة الأولياء':'Type de message aux parents','رسالة خاصة لولي أمر (على رقمه الخاص)':'Message privé à un parent (sur son numéro)','رسالة عامة (عبر مجموعة واتساب الأولياء)':'Message général (via le groupe WhatsApp des parents)','رقم واتساب ولي الأمر':'Numéro WhatsApp du parent','محتوى الرسالة / التوجيه':'Contenu du message / orientation','إرسال عبر واتساب أو النظام الآن':'Envoyer via WhatsApp ou le système maintenant','إضافة تلميذ أو طفل جديد':'Ajouter un nouvel élève ou enfant','حفظ التلميذ':'Enregistrer l’élève','شتمبر 2026':'Septembre 2026','أكتوبر 2026':'Octobre 2026','نونبر 2026':'Novembre 2026','دجنبر 2026':'Décembre 2026','جاري إرسال الطلب...':'Envoi de la demande…','تعذر الاتصال بخدمة التسجيل. يرجى المحاولة لاحقًا.':'Impossible de contacter le service d’inscription. Veuillez réessayer plus tard.','تعذر إرسال الطلب حاليًا. يرجى التحقق من البيانات والمحاولة مرة أخرى.':'Impossible d’envoyer la demande. Vérifiez les données et réessayez.','القسم (أ)':'Classe A','القسم (ب)':'Classe B','القسم (ج)':'Classe C','أ. فاطمة الزهراء':'Mme Fatima Zahra','روض أ':'Maternelle A','4000 درهم':'4 000 DH','5000 درهم':'5 000 DH','1,200 درهم':'1 200 DH','125,500 درهم':'125 500 DH','45,000 درهم':'45 000 DH','24 ساعة':'24 heures','2026-09-05':'05/09/2026','ملء خزان الحافلة رقم 1':'Remplissage du réservoir du bus n°1','2026/09/01':'01/09/2026','حفل استقبال أطفال الروض والتلامذة الجدد':'Cérémonie d’accueil des enfants de maternelle et des nouveaux élèves','2026-09-07':'07/09/2026'};
+ const KEY='alRisalaLanguage';
+ function translateElement(el,lang){
+   if(el.dataset.arText===undefined) el.dataset.arText=el.innerHTML;
+   if(lang==='fr'){
+      if(el.getAttribute('data-fr')) el.innerHTML=el.getAttribute('data-fr');
+      else if(el.dataset.frText) el.innerHTML=el.dataset.frText;
+      else if(T[el.textContent.trim()]){ el.innerHTML=T[el.textContent.trim()]; }
+   } else { el.innerHTML=el.dataset.arText; }
+ }
+ function translateAll(lang){
+   const root=document.documentElement; root.lang=lang; root.dir=lang==='fr'?'ltr':'rtl';
+   document.querySelectorAll('title').forEach(e=>{ if(!e.dataset.arText)e.dataset.arText=e.textContent; if(lang==='fr' && T[e.dataset.arText]) e.textContent=T[e.dataset.arText]; else if(lang==='ar') e.textContent=e.dataset.arText; });
+   document.querySelectorAll('body *').forEach(el=>{
+      if(el.id==='alRisalaI18n'||el.id==='alRisalaI18nStyle'||el.classList.contains('i18n-lang-btn')) return;
+      if(el.children.length===0 && el.textContent.trim()) translateElement(el,lang);
+      if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){ const p=el.getAttribute('placeholder'); if(p){ if(!el.dataset.arPlaceholder)el.dataset.arPlaceholder=p; if(lang==='fr'&&T[p])el.placeholder=T[p]; else if(lang==='ar')el.placeholder=el.dataset.arPlaceholder; } }
+      if(el.tagName==='OPTION'){ if(!el.dataset.arText)el.dataset.arText=el.textContent; if(lang==='fr'&&T[el.dataset.arText])el.textContent=T[el.dataset.arText]; else if(lang==='ar')el.textContent=el.dataset.arText; }
+   });
+   const btn=document.querySelector('.i18n-lang-btn'); if(btn) btn.textContent=lang==='fr'?'العربية / FR':'FR / العربية';
+   localStorage.setItem(KEY,lang);
+ }
+ function addButton(){
+   if(document.querySelector('.i18n-lang-btn')) return;
+   const b=document.createElement('button'); b.className='i18n-lang-btn'; b.type='button'; b.textContent='FR / العربية'; b.title='Changer de langue / تغيير اللغة'; b.onclick=()=>translateAll((document.documentElement.lang||'ar')==='fr'?'ar':'fr');
+   const host=document.querySelector('.header-actions, header .header-inner, header'); if(host){ b.style.marginInlineStart='8px'; host.appendChild(b); }
+ }
+ window.alRisalaSetLanguage=translateAll; window.toggleLanguage=()=>translateAll((document.documentElement.lang||'ar')==='fr'?'ar':'fr');
+ function init(){ addButton(); const lang=localStorage.getItem(KEY)||'ar'; translateAll(lang); }
+ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
+
+</body></html>
